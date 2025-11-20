@@ -1,0 +1,179 @@
+---
+import { urlFor } from '../../lib/sanity'
+import Button from '../ui/Button.astro'
+
+interface Props {
+  heading: string
+  description: string
+  bulletPoints?: string[]
+  ctaButton?: any
+  featureImage: any
+  backgroundImage?: any
+  imagePosition?: string
+  backgroundColor?: string
+}
+
+const {
+  heading,
+  description,
+  bulletPoints,
+  ctaButton,
+  featureImage,
+  backgroundImage,
+  imagePosition = 'right',
+  backgroundColor = 'white'
+} = Astro.props
+
+const featureImageUrl = featureImage ? urlFor(featureImage).width(800).auto('format').url() : null
+const bgImageUrl = backgroundImage ? urlFor(backgroundImage).width(1440).auto('format').url() : null
+
+function getCtaHref(): string {
+  if (!ctaButton) return '#'
+  if (ctaButton.linkType === 'external' && ctaButton.externalUrl) return ctaButton.externalUrl
+  if (ctaButton.internalLink?.slug) return `/${ctaButton.internalLink.slug}`
+  return '#'
+}
+---
+
+<section class={`split-feature image-${imagePosition} bg-${backgroundColor}`} style={bgImageUrl ? `background-image: url(${bgImageUrl})` : undefined}>
+  <div class="split-container">
+    <div class="content-side">
+      <h2>{heading}</h2>
+      <p class="description">{description}</p>
+
+      {bulletPoints && bulletPoints.length > 0 && (
+        <ul class="bullet-points">
+          {bulletPoints.map(point => (
+            <li>{point}</li>
+          ))}
+        </ul>
+      )}
+
+      {ctaButton && (
+        <Button
+          href={getCtaHref()}
+          text={ctaButton.text}
+          variant={ctaButton.style || 'primary'}
+          target={ctaButton.linkType === 'external' ? '_blank' : undefined}
+        />
+      )}
+    </div>
+
+    {featureImageUrl && (
+      <div class="image-side">
+        <img src={featureImageUrl} alt={featureImage?.alt || heading} loading="lazy" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .split-feature {
+    background-size: cover;
+    background-position: center;
+    background-color: var(--color-light-bg);
+  }
+
+  .bg-white {
+    background-color: #FFFFFF;
+  }
+
+  .bg-light-blue {
+    background-color: #E8F2F7;
+  }
+
+  .bg-blue {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+  }
+
+  .bg-blue h2,
+  .bg-blue .description {
+    color: var(--color-light);
+  }
+
+  .split-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: var(--split-content) var(--split-image);
+    min-height: 648px;
+  }
+
+  .image-right .split-container {
+    grid-template-columns: var(--split-content) var(--split-image);
+  }
+
+  .image-left .split-container {
+    grid-template-columns: var(--split-image) var(--split-content);
+  }
+
+  .image-left .content-side {
+    order: 2;
+  }
+
+  .content-side {
+    padding: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .content-side h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .description {
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .bullet-points {
+    list-style: none;
+    margin-bottom: 2rem;
+  }
+
+  .bullet-points li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .bullet-points li::before {
+    content: '|';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: var(--weight-bold);
+  }
+
+  .image-side {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-side img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 1024px) {
+    .split-container {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    .image-left .content-side {
+      order: 1;
+    }
+
+    .content-side {
+      padding: var(--spacing-xl);
+    }
+
+    .image-side {
+      min-height: 400px;
+    }
+  }
+</style>

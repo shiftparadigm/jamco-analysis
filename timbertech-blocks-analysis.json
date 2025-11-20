@@ -1,0 +1,799 @@
+{
+  "metadata": {
+    "site": "https://www.timbertech.com",
+    "analysis_date": "2025-11-19",
+    "total_pages_discovered": 228,
+    "pages_analyzed": 37,
+    "wordpress_theme": "Astra",
+    "theme_framework": "ast-separate-container",
+    "custom_block_namespace": "ttds",
+    "responsive_breakpoints": {
+      "mobile": "544px",
+      "tablet": "768px",
+      "desktop_small": "921px",
+      "desktop": "1025px",
+      "desktop_large": "1200px"
+    },
+    "color_system": "CSS variables (--ast-global-color-*)",
+    "primary_brand_color": "#935f25",
+    "layout_system": ["is-layout-flex", "is-layout-grid", "is-layout-flow", "is-layout-constrained"]
+  },
+  "page_categories": {
+    "pages": 56,
+    "products": 75,
+    "posts": 56,
+    "architect_projects": 12,
+    "news": 11
+  },
+  "blocks": {
+    "custom_ttds_blocks": {
+      "wp-block-ttds-media-text-split": {
+        "description": "Split layout combining media (image/video/iframe) with text content",
+        "estimated_occurrences": "High - Found on nearly every page",
+        "complexity": "High",
+        "properties": {
+          "wrapper_class": "ttds-block-content",
+          "child_elements": [".media", ".text", ".content"],
+          "layout_variants": ["media-left (default)", "media-right"],
+          "media_aspect_ratio": "16/9",
+          "responsive_behavior": "Column on mobile, row at 1025px+"
+        },
+        "inner_blocks_support": true,
+        "data_attributes": ["media-right"],
+        "css_dependencies": ["flexbox", "object-fit", "aspect-ratio"],
+        "rebuild_considerations": {
+          "drupal": "Could use Paragraphs with Layout Builder or custom block type",
+          "optimizely": "Visual Builder component with two-column layout",
+          "notes": "Core feature block - needs iframe/video support and RTL text positioning"
+        }
+      },
+      "wp-block-ttds-image-array": {
+        "description": "Flexible grid display for multiple images",
+        "estimated_occurrences": "High - Product and gallery pages",
+        "complexity": "Medium",
+        "properties": {
+          "wrapper_class": "ttds-block-content",
+          "layout": "flex row",
+          "gap": "24px",
+          "flex_wrap": true,
+          "child_elements": ["figure"]
+        },
+        "inner_blocks_support": true,
+        "data_attributes": [],
+        "css_dependencies": ["flexbox", "gap"],
+        "rebuild_considerations": {
+          "drupal": "Media library with Views grid display",
+          "optimizely": "Image collection component",
+          "notes": "Simpler than gallery - just flexible image grouping"
+        }
+      },
+      "wp-block-ttds-photo-gallery": {
+        "description": "Photo gallery with full-screen viewing capability and captions",
+        "estimated_occurrences": "High - Project showcases and product pages",
+        "complexity": "High",
+        "properties": {
+          "wrapper_class": "ttds-block-content",
+          "layout": "flex column",
+          "gap": "20px",
+          "child_elements": ["figure", "figcaption", ".full-screen-button"],
+          "layout_variants": [".half (two-column split)"],
+          "fullscreen_button": "SVG background positioned absolute bottom-right"
+        },
+        "inner_blocks_support": true,
+        "data_attributes": ["half"],
+        "css_dependencies": ["flexbox", "lightbox JS", "SVG icons"],
+        "rebuild_considerations": {
+          "drupal": "Media gallery with lightbox module (Colorbox/GLightbox)",
+          "optimizely": "Gallery component with modal viewer",
+          "notes": "Requires JavaScript lightbox functionality for fullscreen"
+        }
+      },
+      "wp-block-ttds-table": {
+        "description": "Advanced data table with image support and aspect ratio controls",
+        "estimated_occurrences": "Medium-High - Comparison and spec pages",
+        "complexity": "Very High",
+        "properties": {
+          "wrapper_class": "table-wrapper",
+          "child_elements": [".ttds-table-row", ".ttds-table-cell", ".image-row-cell"],
+          "grid_system": "CSS Grid with auto-fit minmax(200px, 1fr)",
+          "scroll_container_width": "1180px",
+          "alignment_classes": {
+            "vertical": ["vertical-align-top", "vertical-align-middle", "vertical-align-bottom"],
+            "horizontal": ["text-align-left", "text-align-center", "text-align-right"]
+          },
+          "aspect_ratio_variants": ["1-1", "3-2", "16-9", "auto"],
+          "header_support": ".has-row-headers"
+        },
+        "inner_blocks_support": true,
+        "data_attributes": ["header-images-aspect-ratio-*"],
+        "css_dependencies": ["CSS Grid", "aspect-ratio", "overflow-x scroll"],
+        "rebuild_considerations": {
+          "drupal": "Custom table paragraph type or Views with grid formatter",
+          "optimizely": "Custom table component with image cell support",
+          "notes": "Most complex custom block - needs careful recreation of grid system and image handling"
+        }
+      },
+      "wp-block-ttds-hero": {
+        "description": "Hero/banner section block",
+        "estimated_occurrences": "Low-Medium - Landing pages",
+        "complexity": "Medium",
+        "properties": {
+          "purpose": "Full-width hero sections for page headers"
+        },
+        "inner_blocks_support": true,
+        "data_attributes": [],
+        "css_dependencies": ["full-width layout", "background images"],
+        "rebuild_considerations": {
+          "drupal": "Hero paragraph type or Layout Builder section",
+          "optimizely": "Hero component",
+          "notes": "May overlap with wp-block-cover functionality"
+        }
+      },
+      "wp-block-ttds-table-row": {
+        "description": "Table row component within ttds-table",
+        "estimated_occurrences": "High - Within all ttds-table instances",
+        "complexity": "Low",
+        "properties": {
+          "class": ".ttds-table-row",
+          "parent_block": "wp-block-ttds-table"
+        },
+        "inner_blocks_support": true,
+        "rebuild_considerations": {
+          "notes": "Child block of ttds-table - row wrapper"
+        }
+      },
+      "wp-block-ttds-table-cell": {
+        "description": "Table cell component within ttds-table-row",
+        "estimated_occurrences": "High - Within all ttds-table instances",
+        "complexity": "Medium",
+        "properties": {
+          "class": ".ttds-table-cell",
+          "parent_block": "wp-block-ttds-table-row",
+          "variants": [".image-row-cell"],
+          "alignment_classes": ["vertical-align-*", "text-align-*"]
+        },
+        "inner_blocks_support": true,
+        "rebuild_considerations": {
+          "notes": "Child block of ttds-table-row - handles cell content including images"
+        }
+      }
+    },
+    "core_wordpress_blocks": {
+      "wp-block-button": {
+        "description": "Call-to-action button",
+        "estimated_occurrences": "Very High - Every page",
+        "complexity": "Low",
+        "properties": {
+          "child_class": ".wp-block-button__link",
+          "element_class": ".wp-element-button",
+          "style_variants": ["filled", "outline"],
+          "alignment": "Inherits from container"
+        },
+        "rebuild_considerations": {
+          "drupal": "Button field or CTA paragraph",
+          "optimizely": "Built-in button component",
+          "notes": "Standard component - straightforward mapping"
+        }
+      },
+      "wp-block-buttons": {
+        "description": "Container for button groups",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "layout": "flexbox",
+          "alignment_options": ["left", "center", "right"]
+        },
+        "rebuild_considerations": {
+          "drupal": "Multi-value button field",
+          "optimizely": "Button group component",
+          "notes": "Wrapper for multiple buttons"
+        }
+      },
+      "wp-block-columns": {
+        "description": "Multi-column layout container",
+        "estimated_occurrences": "Very High",
+        "complexity": "Medium",
+        "properties": {
+          "gap": "2em default",
+          "child_class": ".wp-block-column",
+          "responsive": "Stacks on mobile"
+        },
+        "rebuild_considerations": {
+          "drupal": "Layout Builder columns or Paragraphs grid",
+          "optimizely": "Row/Column components",
+          "notes": "Core layout building block"
+        }
+      },
+      "wp-block-column": {
+        "description": "Individual column within columns block",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "width_control": "Percentage or flex basis",
+          "inner_blocks_support": true
+        },
+        "rebuild_considerations": {
+          "notes": "Child of columns - inherits behavior"
+        }
+      },
+      "wp-block-group": {
+        "description": "Content grouping container with styling options",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "inner_class": ".wp-block-group__inner-container",
+          "padding": "4em top/bottom default",
+          "background_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Container paragraph or Layout Builder section",
+          "optimizely": "Container component",
+          "notes": "Generic wrapper with styling"
+        }
+      },
+      "wp-block-image": {
+        "description": "Image display block",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "alignment_classes": ["alignfull", "alignwide", "aligncenter", "alignleft", "alignright"],
+          "margins": "2rem default",
+          "caption_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Image field with formatter",
+          "optimizely": "Image component",
+          "notes": "Standard - ensure alignment classes map correctly"
+        }
+      },
+      "wp-block-cover": {
+        "description": "Full-width hero section with background image/color",
+        "estimated_occurrences": "High",
+        "complexity": "Medium",
+        "properties": {
+          "inner_class": ".wp-block-cover__inner-container",
+          "overlay_support": true,
+          "parallax_option": true,
+          "content_position": "Center default"
+        },
+        "rebuild_considerations": {
+          "drupal": "Hero paragraph or Banner content type",
+          "optimizely": "Hero/Banner component",
+          "notes": "Important for page headers and CTAs"
+        }
+      },
+      "wp-block-gallery": {
+        "description": "Image gallery grid",
+        "estimated_occurrences": "Medium",
+        "complexity": "Medium",
+        "properties": {
+          "grid_class": ".blocks-gallery-grid",
+          "gap": "24px",
+          "margin_bottom": "1.6em",
+          "column_options": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        "rebuild_considerations": {
+          "drupal": "Media gallery with grid display",
+          "optimizely": "Gallery component",
+          "notes": "Standard gallery - simpler than ttds-photo-gallery"
+        }
+      },
+      "wp-block-media-text": {
+        "description": "Core WordPress media/text split layout",
+        "estimated_occurrences": "Medium",
+        "complexity": "Medium",
+        "properties": {
+          "content_class": ".wp-block-media-text__content",
+          "media_position": ["left", "right"],
+          "vertical_alignment": true
+        },
+        "rebuild_considerations": {
+          "notes": "Similar to ttds-media-text-split but less customized"
+        }
+      },
+      "wp-block-separator": {
+        "description": "Horizontal divider/rule",
+        "estimated_occurrences": "High",
+        "complexity": "Low",
+        "properties": {
+          "style_variants": ["default", "wide", "dots"],
+          "max_width": "100px default"
+        },
+        "rebuild_considerations": {
+          "drupal": "Divider paragraph or text format",
+          "optimizely": "Divider component",
+          "notes": "Simple styling element"
+        }
+      },
+      "wp-block-pullquote": {
+        "description": "Styled quote block",
+        "estimated_occurrences": "Medium",
+        "complexity": "Low",
+        "properties": {
+          "border": "4px solid",
+          "font_size": "1.5em",
+          "citation_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Quote paragraph type",
+          "optimizely": "Quote component",
+          "notes": "Standard testimonial/quote display"
+        }
+      },
+      "wp-block-table": {
+        "description": "Standard data table",
+        "estimated_occurrences": "Medium",
+        "complexity": "Low",
+        "properties": {
+          "responsive_scroll": true,
+          "header_support": true,
+          "style_variants": ["default", "stripes"]
+        },
+        "rebuild_considerations": {
+          "notes": "Simpler than ttds-table - standard HTML table"
+        }
+      },
+      "wp-block-latest-posts": {
+        "description": "Dynamic post listing",
+        "estimated_occurrences": "Medium",
+        "complexity": "Medium",
+        "properties": {
+          "display_options": ["list", "grid"],
+          "excerpt_support": true,
+          "featured_image": true,
+          "category_filter": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Views block with post listing",
+          "optimizely": "Content listing component",
+          "notes": "Dynamic content - needs query configuration"
+        }
+      },
+      "wp-block-navigation": {
+        "description": "Menu navigation block",
+        "estimated_occurrences": "Low - Header/Footer",
+        "complexity": "Medium",
+        "properties": {
+          "submenu_support": true,
+          "mobile_toggle": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Menu block",
+          "optimizely": "Navigation component",
+          "notes": "Typically handled by theme, not content blocks"
+        }
+      },
+      "wp-block-search": {
+        "description": "Search form widget",
+        "estimated_occurrences": "Low",
+        "complexity": "Low",
+        "properties": {
+          "button_text": "Customizable",
+          "placeholder_text": "Customizable"
+        },
+        "rebuild_considerations": {
+          "drupal": "Search API block",
+          "optimizely": "Search component",
+          "notes": "Functional search - needs backend integration"
+        }
+      },
+      "wp-block-loginout": {
+        "description": "User authentication UI",
+        "estimated_occurrences": "Low",
+        "complexity": "Low",
+        "properties": {
+          "login_redirect": true,
+          "logout_redirect": true
+        },
+        "rebuild_considerations": {
+          "drupal": "User login block",
+          "optimizely": "Auth component",
+          "notes": "Requires user system integration"
+        }
+      },
+      "wp-block-embed": {
+        "description": "Embedded media container for videos, iframes, etc.",
+        "estimated_occurrences": "Medium - Product and content pages",
+        "complexity": "Medium",
+        "properties": {
+          "supported_providers": ["YouTube", "Vimeo", "Twitter", "generic iframe"],
+          "responsive": true,
+          "aspect_ratio_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Media embed field or oEmbed",
+          "optimizely": "Embed component",
+          "notes": "Needs oEmbed support for various providers"
+        }
+      },
+      "wp-block-post-template": {
+        "description": "Template block for post loops/queries",
+        "estimated_occurrences": "Medium - Archive and listing pages",
+        "complexity": "Medium",
+        "properties": {
+          "loop_support": true,
+          "pagination": true,
+          "inner_blocks_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Views with custom template",
+          "optimizely": "Content loop component",
+          "notes": "Dynamic content template for post iterations"
+        }
+      },
+      "wp-block-navigation-link": {
+        "description": "Individual navigation menu link item",
+        "estimated_occurrences": "Low - Navigation menus",
+        "complexity": "Low",
+        "properties": {
+          "url": true,
+          "label": true,
+          "submenu_support": true,
+          "parent_block": "wp-block-navigation"
+        },
+        "rebuild_considerations": {
+          "drupal": "Menu link content type",
+          "optimizely": "Menu item component",
+          "notes": "Child of navigation block"
+        }
+      }
+    },
+    "woocommerce_blocks": {
+      "wc-block-grid__products": {
+        "description": "Product grid display",
+        "estimated_occurrences": "Medium - Shop pages",
+        "complexity": "High",
+        "properties": {
+          "child_class": ".wc-block-grid__product",
+          "columns": "Configurable",
+          "pagination": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Commerce product listing with Views",
+          "optimizely": "Product catalog component",
+          "notes": "Requires e-commerce platform integration"
+        }
+      },
+      "wc-block-grid__product": {
+        "description": "Individual product card",
+        "estimated_occurrences": "High within grids",
+        "complexity": "Medium",
+        "properties": {
+          "elements": ["image", "title", "price", "rating", "add-to-cart"],
+          "sale_badge": ".wc-block-grid__product-onsale"
+        },
+        "rebuild_considerations": {
+          "notes": "Product display template - needs commerce mapping"
+        }
+      }
+    },
+    "third_party_integrations": {
+      "gravity_forms": {
+        "description": "Form builder integration",
+        "estimated_occurrences": "Medium - Contact, registration pages",
+        "complexity": "High",
+        "properties": {
+          "initialization": "JavaScript gform object",
+          "ajax_support": true,
+          "conditional_logic": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Webform module",
+          "optimizely": "Optimizely Forms or third-party",
+          "notes": "Complex forms need careful field mapping"
+        }
+      }
+    }
+  },
+  "custom_applications": {
+    "description": "Standalone tools and applications that are NOT WordPress blocks - require separate development",
+    "tools": {
+      "cost_calculator": {
+        "description": "Deck cost estimation tool",
+        "likely_location": "/cost-calculator-media/ or embedded on design pages",
+        "complexity": "High",
+        "type": "Custom JavaScript application",
+        "rebuild_considerations": {
+          "notes": "Standalone calculator app - needs custom development, not a CMS component",
+          "requirements": ["Pricing data integration", "Material calculations", "Labor estimates", "Regional pricing"]
+        }
+      },
+      "deck_designer_3d": {
+        "description": "3D deck visualization and design tool",
+        "likely_location": "/deck-designer-media/ or /design/deck-plans/",
+        "complexity": "Very High",
+        "type": "Custom 3D JavaScript application (likely React/WebGL)",
+        "rebuild_considerations": {
+          "notes": "Complex 3D visualization tool - major custom development effort",
+          "requirements": ["3D rendering engine", "Product catalog integration", "Save/export functionality", "Material/color selection"]
+        }
+      },
+      "dealer_locator": {
+        "description": "Find dealers/contractors by location",
+        "location": "https://locator.timbertech.com/where-to-buy/",
+        "complexity": "High",
+        "type": "Separate application on subdomain",
+        "rebuild_considerations": {
+          "notes": "Currently hosted separately - may need API integration or embed",
+          "requirements": ["Geolocation", "Dealer database", "Map integration", "Search/filter"]
+        }
+      },
+      "product_swatches": {
+        "description": "Interactive color/texture selector for decking products",
+        "estimated_occurrences": "High - Product pages",
+        "complexity": "Medium",
+        "type": "Custom JavaScript component",
+        "properties": {
+          "container_class": ".sps-swatches",
+          "swatch_class": ".swatchColor",
+          "selected_state": ".selected"
+        },
+        "rebuild_considerations": {
+          "drupal": "Commerce product variations with color field + custom JS",
+          "optimizely": "Product variant selector component",
+          "notes": "Interactive swatch picker with image updates - needs custom frontend work"
+        }
+      },
+      "sample_ordering": {
+        "description": "Order physical deck samples",
+        "likely_location": "/order-samples/",
+        "complexity": "Medium-High",
+        "type": "WooCommerce integration + custom logic",
+        "rebuild_considerations": {
+          "notes": "E-commerce flow for free/paid samples",
+          "requirements": ["Cart functionality", "Address collection", "Sample inventory management"]
+        }
+      }
+    }
+  },
+  "page_templates": {
+    "single_product": {
+      "common_blocks": ["ttds-media-text-split", "ttds-photo-gallery", "ttds-table", "product-swatches"],
+      "schema": "Product schema markup detected"
+    },
+    "blog_post": {
+      "common_blocks": ["cover", "columns", "image", "pullquote", "latest-posts"]
+    },
+    "landing_page": {
+      "common_blocks": ["ttds-hero", "ttds-media-text-split", "columns", "buttons"]
+    },
+    "comparison_page": {
+      "common_blocks": ["ttds-table", "ttds-image-array", "separator"]
+    },
+    "project_showcase": {
+      "common_blocks": ["ttds-photo-gallery", "ttds-media-text-split", "pullquote"]
+    }
+  },
+  "pages_analyzed_detail": [
+    "https://www.timbertech.com/",
+    "https://www.timbertech.com/products/decking/",
+    "https://www.timbertech.com/product/azek-landmark-collection/",
+    "https://www.timbertech.com/ideas/modern-deck-designs/",
+    "https://www.timbertech.com/start-your-journey/deck-designs-and-ideas/",
+    "https://www.timbertech.com/products/railing/composite-railing/",
+    "https://www.timbertech.com/for-the-pros/",
+    "https://www.timbertech.com/architects/projects/island-retreat/",
+    "https://www.timbertech.com/timbertech-stories/brepurposed/",
+    "https://www.timbertech.com/news/",
+    "https://www.timbertech.com/resources/faqs/",
+    "https://www.timbertech.com/about/",
+    "https://www.timbertech.com/shop/",
+    "https://www.timbertech.com/design/deck-plans/",
+    "https://www.timbertech.com/about-warranties/warranty-support/",
+    "https://www.timbertech.com/products/compare-decking/compare-advanced-pvc-collections/",
+    "https://www.timbertech.com/design/3d-image-gallery/",
+    "https://www.timbertech.com/product/impressionrail-express/",
+    "https://www.timbertech.com/products/porch/",
+    "https://www.timbertech.com/products/railing/railing-overview/",
+    "https://www.timbertech.com/products/lighting/",
+    "https://www.timbertech.com/products/fasteners/",
+    "https://www.timbertech.com/products/furniture/",
+    "https://www.timbertech.com/products/accessories/",
+    "https://www.timbertech.com/products/pavers/",
+    "https://www.timbertech.com/products/cladding/",
+    "https://www.timbertech.com/start-your-journey/",
+    "https://www.timbertech.com/order-samples/",
+    "https://www.timbertech.com/products/compare-decking/",
+    "https://www.timbertech.com/resources/",
+    "https://www.timbertech.com/warranties/",
+    "https://www.timbertech.com/gallery/",
+    "https://www.timbertech.com/colors/",
+    "https://www.timbertech.com/design/",
+    "https://www.timbertech.com/request-quote/",
+    "https://www.timbertech.com/ideas/",
+    "https://www.timbertech.com/timbertech-stories/"
+  ],
+  "rebuild_recommendations": {
+    "priority_blocks": [
+      {
+        "block": "wp-block-ttds-media-text-split",
+        "priority": 1,
+        "reason": "Core layout block used on nearly every page"
+      },
+      {
+        "block": "wp-block-ttds-table",
+        "priority": 2,
+        "reason": "Complex block critical for product comparisons"
+      },
+      {
+        "block": "wp-block-ttds-photo-gallery",
+        "priority": 3,
+        "reason": "Key for project showcases and product displays"
+      },
+      {
+        "block": "product-swatches",
+        "priority": 4,
+        "reason": "Critical for product color selection UX"
+      }
+    ],
+    "technical_requirements": {
+      "css_features": [
+        "CSS Grid",
+        "Flexbox",
+        "CSS Custom Properties",
+        "aspect-ratio property",
+        "object-fit"
+      ],
+      "javascript_features": [
+        "Lightbox/Modal gallery viewer",
+        "WooCommerce cart functionality",
+        "Gravity Forms",
+        "Responsive menu toggle"
+      ],
+      "responsive_design": "Mobile-first with breakpoints at 544px, 768px, 921px, 1025px, 1200px"
+    },
+    "content_migration_notes": [
+      "210 total pages to migrate across 5 content types",
+      "Heavy use of custom TTDS blocks requires mapping to equivalent components",
+      "Product data includes WooCommerce attributes and variations",
+      "SEO schema markup present on product pages",
+      "Forms use Gravity Forms - need field mapping to new form system"
+    ]
+  },
+  "all_discovered_urls": {
+    "navigation_pages": [
+      "https://www.timbertech.com/",
+      "https://www.timbertech.com/products/decking/",
+      "https://www.timbertech.com/products/railing/railing-overview/",
+      "https://www.timbertech.com/products/railing/pvc-railing/",
+      "https://www.timbertech.com/products/railing/composite-railing/",
+      "https://www.timbertech.com/products/porch/",
+      "https://www.timbertech.com/products/multi-width-decking/",
+      "https://www.timbertech.com/products/lighting/",
+      "https://www.timbertech.com/products/fasteners/",
+      "https://www.timbertech.com/products/furniture/",
+      "https://www.timbertech.com/products/accessories/",
+      "https://www.timbertech.com/products/pavers/",
+      "https://www.timbertech.com/products/cladding/",
+      "https://www.timbertech.com/products/compare-decking/",
+      "https://www.timbertech.com/start-your-journey/",
+      "https://www.timbertech.com/start-your-journey/deck-designs-and-ideas/",
+      "https://www.timbertech.com/start-your-journey/deck-and-railing-101/",
+      "https://www.timbertech.com/design/",
+      "https://www.timbertech.com/design/deck-plans/",
+      "https://www.timbertech.com/design/3d-image-gallery/",
+      "https://www.timbertech.com/gallery/",
+      "https://www.timbertech.com/colors/",
+      "https://www.timbertech.com/ideas/",
+      "https://www.timbertech.com/timbertech-stories/",
+      "https://www.timbertech.com/for-the-pros/",
+      "https://www.timbertech.com/for-the-architects/",
+      "https://www.timbertech.com/order-samples/",
+      "https://www.timbertech.com/request-quote/",
+      "https://www.timbertech.com/about/",
+      "https://www.timbertech.com/about-warranties/warranty-support/",
+      "https://www.timbertech.com/warranties/",
+      "https://www.timbertech.com/resources/",
+      "https://www.timbertech.com/resources/faqs/",
+      "https://www.timbertech.com/resources/technical-resources/",
+      "https://www.timbertech.com/resources/deck-building/",
+      "https://www.timbertech.com/shop/",
+      "https://www.timbertech.com/news/"
+    ],
+    "products_count": 75,
+    "posts_count": 56,
+    "architect_projects_count": 12,
+    "news_count": 11,
+    "external_redirects": {
+      "/where-to-buy/": "https://locator.timbertech.com/where-to-buy/ (separate application)"
+    },
+    "note": "Full URL lists available in sitemap files at /page-sitemap.xml, /product-sitemap.xml, /post-sitemap.xml, /architect_project-sitemap.xml, /news-sitemap.xml"
+  },
+  "block_summary": {
+    "total_unique_blocks": 26,
+    "custom_ttds_blocks": 7,
+    "core_wordpress_blocks": 19,
+    "woocommerce_blocks": 2,
+    "third_party_integrations": 1,
+    "custom_applications": 5,
+    "theme_components": 6
+  },
+  "theme_components": {
+    "description": "Page-level templates and global components requiring rebuild",
+    "components": {
+      "header": {
+        "description": "Global site header",
+        "complexity": "Medium",
+        "elements": ["Logo", "Main navigation with dropdowns", "Search trigger", "Mobile menu toggle", "Utility links"]
+      },
+      "footer": {
+        "description": "Global site footer",
+        "complexity": "Medium",
+        "elements": ["Navigation columns", "Social links", "Legal links", "Newsletter signup", "Copyright"]
+      },
+      "404_page": {
+        "description": "Page not found template",
+        "complexity": "Low",
+        "elements": ["Error message", "Search box", "Navigation suggestions"]
+      },
+      "search_dialog": {
+        "description": "Search modal/overlay",
+        "complexity": "Low-Medium",
+        "elements": ["Search input", "Autocomplete/suggestions", "Close button"]
+      },
+      "search_results_page": {
+        "description": "Search results listing template",
+        "complexity": "Medium",
+        "elements": ["Results list", "Filtering", "Pagination", "No results state"]
+      },
+      "generic_embed": {
+        "description": "Generic embed handler for third-party content",
+        "complexity": "Medium",
+        "supported_types": ["YouTube", "Vimeo", "Instagram", "Twitter", "Generic iframe/oEmbed"],
+        "notes": "Responsive container with aspect ratio handling for various embed providers"
+      }
+    }
+  },
+  "rebuild_summary": {
+    "total_components": 38,
+    "breakdown": {
+      "gutenberg_blocks": 26,
+      "custom_applications": 5,
+      "theme_components": 6,
+      "third_party": 1
+    },
+    "blocks_to_build": {
+      "description": "WordPress Gutenberg blocks that need equivalent components in new CMS",
+      "count": 26,
+      "priority_order": [
+        "wp-block-ttds-media-text-split (core layout - every page)",
+        "wp-block-ttds-table (product comparisons)",
+        "wp-block-ttds-photo-gallery (project showcases)",
+        "wp-block-ttds-image-array (product galleries)",
+        "wp-block-columns/column (layouts)",
+        "wp-block-cover (heroes)",
+        "wp-block-button/buttons (CTAs)",
+        "wp-block-group (containers)",
+        "Standard blocks (image, gallery, separator, pullquote, etc.)"
+      ]
+    },
+    "custom_apps_to_build": {
+      "description": "Standalone applications requiring separate development - NOT CMS blocks",
+      "count": 5,
+      "priority_order": [
+        "Product swatches (Medium - critical for product UX)",
+        "Dealer locator (High - currently on subdomain)",
+        "Cost calculator (High - custom pricing logic)",
+        "Sample ordering (Medium-High - e-commerce flow)",
+        "3D deck designer (Very High - major development effort)"
+      ]
+    },
+    "theme_components_to_build": {
+      "description": "Global templates and page-level components",
+      "count": 6,
+      "items": [
+        "Header (navigation, mobile menu)",
+        "Footer (links, social, legal)",
+        "404 page",
+        "Search dialog/modal",
+        "Search results page",
+        "Generic embed handler"
+      ]
+    },
+    "estimated_effort": {
+      "blocks": "Medium - mostly standard patterns with some custom TTDS complexity",
+      "custom_apps": "High to Very High - significant custom development especially for 3D designer",
+      "theme_components": "Medium - standard patterns but need careful attention to responsive behavior"
+    }
+  }
+}

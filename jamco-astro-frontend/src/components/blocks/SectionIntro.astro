@@ -1,0 +1,43 @@
+---
+interface Props {
+  heading: string
+  description?: string
+  showDivider?: boolean
+}
+
+const { heading, description, showDivider = false } = Astro.props
+---
+
+<section class="section-intro">
+  <div class="container-narrow">
+    <h4>{heading}</h4>
+    {description && <p>{description}</p>}
+    {showDivider && <hr class="divider" />}
+  </div>
+</section>
+
+<style>
+  .section-intro {
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+  }
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+
+  p {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--color-gray);
+  }
+
+  .divider {
+    border: none;
+    border-top: 1px solid var(--color-light-blue);
+    margin-top: 2rem;
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

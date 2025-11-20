@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import PageBuilder from '../components/PageBuilder.astro'
+import { sanityClient, queries, urlFor } from '../lib/sanity'
+
+export async function getStaticPaths() {
+  const pages = await sanityClient.fetch(queries.allPages)
+
+  return pages
+    .filter((page: any) => page.language === 'en')
+    .map((page: any) => ({
+      params: { slug: page.slug },
+    }))
+}
+
+const { slug } = Astro.params
+
+const page = await sanityClient.fetch(queries.pageBySlug, {
+  slug,
+  language: 'en'
+})
+
+if (!page) {
+  return Astro.redirect('/404')
+}
+
+const title = page.seo?.metaTitle || page.title
+const description = page.seo?.metaDescription || ''
+const ogImage = page.seo?.ogImage ? urlFor(page.seo.ogImage).width(1200).url() : ''
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  noIndex={page.seo?.noIndex}
+>
+  <PageBuilder hero={page.hero} content={page.content} />
+</BaseLayout>

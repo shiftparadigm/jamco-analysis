@@ -1,0 +1,43 @@
+---
+import '../styles/design-tokens.css'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+  noIndex?: boolean
+}
+
+const {
+  title,
+  description = '',
+  ogImage = '',
+  noIndex = false,
+} = Astro.props
+
+const siteName = 'Jamco America'
+const fullTitle = title ? `${title} | ${siteName}` : siteName
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+
+    {description && <meta name="description" content={description} />}
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

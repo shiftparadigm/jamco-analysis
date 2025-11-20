@@ -1,0 +1,27 @@
+{
+  "name": "jamco-sanity-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "sanity dev",
+    "start": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy"
+  },
+  "dependencies": {
+    "@sanity/document-internationalization": "^3.0.0",
+    "sanity": "^3.57.0",
+    "styled-components": "^6.1.0",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^4.0.0",
+    "@types/react": "^18.3.0",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.0",
+    "typescript": "^5.5.0"
+  }
+}

@@ -1,0 +1,85 @@
+---
+import Button from '../ui/Button.astro'
+
+interface Props {
+  heading: string
+  subheading?: string
+  ctaButton?: any
+  backgroundColor?: string
+}
+
+const {
+  heading,
+  subheading,
+  ctaButton,
+  backgroundColor = 'blue'
+} = Astro.props
+
+function getCtaHref(): string {
+  if (!ctaButton) return '#'
+  if (ctaButton.linkType === 'external' && ctaButton.externalUrl) return ctaButton.externalUrl
+  if (ctaButton.internalLink?.slug) return `/${ctaButton.internalLink.slug}`
+  return '#'
+}
+---
+
+<section class={`cta-block bg-${backgroundColor}`}>
+  <div class="cta-container">
+    <h2>{heading}</h2>
+    {subheading && <p class="subheading">{subheading}</p>}
+
+    {ctaButton && (
+      <Button
+        href={getCtaHref()}
+        text={ctaButton.text}
+        variant={ctaButton.style || 'primary'}
+        target={ctaButton.linkType === 'external' ? '_blank' : undefined}
+      />
+    )}
+  </div>
+</section>
+
+<style>
+  .cta-block {
+    padding: var(--section-gap) 0;
+    text-align: center;
+  }
+
+  .bg-blue {
+    background-color: var(--color-primary);
+    color: var(--color-light);
+  }
+
+  .bg-dark-blue {
+    background: linear-gradient(135deg, rgb(0, 60, 120) 0%, rgb(11, 89, 169) 100%);
+    color: var(--color-light);
+  }
+
+  .cta-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  h2 {
+    font-size: clamp(32px, 4vw, 52px);
+    margin-bottom: 1rem;
+  }
+
+  .subheading {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 32px;
+    }
+
+    .subheading {
+      font-size: 16px;
+    }
+  }
+</style>

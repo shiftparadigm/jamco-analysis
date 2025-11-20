@@ -1,0 +1,101 @@
+---
+import { urlFor } from '../../lib/sanity'
+
+interface Props {
+  heading?: string
+  description?: string
+  columns?: string
+  features: Array<{
+    image: any
+    heading: string
+    description?: string
+  }>
+}
+
+const { heading, description, columns = '3-col', features } = Astro.props
+---
+
+<section class="feature-grid section">
+  <div class="container">
+    {heading && <h2 class="text-center">{heading}</h2>}
+    {description && <p class="description text-center">{description}</p>}
+
+    <div class={`grid grid-${columns}`}>
+      {features.map((feature) => (
+        <div class="feature-card">
+          {feature.image && (
+            <img
+              src={urlFor(feature.image).width(432).height(432).auto('format').url()}
+              alt={feature.image.alt || feature.heading}
+              loading="lazy"
+            />
+          )}
+          <h6>{feature.heading}</h6>
+          {feature.description && <p>{feature.description}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .feature-grid h2 {
+    margin-bottom: 1rem;
+  }
+
+  .description {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    color: var(--color-gray);
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--card-gap);
+  }
+
+  .grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .grid-4-col {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .feature-card {
+    text-align: center;
+  }
+
+  .feature-card img {
+    width: 100%;
+    border-radius: var(--radius-md);
+    margin-bottom: 1rem;
+  }
+
+  .feature-card h6 {
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+  }
+
+  @media (max-width: 1024px) {
+    .grid-4-col {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .grid-2-col,
+    .grid-3-col,
+    .grid-4-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

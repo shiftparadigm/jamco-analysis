@@ -1,0 +1,214 @@
+---
+import { urlFor } from '../../lib/sanity'
+import Button from '../ui/Button.astro'
+
+interface Props {
+  heading: string
+  subheading?: string
+  backgroundImage?: any
+  overlayOpacity?: number
+  cta?: any
+  secondaryCta?: any
+  floatingImage?: any
+  featureCallout?: any
+  carouselIndicator?: string
+}
+
+const {
+  heading,
+  subheading,
+  backgroundImage,
+  cta,
+  secondaryCta,
+  floatingImage,
+  featureCallout,
+  carouselIndicator
+} = Astro.props
+
+const floatingImageUrl = floatingImage ? urlFor(floatingImage).width(800).auto('format').url() : null
+
+function getCtaHref(ctaObj: any): string {
+  if (!ctaObj) return '#'
+  if (ctaObj.linkType === 'external' && ctaObj.externalUrl) return ctaObj.externalUrl
+  if (ctaObj.internalLink?.slug) return `/${ctaObj.internalLink.slug}`
+  return '#'
+}
+---
+
+<section class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1>{heading}</h1>
+      {subheading && <p class="subheading">{subheading}</p>}
+
+      <div class="hero-ctas">
+        {cta && <Button href={getCtaHref(cta)} text={cta.text} variant={cta.style || 'primary'} target={cta.linkType === 'external' ? '_blank' : undefined} />}
+        {secondaryCta && <Button href={getCtaHref(secondaryCta)} text={secondaryCta.text} variant={secondaryCta.style || 'outline'} target={secondaryCta.linkType === 'external' ? '_blank' : undefined} />}
+      </div>
+    </div>
+
+    {floatingImage && (
+      <div class="hero-image">
+        <img src={floatingImageUrl} alt={floatingImage.alt || ''} />
+
+        {featureCallout && (
+          <div class="feature-callout">
+            <strong>{featureCallout.label}</strong>
+            {featureCallout.description && <p>{featureCallout.description}</p>}
+          </div>
+        )}
+
+        {carouselIndicator && <span class="carousel-indicator">{carouselIndicator}</span>}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .hero-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 877px;
+    align-items: center;
+  }
+
+  .hero-content {
+    padding: 4rem 2rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: rgb(11, 89, 169);
+    margin: 0;
+  }
+
+  .subheading {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+    max-width: 400px;
+    margin: 0;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .hero-image {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    max-width: 730px;
+    object-fit: contain;
+  }
+
+  .feature-callout {
+    position: absolute;
+    bottom: 80px;
+    right: 60px;
+    background: rgba(0, 85, 172, 0.5);
+    backdrop-filter: blur(10px);
+    color: #FFFFFF;
+    padding: 1.5rem;
+    border-radius: 4px;
+    max-width: 256px;
+  }
+
+  .feature-callout strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .feature-callout p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .carousel-indicator {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+  }
+
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    h1 {
+      font-size: 64px;
+    }
+
+    .hero-content {
+      padding: 3rem 2rem;
+    }
+
+    .hero-image {
+      padding: 2rem;
+      min-height: 400px;
+    }
+
+    .feature-callout {
+      bottom: 40px;
+      right: 40px;
+      max-width: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 48px;
+    }
+
+    .hero-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .feature-callout {
+      position: static;
+      margin-top: 2rem;
+      max-width: 100%;
+    }
+
+    .carousel-indicator {
+      position: static;
+      display: block;
+      margin-top: 1rem;
+    }
+  }
+</style>

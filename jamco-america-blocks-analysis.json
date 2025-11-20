@@ -1,0 +1,425 @@
+{
+  "metadata": {
+    "site": "https://jamco-america.com",
+    "analysis_date": "2025-11-19",
+    "total_pages_discovered": 60,
+    "pages_analyzed": 9,
+    "cms_platform": "WordPress",
+    "theme": "Neve (by ThemeIsle)",
+    "theme_builder": "Header Footer Grid (HFG)",
+    "seo_plugin": "Yoast SEO",
+    "responsive_breakpoints": {
+      "mobile": "560px",
+      "tablet": "576px",
+      "desktop": "960px",
+      "max_container": "1170px"
+    },
+    "primary_brand_color": "#2665A8"
+  },
+  "page_categories": {
+    "pages": 8,
+    "posts": 51,
+    "categories": 1
+  },
+  "blocks": {
+    "core_wordpress_blocks": {
+      "wp-block-button": {
+        "description": "Call-to-action button",
+        "estimated_occurrences": "High - Every page",
+        "complexity": "Low",
+        "properties": {
+          "child_class": ".wp-block-button__link",
+          "style": "Blue background (#2665A8), white text, 50px border-radius",
+          "hover": "Color inversion"
+        },
+        "rebuild_considerations": {
+          "drupal": "Button field or CTA paragraph",
+          "optimizely": "Built-in button component",
+          "notes": "Standard button with custom brand styling"
+        }
+      },
+      "wp-block-buttons": {
+        "description": "Button group container",
+        "estimated_occurrences": "High",
+        "complexity": "Low",
+        "properties": {
+          "layout": "flexbox with center alignment"
+        },
+        "rebuild_considerations": {
+          "notes": "Wrapper for multiple buttons"
+        }
+      },
+      "wp-block-columns": {
+        "description": "Multi-column layout container",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "child_class": ".wp-block-column",
+          "layout": "is-layout-flex",
+          "responsive": "Stacks on mobile"
+        },
+        "rebuild_considerations": {
+          "drupal": "Layout Builder columns or Paragraphs",
+          "optimizely": "Row/Column components",
+          "notes": "Primary layout building block"
+        }
+      },
+      "wp-block-column": {
+        "description": "Individual column within columns block",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "properties": {
+          "width_control": "Percentage or flex basis"
+        },
+        "rebuild_considerations": {
+          "notes": "Child of columns block"
+        }
+      },
+      "wp-block-cover": {
+        "description": "Full-width hero/banner section with background image",
+        "estimated_occurrences": "High - Page headers",
+        "complexity": "Medium",
+        "properties": {
+          "inner_class": ".wp-block-cover__inner-container",
+          "overlay_support": true,
+          "image_position": "object-fit: cover"
+        },
+        "rebuild_considerations": {
+          "drupal": "Hero paragraph or Banner content type",
+          "optimizely": "Hero/Banner component",
+          "notes": "Key component for page headers"
+        }
+      },
+      "wp-block-group": {
+        "description": "Content grouping container",
+        "estimated_occurrences": "High",
+        "complexity": "Low",
+        "properties": {
+          "background_support": true,
+          "hover_effects": "Semi-transparent backgrounds on some instances"
+        },
+        "rebuild_considerations": {
+          "drupal": "Container paragraph",
+          "optimizely": "Container component",
+          "notes": "Generic wrapper with styling options"
+        }
+      },
+      "wp-block-image": {
+        "description": "Image display block",
+        "estimated_occurrences": "High",
+        "complexity": "Low",
+        "properties": {
+          "lightbox_support": "FancyBox integration",
+          "lazy_loading": true,
+          "caption_support": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Image field with formatter",
+          "optimizely": "Image component",
+          "notes": "Standard image with lightbox capability"
+        }
+      },
+      "wp-block-post-template": {
+        "description": "Post loop/listing template",
+        "estimated_occurrences": "Medium - News page",
+        "complexity": "Medium",
+        "properties": {
+          "gap": "1.25em",
+          "grid_layout": true
+        },
+        "rebuild_considerations": {
+          "drupal": "Views with custom template",
+          "optimizely": "Content listing component",
+          "notes": "Dynamic post listing"
+        }
+      },
+      "wp-block-pullquote": {
+        "description": "Styled quote block",
+        "estimated_occurrences": "Low-Medium",
+        "complexity": "Low",
+        "properties": {
+          "font_size": "1.5em",
+          "line_height": "1.6"
+        },
+        "rebuild_considerations": {
+          "drupal": "Quote paragraph type",
+          "optimizely": "Quote component",
+          "notes": "Standard testimonial/quote display"
+        }
+      },
+      "wp-block-file": {
+        "description": "File download block",
+        "estimated_occurrences": "Medium - Support page",
+        "complexity": "Low",
+        "properties": {
+          "button_class": ".wp-block-file__button"
+        },
+        "rebuild_considerations": {
+          "drupal": "File field with download formatter",
+          "optimizely": "Download component",
+          "notes": "PDF and document downloads"
+        }
+      },
+      "wp-block-paragraph": {
+        "description": "Text paragraph block",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "rebuild_considerations": {
+          "notes": "Standard text - maps to any CMS text field"
+        }
+      },
+      "wp-block-heading": {
+        "description": "Heading block (H1-H6)",
+        "estimated_occurrences": "Very High",
+        "complexity": "Low",
+        "rebuild_considerations": {
+          "notes": "Standard heading - built into most CMS"
+        }
+      }
+    },
+    "neve_theme_components": {
+      "nv-index-posts": {
+        "description": "Blog/news post listing grid",
+        "estimated_occurrences": "Low - News archive page",
+        "complexity": "Medium",
+        "properties": {
+          "child_elements": [".posts-wrapper", ".article-content-col", ".blog-entry-title"],
+          "pagination": ".page-numbers"
+        },
+        "rebuild_considerations": {
+          "drupal": "Views block with grid display",
+          "optimizely": "Post listing component",
+          "notes": "Archive listing with pagination"
+        }
+      },
+      "nv-post-cover": {
+        "description": "Post header image section",
+        "estimated_occurrences": "Medium - Single posts",
+        "complexity": "Low",
+        "properties": {
+          "image_height": "240px",
+          "object_fit": "cover"
+        },
+        "rebuild_considerations": {
+          "notes": "Featured image display on posts"
+        }
+      },
+      "nv-meta-list": {
+        "description": "Post metadata display (author, date)",
+        "estimated_occurrences": "Medium - Posts",
+        "complexity": "Low",
+        "rebuild_considerations": {
+          "notes": "Standard post metadata - built into most CMS"
+        }
+      },
+      "nv-title-meta-wrap": {
+        "description": "Title and metadata container",
+        "estimated_occurrences": "Medium",
+        "complexity": "Low",
+        "rebuild_considerations": {
+          "notes": "Wrapper for post header info"
+        }
+      }
+    },
+    "third_party_plugins": {
+      "sp-testimonial-free": {
+        "description": "Testimonial carousel/slider",
+        "estimated_occurrences": "Low - Careers page",
+        "complexity": "Medium",
+        "properties": {
+          "wrapper_class": ".sp-testimonial-free-wrapper-218",
+          "slider_engine": "Swiper.js",
+          "pagination": ".swiper-pagination-bullet"
+        },
+        "rebuild_considerations": {
+          "drupal": "Testimonial content type with Views slideshow",
+          "optimizely": "Testimonial carousel component",
+          "notes": "Swiper-based carousel for employee testimonials"
+        }
+      },
+      "fancybox": {
+        "description": "Lightbox for images",
+        "estimated_occurrences": "Medium - Pages with galleries",
+        "complexity": "Low",
+        "rebuild_considerations": {
+          "drupal": "Colorbox or GLightbox module",
+          "optimizely": "Lightbox library integration",
+          "notes": "Standard lightbox functionality"
+        }
+      }
+    }
+  },
+  "custom_applications": {
+    "description": "External integrations and standalone tools - NOT CMS blocks",
+    "tools": {
+      "adp_careers_portal": {
+        "description": "Job listings and application system",
+        "location": "External link from /careers/",
+        "url": "workforcenow.adp.com",
+        "complexity": "N/A - External SaaS",
+        "rebuild_considerations": {
+          "notes": "External ADP Workforce Now integration - just needs link/embed",
+          "requirements": ["Link to external portal", "Possibly iframe embed option"]
+        }
+      },
+      "ethics_hotline": {
+        "description": "Ethics reporting hotline",
+        "location": "/contact/",
+        "provider": "Lighthouse Services",
+        "complexity": "N/A - External",
+        "rebuild_considerations": {
+          "notes": "External link to Lighthouse Services portal"
+        }
+      }
+    }
+  },
+  "theme_components": {
+    "description": "Global templates and page-level components",
+    "components": {
+      "header": {
+        "description": "Global site header using HFG builder",
+        "complexity": "Medium",
+        "elements": ["Logo", "Primary menu", "Mobile nav toggle", "Search"],
+        "builder_items": ["builder-item--logo", "builder-item--primary-menu", "builder-item--nav-icon"]
+      },
+      "footer": {
+        "description": "Global site footer using HFG builder",
+        "complexity": "Medium",
+        "elements": ["Footer menu", "Widget areas", "Copyright"],
+        "builder_items": ["builder-item--footer-menu", "builder-item--footer-one-widgets"]
+      },
+      "404_page": {
+        "description": "Page not found template",
+        "complexity": "Low",
+        "elements": ["Error message", "Navigation suggestions"]
+      },
+      "search_results": {
+        "description": "Search results page",
+        "complexity": "Low",
+        "elements": ["Results list", "No results state"]
+      },
+      "single_post": {
+        "description": "Single blog post template",
+        "complexity": "Low",
+        "elements": ["Featured image", "Title", "Meta", "Content", "Related posts"]
+      },
+      "archive": {
+        "description": "Blog/news archive template",
+        "complexity": "Medium",
+        "elements": ["Post grid", "Pagination", "Sidebar (optional)"]
+      },
+      "generic_embed": {
+        "description": "Generic embed handler for third-party content",
+        "complexity": "Low",
+        "supported_types": ["YouTube", "Vimeo", "Generic iframe/oEmbed"]
+      }
+    }
+  },
+  "custom_page_classes": {
+    "description": "Page-specific CSS classes for custom layouts",
+    "classes": {
+      "home-products": "Homepage product grid layout",
+      "home-safety-box": "Safety feature boxes on homepage",
+      "careers-box": "Careers page content boxes",
+      "careers-cover": "Careers page hero section",
+      "cap-content-wrap": "Capabilities page layout wrapper",
+      "support-info-wrap": "Support page info grid",
+      "support-resources-wrap": "Support resources/downloads section",
+      "bt-with-icon": "Button with icon styling"
+    },
+    "rebuild_considerations": {
+      "notes": "These are CSS styling classes, not blocks - can be handled through component variants or CSS classes in new system"
+    }
+  },
+  "pages_analyzed_detail": [
+    "https://jamco-america.com/",
+    "https://jamco-america.com/products/",
+    "https://jamco-america.com/capabilities/",
+    "https://jamco-america.com/about/",
+    "https://jamco-america.com/contact/",
+    "https://jamco-america.com/support/",
+    "https://jamco-america.com/news/",
+    "https://jamco-america.com/careers/",
+    "https://jamco-america.com/testing-services/"
+  ],
+  "all_discovered_urls": {
+    "pages": [
+      "https://jamco-america.com/",
+      "https://jamco-america.com/careers/",
+      "https://jamco-america.com/about/",
+      "https://jamco-america.com/contact/",
+      "https://jamco-america.com/support/",
+      "https://jamco-america.com/products/",
+      "https://jamco-america.com/testing-services/",
+      "https://jamco-america.com/capabilities/"
+    ],
+    "posts_count": 51,
+    "categories_count": 1,
+    "note": "Full URL lists available in sitemap files"
+  },
+  "integrations": {
+    "analytics": "Google Analytics (G-FYSCS0VL5H)",
+    "seo": "Yoast SEO",
+    "lightbox": "FancyBox",
+    "slider": "Swiper.js (testimonials)"
+  },
+  "block_summary": {
+    "total_unique_blocks": 16,
+    "core_wordpress_blocks": 12,
+    "neve_theme_components": 4,
+    "third_party_plugins": 2,
+    "custom_applications": 2,
+    "theme_components": 7
+  },
+  "rebuild_summary": {
+    "total_components": 27,
+    "breakdown": {
+      "gutenberg_blocks": 16,
+      "custom_applications": 2,
+      "theme_components": 7,
+      "third_party_integrations": 2
+    },
+    "blocks_to_build": {
+      "description": "WordPress blocks that need equivalent components in new CMS",
+      "count": 16,
+      "priority_order": [
+        "wp-block-cover (page headers - high usage)",
+        "wp-block-columns/column (layouts)",
+        "wp-block-button/buttons (CTAs)",
+        "wp-block-group (containers)",
+        "wp-block-image (with lightbox)",
+        "wp-block-file (downloads)",
+        "nv-index-posts (news listing)",
+        "sp-testimonial-free (testimonial carousel)",
+        "Standard blocks (paragraph, heading, pullquote)"
+      ]
+    },
+    "custom_apps_to_build": {
+      "description": "External integrations - minimal custom development needed",
+      "count": 2,
+      "items": [
+        "ADP Careers Portal (external link/embed)",
+        "Ethics Hotline (external link)"
+      ]
+    },
+    "theme_components_to_build": {
+      "description": "Global templates and page-level components",
+      "count": 7,
+      "items": [
+        "Header (HFG builder layout)",
+        "Footer (HFG builder layout)",
+        "404 page",
+        "Search results",
+        "Single post template",
+        "Archive/listing template",
+        "Generic embed handler"
+      ]
+    },
+    "estimated_effort": {
+      "overall": "Low-Medium - Standard WordPress patterns with Neve theme",
+      "blocks": "Low - Standard core blocks, no complex custom blocks",
+      "custom_apps": "Minimal - External integrations only",
+      "theme_components": "Medium - Standard templates with Neve styling"
+    }
+  }
+}

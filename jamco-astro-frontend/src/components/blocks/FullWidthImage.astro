@@ -1,0 +1,49 @@
+---
+import { urlFor } from '../../lib/sanity'
+
+interface Props {
+  image: any
+  caption?: string
+  height?: string
+}
+
+const { image, caption, height = 'auto' } = Astro.props
+
+const imageUrl = urlFor(image).width(1440).auto('format').url()
+
+const heights = {
+  auto: 'auto',
+  tall: '800px',
+  medium: '600px',
+  short: '400px'
+}
+---
+
+<section class="full-width-image">
+  <img
+    src={imageUrl}
+    alt={image.alt || ''}
+    loading="lazy"
+    style={`height: ${heights[height as keyof typeof heights]}`}
+  />
+  {caption && <p class="caption">{caption}</p>}
+</section>
+
+<style>
+  .full-width-image {
+    width: 100%;
+  }
+
+  img {
+    width: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .caption {
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+    padding: 1rem;
+  }
+</style>

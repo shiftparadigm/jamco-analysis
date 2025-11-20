@@ -1,0 +1,11 @@
+{
+  "name": "jamco-content-setup",
+  "type": "module",
+  "scripts": {
+    "populate": "node populate-content.js",
+    "upload-images": "node upload-images.js"
+  },
+  "dependencies": {
+    "@sanity/client": "^6.0.0"
+  }
+}

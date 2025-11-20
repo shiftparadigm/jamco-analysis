@@ -1,0 +1,44 @@
+---
+import Hero from './blocks/Hero.astro'
+import HeroCarousel from './blocks/HeroCarousel.astro'
+import SectionIntro from './blocks/SectionIntro.astro'
+import FeatureGrid from './blocks/FeatureGrid.astro'
+import SplitFeature from './blocks/SplitFeature.astro'
+import ProductCarousel from './blocks/ProductCarousel.astro'
+import PricingCards from './blocks/PricingCards.astro'
+import FullWidthImage from './blocks/FullWidthImage.astro'
+import Testimonial from './blocks/Testimonial.astro'
+import CTABlock from './blocks/CTABlock.astro'
+
+interface Props {
+  hero?: any
+  content?: any[]
+}
+
+const { hero, content } = Astro.props
+---
+
+{hero && hero._type === 'heroCarousel' ? <HeroCarousel {...hero} /> : hero && <Hero {...hero} />}
+
+{content && content.map((block) => {
+  switch (block._type) {
+    case 'sectionIntroBlock':
+      return <SectionIntro {...block} />
+    case 'featureGridBlock':
+      return <FeatureGrid {...block} />
+    case 'splitFeatureBlock':
+      return <SplitFeature {...block} />
+    case 'productCarouselBlock':
+      return <ProductCarousel {...block} />
+    case 'pricingCardBlock':
+      return <PricingCards {...block} />
+    case 'fullWidthImageBlock':
+      return <FullWidthImage {...block} />
+    case 'testimonialBlock':
+      return <Testimonial {...block} />
+    case 'ctaBlock':
+      return <CTABlock {...block} />
+    default:
+      return null
+  }
+})}

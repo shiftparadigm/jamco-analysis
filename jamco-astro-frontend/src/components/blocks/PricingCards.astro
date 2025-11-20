@@ -1,0 +1,148 @@
+---
+import { urlFor } from '../../lib/sanity'
+
+interface Props {
+  layout?: string
+  cards: Array<{
+    tierName: string
+    heading?: string
+    price: number
+    pricePrefix?: string
+    priceSuffix?: string
+    features?: string[]
+    backgroundImage?: any
+    highlightCard?: boolean
+  }>
+}
+
+const { layout = '2-col', cards } = Astro.props
+---
+
+<section class="pricing-cards section">
+  <div class="container">
+    <div class={`pricing-grid grid-${layout}`}>
+      {cards.map((card) => (
+        <div class={`pricing-card ${card.highlightCard ? 'highlighted' : ''}`}>
+          {card.backgroundImage && (
+            <div class="card-bg" style={`background-image: url(${urlFor(card.backgroundImage).width(600).auto('format').url()})`}></div>
+          )}
+
+          <div class="card-content">
+            <span class="tier-label">{card.tierName}</span>
+            {card.heading && <h5 class="card-heading">{card.heading}</h5>}
+
+            <div class="price">
+              {card.pricePrefix || '$'}{card.price}
+              {card.priceSuffix && <span class="suffix">{card.priceSuffix}</span>}
+            </div>
+
+            {card.features && card.features.length > 0 && (
+              <ul class="features">
+                {card.features.map(feature => (
+                  <li>{feature}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-grid {
+    display: grid;
+    gap: var(--card-gap);
+  }
+
+  .grid-2-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-3-col {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .pricing-card {
+    position: relative;
+    background: var(--color-light-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    padding: 2rem;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .pricing-card.highlighted {
+    background: var(--color-primary);
+    color: var(--color-light);
+    transform: scale(1.05);
+  }
+
+  .card-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+    z-index: 0;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .tier-label {
+    display: block;
+    font-size: var(--text-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+  }
+
+  .card-heading {
+    margin-bottom: 1rem;
+  }
+
+  .price {
+    font-size: var(--text-price);
+    font-weight: var(--weight-semibold);
+    margin-bottom: 1.5rem;
+  }
+
+  .suffix {
+    font-size: var(--text-sm);
+    opacity: 0.7;
+  }
+
+  .features {
+    list-style: none;
+  }
+
+  .features li {
+    padding: 0.5rem 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .highlighted .features li {
+    border-top-color: rgba(255, 255, 255, 0.2);
+  }
+
+  @media (max-width: 768px) {
+    .grid-2-col,
+    .grid-3-col {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-card.highlighted {
+      transform: scale(1);
+    }
+  }
+</style>

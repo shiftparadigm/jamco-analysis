@@ -1,0 +1,149 @@
+---
+interface Props {
+  quote: string
+  authorName: string
+  authorTitle: string
+  authorImage?: any
+  quoteSize?: string
+  layout?: string
+  showDivider?: boolean
+}
+
+const {
+  quote,
+  authorName,
+  authorTitle,
+  authorImage,
+  quoteSize = 'large',
+  layout = 'centered',
+  showDivider = false
+} = Astro.props
+---
+
+<section class={`testimonial testimonial-${quoteSize} testimonial-${layout}`}>
+  <div class="testimonial-container">
+    {showDivider && <hr class="divider" />}
+
+    <blockquote>
+      <p class="quote">"{quote}"</p>
+    </blockquote>
+
+    <div class="author">
+      {authorImage && (
+        <img src={authorImage} alt={authorName} class="author-image" />
+      )}
+      <div class="author-info">
+        <p class="author-name">{authorName}</p>
+        <p class="author-title">{authorTitle}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonial {
+    background: var(--color-primary);
+    color: var(--color-light);
+    padding: var(--section-gap) 0;
+  }
+
+  .testimonial-container {
+    max-width: var(--container-narrow);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .divider {
+    width: 100px;
+    height: 2px;
+    background: var(--color-light);
+    opacity: 0.3;
+    border: none;
+    margin: 0 auto 3rem;
+  }
+
+  .testimonial-centered {
+    text-align: center;
+  }
+
+  .testimonial-left-aligned .testimonial-container {
+    max-width: var(--container-content);
+  }
+
+  blockquote {
+    margin: 0 0 2rem;
+  }
+
+  .quote {
+    font-size: 32px;
+    line-height: 1.4;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .testimonial-large .quote {
+    font-size: 40px;
+    line-height: 1.3;
+  }
+
+  .testimonial-medium .quote {
+    font-size: 32px;
+  }
+
+  .testimonial-small .quote {
+    font-size: 24px;
+  }
+
+  .author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .testimonial-left-aligned .author {
+    justify-content: flex-start;
+  }
+
+  .author-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .author-info {
+    text-align: left;
+  }
+
+  .author-name {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+  }
+
+  .author-title {
+    font-size: 14px;
+    opacity: 0.85;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .quote {
+      font-size: 24px;
+    }
+
+    .testimonial-large .quote {
+      font-size: 28px;
+    }
+
+    .author {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .author-info {
+      text-align: center;
+    }
+  }
+</style>

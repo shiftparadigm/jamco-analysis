@@ -1,0 +1,317 @@
+---
+import { urlFor } from '../../lib/sanity'
+import Button from '../ui/Button.astro'
+
+interface Props {
+  heading: string
+  subheading?: string
+  cta?: any
+  secondaryCta?: any
+  slides: Array<{
+    floatingImage?: any
+    featureCallout?: any
+  }>
+}
+
+const {
+  heading,
+  subheading,
+  cta,
+  secondaryCta,
+  slides = []
+} = Astro.props
+
+function getCtaHref(ctaObj: any): string {
+  if (!ctaObj) return '#'
+  if (ctaObj.linkType === 'external' && ctaObj.externalUrl) return ctaObj.externalUrl
+  if (ctaObj.internalLink?.slug) return `/${ctaObj.internalLink.slug}`
+  return '#'
+}
+---
+
+<section class="hero-carousel">
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1>{heading}</h1>
+      {subheading && <p class="subheading">{subheading}</p>}
+
+      <div class="hero-ctas">
+        {cta && <Button href={getCtaHref(cta)} text={cta.text} variant={cta.style || 'primary'} target={cta.linkType === 'external' ? '_blank' : undefined} />}
+        {secondaryCta && <Button href={getCtaHref(secondaryCta)} text={secondaryCta.text} variant={secondaryCta.style || 'outline'} target={secondaryCta.linkType === 'external' ? '_blank' : undefined} />}
+      </div>
+    </div>
+
+    <div class="hero-carousel-wrapper">
+      <div class="carousel-slides">
+        {slides.map((slide, index) => {
+          const imageUrl = slide.floatingImage ? urlFor(slide.floatingImage).width(800).auto('format').url() : null
+          return (
+            <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
+              {imageUrl && (
+                <div class="hero-image">
+                  <img src={imageUrl} alt={slide.floatingImage?.alt || ''} />
+
+                  {slide.featureCallout && (
+                    <div class="feature-callout">
+                      <strong>{slide.featureCallout.label}</strong>
+                      {slide.featureCallout.description && <p>{slide.featureCallout.description}</p>}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+
+      {slides.length > 1 && (
+        <div class="carousel-controls">
+          <span class="carousel-indicator">
+            <span class="current-slide">01</span> / {String(slides.length).padStart(2, '0')}
+          </span>
+          <button class="carousel-nav prev" aria-label="Previous slide">‹</button>
+          <button class="carousel-nav next" aria-label="Next slide">›</button>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<script>
+  let currentSlide = 0
+  const slides = document.querySelectorAll('.carousel-slide')
+  const indicator = document.querySelector('.current-slide')
+  const prevBtn = document.querySelector('.carousel-nav.prev')
+  const nextBtn = document.querySelector('.carousel-nav.next')
+
+  function showSlide(index: number) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index)
+    })
+    if (indicator) {
+      indicator.textContent = String(index + 1).padStart(2, '0')
+    }
+    currentSlide = index
+  }
+
+  function nextSlide() {
+    const next = (currentSlide + 1) % slides.length
+    showSlide(next)
+  }
+
+  function prevSlide() {
+    const prev = (currentSlide - 1 + slides.length) % slides.length
+    showSlide(prev)
+  }
+
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide)
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide)
+
+  // Auto-advance every 5 seconds
+  if (slides.length > 1) {
+    setInterval(nextSlide, 5000)
+  }
+</script>
+
+<style>
+  .hero-carousel {
+    position: relative;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E5E5E5;
+  }
+
+  .hero-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 877px;
+    align-items: center;
+  }
+
+  .hero-content {
+    padding: 4rem 2rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: rgb(11, 89, 169);
+    margin: 0;
+  }
+
+  .subheading {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333333;
+    max-width: 400px;
+    margin: 0;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+
+  .hero-carousel-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-slides {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .carousel-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none;
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hero-image {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: auto;
+    max-width: 730px;
+    object-fit: contain;
+  }
+
+  .feature-callout {
+    position: absolute;
+    bottom: 80px;
+    right: 60px;
+    background: rgba(0, 85, 172, 0.5);
+    backdrop-filter: blur(10px);
+    color: #FFFFFF;
+    padding: 1.5rem;
+    border-radius: 4px;
+    max-width: 256px;
+  }
+
+  .feature-callout strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+
+  .feature-callout p {
+    font-size: 14px;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .carousel-controls {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .carousel-indicator {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+  }
+
+  .carousel-nav {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #666666;
+    background: rgba(255, 255, 255, 0.9);
+    color: #666666;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-nav:hover {
+    background: rgb(11, 89, 169);
+    color: white;
+    border-color: rgb(11, 89, 169);
+  }
+
+  @media (max-width: 1024px) {
+    .hero-container {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+
+    h1 {
+      font-size: 64px;
+    }
+
+    .hero-content {
+      padding: 3rem 2rem;
+    }
+
+    .carousel-slides {
+      min-height: 400px;
+    }
+
+    .feature-callout {
+      bottom: 40px;
+      right: 40px;
+      max-width: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 48px;
+    }
+
+    .hero-content {
+      padding: 2rem 1.5rem;
+    }
+
+    .feature-callout {
+      position: static;
+      margin-top: 2rem;
+      max-width: 100%;
+    }
+
+    .carousel-controls {
+      position: static;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+  }
+</style>
