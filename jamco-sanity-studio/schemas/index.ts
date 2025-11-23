@@ -28,6 +28,7 @@ import productCarouselBlock from './objects/productCarouselBlock'
 import pricingCardBlock from './objects/pricingCardBlock'
 import fullWidthImageBlock from './objects/fullWidthImageBlock'
 import featureCallout from './objects/featureCallout'
+import seatingDiagramBlock from './objects/seatingDiagramBlock'
 
 export const schemaTypes = [
   // Documents
@@ -60,4 +61,5 @@ export const schemaTypes = [
   pricingCardBlock,
   fullWidthImageBlock,
   featureCallout,
+  seatingDiagramBlock,
 ]

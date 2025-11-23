@@ -1,4 +1,5 @@
 ---
+import { urlFor } from '../../lib/sanity'
 import Button from '../ui/Button.astro'
 
 interface Props {
@@ -6,14 +7,18 @@ interface Props {
   subheading?: string
   ctaButton?: any
   backgroundColor?: string
+  backgroundImage?: any
 }
 
 const {
   heading,
   subheading,
   ctaButton,
-  backgroundColor = 'blue'
+  backgroundColor = 'blue',
+  backgroundImage
 } = Astro.props
+
+const bgImageUrl = backgroundImage ? urlFor(backgroundImage).width(1440).auto('format').url() : null
 
 function getCtaHref(): string {
   if (!ctaButton) return '#'
@@ -24,6 +29,9 @@ function getCtaHref(): string {
 ---
 
 <section class={`cta-block bg-${backgroundColor}`}>
+  {bgImageUrl && <div class="bg-image" style={`background-image: url(${bgImageUrl})`}></div>}
+  <div class="cta-overlay"></div>
+
   <div class="cta-container">
     <h2>{heading}</h2>
     {subheading && <p class="subheading">{subheading}</p>}
@@ -32,7 +40,7 @@ function getCtaHref(): string {
       <Button
         href={getCtaHref()}
         text={ctaButton.text}
-        variant={ctaButton.style || 'primary'}
+        variant="outline"
         target={ctaButton.linkType === 'external' ? '_blank' : undefined}
       />
     )}
@@ -41,8 +49,24 @@ function getCtaHref(): string {
 
 <style>
   .cta-block {
+    position: relative;
     padding: var(--section-gap) 0;
     text-align: center;
+    overflow: hidden;
+  }
+
+  .bg-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+  }
+
+  .cta-overlay {
+    position: absolute;
+    inset: 0;
+    background: inherit;
   }
 
   .bg-blue {
@@ -50,12 +74,22 @@ function getCtaHref(): string {
     color: var(--color-light);
   }
 
+  .bg-blue .cta-overlay {
+    background: linear-gradient(180deg, rgba(0, 85, 172, 0.9) 0%, rgba(0, 85, 172, 0.95) 100%);
+  }
+
   .bg-dark-blue {
-    background: linear-gradient(135deg, rgb(0, 60, 120) 0%, rgb(11, 89, 169) 100%);
+    background-color: var(--color-dark-bg);
     color: var(--color-light);
   }
 
+  .bg-dark-blue .cta-overlay {
+    background: linear-gradient(180deg, rgba(3, 35, 67, 0.9) 0%, rgba(3, 35, 67, 0.95) 100%);
+  }
+
   .cta-container {
+    position: relative;
+    z-index: 1;
     max-width: 800px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
@@ -64,6 +98,7 @@ function getCtaHref(): string {
   h2 {
     font-size: clamp(32px, 4vw, 52px);
     margin-bottom: 1rem;
+    font-weight: var(--weight-semibold);
   }
 
   .subheading {

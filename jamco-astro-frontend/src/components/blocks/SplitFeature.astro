@@ -71,7 +71,7 @@ function getCtaHref(): string {
   .split-feature {
     background-size: cover;
     background-position: center;
-    background-color: var(--color-light-bg);
+    background-color: #FFFFFF;
   }
 
   .bg-white {
@@ -79,7 +79,7 @@ function getCtaHref(): string {
   }
 
   .bg-light-blue {
-    background-color: #E8F2F7;
+    background-color: var(--color-light-blue-bg);
   }
 
   .bg-blue {
@@ -88,7 +88,12 @@ function getCtaHref(): string {
   }
 
   .bg-blue h2,
-  .bg-blue .description {
+  .bg-blue .description,
+  .bg-blue .bullet-points li {
+    color: var(--color-light);
+  }
+
+  .bg-blue .bullet-points li::before {
     color: var(--color-light);
   }
 
@@ -113,34 +118,55 @@ function getCtaHref(): string {
   }
 
   .content-side {
-    padding: var(--spacing-2xl);
+    position: relative;
+    padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-2xl) calc(var(--spacing-2xl) + 24px);
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
+  .content-side::before {
+    content: '';
+    position: absolute;
+    left: var(--spacing-lg);
+    top: var(--spacing-2xl);
+    bottom: var(--spacing-2xl);
+    width: 3px;
+    background: var(--color-primary);
+  }
+
+  .bg-blue .content-side::before {
+    background: var(--color-light);
+    opacity: 0.3;
+  }
+
   .content-side h2 {
     margin-bottom: 1.5rem;
+    color: var(--color-primary);
   }
 
   .description {
     margin-bottom: 1.5rem;
     line-height: 1.7;
+    color: var(--color-primary);
   }
 
   .bullet-points {
     list-style: none;
     margin-bottom: 2rem;
+    padding: 0;
   }
 
   .bullet-points li {
     position: relative;
-    padding-left: 1.5rem;
+    padding-left: 1rem;
     margin-bottom: 0.75rem;
+    color: var(--color-primary);
+    font-size: var(--text-body);
   }
 
   .bullet-points li::before {
-    content: '|';
+    content: '•';
     position: absolute;
     left: 0;
     color: var(--color-primary);
@@ -170,6 +196,13 @@ function getCtaHref(): string {
 
     .content-side {
       padding: var(--spacing-xl);
+      padding-left: calc(var(--spacing-xl) + 20px);
+    }
+
+    .content-side::before {
+      left: var(--spacing-md);
+      top: var(--spacing-xl);
+      bottom: var(--spacing-xl);
     }
 
     .image-side {

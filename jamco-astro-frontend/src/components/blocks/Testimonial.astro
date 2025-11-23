@@ -1,9 +1,12 @@
 ---
+import { urlFor } from '../../lib/sanity'
+
 interface Props {
   quote: string
   authorName: string
   authorTitle: string
   authorImage?: any
+  backgroundImage?: any
   quoteSize?: string
   layout?: string
   showDivider?: boolean
@@ -14,23 +17,31 @@ const {
   authorName,
   authorTitle,
   authorImage,
+  backgroundImage,
   quoteSize = 'large',
-  layout = 'centered',
-  showDivider = false
+  layout = 'left-aligned',
+  showDivider = true
 } = Astro.props
+
+const bgImageUrl = backgroundImage ? urlFor(backgroundImage).width(1440).auto('format').url() : null
+const avatarUrl = authorImage ? (typeof authorImage === 'string' ? authorImage : urlFor(authorImage).width(120).height(120).auto('format').url()) : null
 ---
 
 <section class={`testimonial testimonial-${quoteSize} testimonial-${layout}`}>
-  <div class="testimonial-container">
-    {showDivider && <hr class="divider" />}
+  {bgImageUrl && <div class="bg-image" style={`background-image: url(${bgImageUrl})`}></div>}
+  <div class="testimonial-overlay"></div>
 
+  <div class="testimonial-container">
     <blockquote>
-      <p class="quote">"{quote}"</p>
+      <div class="quote-box">
+        {showDivider && <hr class="divider" />}
+        <p class="quote">"{quote}"</p>
+      </div>
     </blockquote>
 
     <div class="author">
-      {authorImage && (
-        <img src={authorImage} alt={authorName} class="author-image" />
+      {avatarUrl && (
+        <img src={avatarUrl} alt={authorName} class="author-image" />
       )}
       <div class="author-info">
         <p class="author-name">{authorName}</p>
@@ -42,24 +53,33 @@ const {
 
 <style>
   .testimonial {
-    background: var(--color-primary);
+    position: relative;
+    background: var(--color-dark-bg);
     color: var(--color-light);
     padding: var(--section-gap) 0;
+    overflow: hidden;
+  }
+
+  .bg-image {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3;
+  }
+
+  .testimonial-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--color-dark-bg) 0%, rgba(3, 35, 67, 0.8) 100%);
   }
 
   .testimonial-container {
+    position: relative;
+    z-index: 1;
     max-width: var(--container-narrow);
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
-  }
-
-  .divider {
-    width: 100px;
-    height: 2px;
-    background: var(--color-light);
-    opacity: 0.3;
-    border: none;
-    margin: 0 auto 3rem;
+    padding: 0 var(--spacing-xl);
   }
 
   .testimonial-centered {
@@ -71,45 +91,61 @@ const {
   }
 
   blockquote {
-    margin: 0 0 2rem;
+    margin: 0 0 2.5rem;
+  }
+
+  .quote-box {
+    border: 1px dashed rgba(255, 255, 255, 0.3);
+    padding: var(--spacing-xl);
+    border-radius: 4px;
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: var(--color-light);
+    opacity: 0.4;
+    border: none;
+    margin: 0 0 var(--spacing-lg);
+  }
+
+  .testimonial-centered .divider {
+    margin: 0 auto var(--spacing-lg);
   }
 
   .quote {
-    font-size: 32px;
-    line-height: 1.4;
-    font-weight: 400;
+    font-family: var(--font-heading);
+    font-size: 48px;
+    line-height: 1.25;
+    font-weight: var(--weight-light);
     margin: 0;
-  }
-
-  .testimonial-large .quote {
-    font-size: 40px;
-    line-height: 1.3;
+    letter-spacing: -0.02em;
   }
 
   .testimonial-medium .quote {
-    font-size: 32px;
+    font-size: 36px;
   }
 
   .testimonial-small .quote {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   .author {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 1rem;
   }
 
-  .testimonial-left-aligned .author {
-    justify-content: flex-start;
+  .testimonial-centered .author {
+    justify-content: center;
   }
 
   .author-image {
-    width: 60px;
-    height: 60px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
   }
 
   .author-info {
@@ -118,23 +154,27 @@ const {
 
   .author-name {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     margin: 0 0 0.25rem;
   }
 
   .author-title {
     font-size: 14px;
-    opacity: 0.85;
+    opacity: 0.75;
     margin: 0;
   }
 
   @media (max-width: 768px) {
     .quote {
-      font-size: 24px;
+      font-size: 32px;
     }
 
     .testimonial-large .quote {
       font-size: 28px;
+    }
+
+    .quote-box {
+      padding: var(--spacing-lg);
     }
 
     .author {

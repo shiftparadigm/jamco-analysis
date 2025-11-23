@@ -39,14 +39,19 @@ const { heading, description, columns = '3-col', features } = Astro.props
 </section>
 
 <style>
+  .feature-grid {
+    background: var(--color-light);
+  }
+
   .feature-grid h2 {
     margin-bottom: 1rem;
+    color: var(--color-primary);
   }
 
   .description {
     max-width: 800px;
     margin: 0 auto 3rem;
-    color: var(--color-gray);
+    color: var(--color-primary);
   }
 
   .grid {
@@ -72,17 +77,22 @@ const { heading, description, columns = '3-col', features } = Astro.props
 
   .feature-card img {
     width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
     border-radius: var(--radius-md);
     margin-bottom: 1rem;
   }
 
   .feature-card h6 {
     margin-bottom: 0.5rem;
+    color: var(--color-primary);
+    font-weight: var(--weight-semibold);
   }
 
   .feature-card p {
     font-size: var(--text-sm);
-    color: var(--color-gray);
+    color: var(--color-primary);
+    opacity: 0.8;
   }
 
   @media (max-width: 1024px) {

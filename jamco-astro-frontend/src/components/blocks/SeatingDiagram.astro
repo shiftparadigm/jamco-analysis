@@ -1,0 +1,135 @@
+---
+import { urlFor } from '../../lib/sanity'
+
+interface Props {
+  diagramImage: any
+  brandLogos?: Array<{
+    name: string
+    logo?: any
+    tagline?: string
+  }>
+  backgroundColor?: string
+}
+
+const {
+  diagramImage,
+  brandLogos = [],
+  backgroundColor = 'white'
+} = Astro.props
+
+const diagramUrl = diagramImage ? urlFor(diagramImage).width(1400).auto('format').url() : null
+---
+
+<section class={`seating-diagram bg-${backgroundColor}`}>
+  <div class="diagram-container">
+    {diagramUrl ? (
+      <img
+        src={diagramUrl}
+        alt={diagramImage?.alt || 'Aircraft seating layout diagram'}
+        class="diagram-image"
+        loading="lazy"
+      />
+    ) : (
+      <div class="diagram-placeholder">
+        <p>Seating diagram image required</p>
+      </div>
+    )}
+  </div>
+
+  {brandLogos.length > 0 && (
+    <div class="brand-logos">
+      {brandLogos.map((brand) => (
+        <div class="brand-item">
+          {brand.logo ? (
+            <img
+              src={urlFor(brand.logo).height(40).auto('format').url()}
+              alt={brand.name}
+              class="brand-logo"
+            />
+          ) : (
+            <span class="brand-name">{brand.name}</span>
+          )}
+          {brand.tagline && <span class="brand-tagline">{brand.tagline}</span>}
+        </div>
+      ))}
+    </div>
+  )}
+</section>
+
+<style>
+  .seating-diagram {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .bg-white {
+    background: var(--color-light);
+  }
+
+  .bg-light-blue {
+    background: var(--color-light-blue-bg);
+  }
+
+  .diagram-container {
+    max-width: var(--container-content);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .diagram-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .diagram-placeholder {
+    background: var(--color-light-blue-bg);
+    border: 2px dashed var(--color-light-blue);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-2xl);
+    text-align: center;
+    color: var(--color-gray);
+  }
+
+  .brand-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+    padding: 0 var(--spacing-md);
+  }
+
+  .brand-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .brand-logo {
+    height: 32px;
+    width: auto;
+  }
+
+  .brand-name {
+    font-family: 'ABC Normal', var(--font-heading);
+    font-size: 24px;
+    font-style: italic;
+    color: var(--color-primary);
+    letter-spacing: 0.05em;
+  }
+
+  .brand-tagline {
+    font-size: var(--text-xs);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  @media (max-width: 768px) {
+    .brand-logos {
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+  }
+</style>

@@ -61,6 +61,7 @@ export default defineType({
         {type: 'productCarouselBlock'},
         {type: 'pricingCardBlock'},
         {type: 'fullWidthImageBlock'},
+        {type: 'seatingDiagramBlock'},
       ],
     }),
     defineField({

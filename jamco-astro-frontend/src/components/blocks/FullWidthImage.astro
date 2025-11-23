@@ -5,13 +5,15 @@ interface Props {
   image: any
   caption?: string
   height?: string
+  watermark?: string
+  showNavArrows?: boolean
 }
 
-const { image, caption, height = 'auto' } = Astro.props
+const { image, caption, height = 'auto', watermark, showNavArrows = false } = Astro.props
 
 const imageUrl = urlFor(image).width(1440).auto('format').url()
 
-const heights = {
+const heights: Record<string, string> = {
   auto: 'auto',
   tall: '800px',
   medium: '600px',
@@ -20,12 +22,25 @@ const heights = {
 ---
 
 <section class="full-width-image">
-  <img
-    src={imageUrl}
-    alt={image.alt || ''}
-    loading="lazy"
-    style={`height: ${heights[height as keyof typeof heights]}`}
-  />
+  <div class="image-container" style={`height: ${heights[height] || height}`}>
+    <img
+      src={imageUrl}
+      alt={image.alt || ''}
+      loading="lazy"
+    />
+    {watermark && (
+      <div class="watermark">
+        <span class="watermark-text">{watermark}</span>
+      </div>
+    )}
+    {showNavArrows && (
+      <button class="nav-arrow next" aria-label="Next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+      </button>
+    )}
+  </div>
   {caption && <p class="caption">{caption}</p>}
 </section>
 
@@ -34,10 +49,58 @@ const heights = {
     width: 100%;
   }
 
+  .image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
   img {
     width: 100%;
+    height: 100%;
     object-fit: cover;
     display: block;
+  }
+
+  .watermark {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  .watermark-text {
+    font-family: 'ABC Normal', var(--font-heading);
+    font-size: 24px;
+    font-style: italic;
+    color: var(--color-light);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-arrow {
+    position: absolute;
+    right: var(--spacing-lg);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-light);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-dark);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition-base);
+  }
+
+  .nav-arrow:hover {
+    background: var(--color-primary);
+    color: var(--color-light);
   }
 
   .caption {

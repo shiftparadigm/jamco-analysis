@@ -37,7 +37,11 @@ function getCtaHref(ctaObj: any): string {
 
       <div class="hero-ctas">
         {cta && <Button href={getCtaHref(cta)} text={cta.text} variant={cta.style || 'primary'} target={cta.linkType === 'external' ? '_blank' : undefined} />}
-        {secondaryCta && <Button href={getCtaHref(secondaryCta)} text={secondaryCta.text} variant={secondaryCta.style || 'outline'} target={secondaryCta.linkType === 'external' ? '_blank' : undefined} />}
+        {secondaryCta && (
+          <a href={getCtaHref(secondaryCta)} class="text-link" target={secondaryCta.linkType === 'external' ? '_blank' : undefined}>
+            {secondaryCta.text} <span class="arrow">→</span>
+          </a>
+        )}
       </div>
     </div>
 
@@ -116,11 +120,23 @@ function getCtaHref(ctaObj: any): string {
 <style>
   .hero-carousel {
     position: relative;
-    background: #FFFFFF;
-    border-bottom: 1px solid #E5E5E5;
+    background: linear-gradient(135deg, rgba(204, 222, 235, 0.3) 0%, rgba(255, 255, 255, 1) 50%);
+    overflow: hidden;
+  }
+
+  .hero-carousel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="rgba(204,222,235,0.1)" width="100" height="100"/></svg>');
+    filter: blur(100px);
+    opacity: 0.5;
+    z-index: 0;
   }
 
   .hero-container {
+    position: relative;
+    z-index: 1;
     max-width: 1440px;
     margin: 0 auto;
     display: grid;
@@ -142,23 +158,49 @@ function getCtaHref(ctaObj: any): string {
     font-weight: 300;
     line-height: 0.9;
     letter-spacing: -0.06em;
-    color: rgb(11, 89, 169);
+    color: var(--color-primary);
     margin: 0;
   }
 
   .subheading {
     font-size: 16px;
     line-height: 1.6;
-    color: #333333;
+    letter-spacing: -0.03em;
+    color: var(--color-primary);
     max-width: 400px;
     margin: 0;
   }
 
   .hero-ctas {
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     flex-wrap: wrap;
+    align-items: center;
     margin-top: 1rem;
+  }
+
+  .text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    text-decoration: none;
+    transition: gap var(--transition-base);
+  }
+
+  .text-link:hover {
+    gap: 0.75rem;
+  }
+
+  .text-link .arrow {
+    font-size: 1.2em;
+    transition: transform var(--transition-base);
+  }
+
+  .text-link:hover .arrow {
+    transform: translateX(2px);
   }
 
   .hero-carousel-wrapper {
