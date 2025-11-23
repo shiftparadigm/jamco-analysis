@@ -1,0 +1,352 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Header from '../../components/blocks/Header.astro'
+import Footer from '../../components/blocks/Footer.astro'
+import { sanityClient, queries, urlFor } from '../../lib/sanity'
+
+export async function getStaticPaths() {
+  const products = await sanityClient.fetch(queries.allProductSlugs)
+
+  return products.map((product: any) => ({
+    params: { slug: product.slug },
+  }))
+}
+
+const { slug } = Astro.params
+const product = await sanityClient.fetch(queries.product, { slug })
+
+if (!product) {
+  return Astro.redirect('/products')
+}
+
+const breadcrumb = [
+  { label: 'Products', href: '/products' },
+  { label: product.name }
+]
+---
+
+<BaseLayout
+  title={`${product.name} | Jamco Products`}
+  description={product.shortDescription || ''}
+>
+  <Header breadcrumb={breadcrumb} />
+
+  <main class="product-page">
+    <section class="product-hero">
+      <div class="container">
+        <div class="product-layout">
+          <div class="product-gallery">
+            {product.images && product.images.length > 0 && (
+              <div class="main-image">
+                <img
+                  src={urlFor(product.images[0]).width(800).auto('format').url()}
+                  alt={product.images[0].alt || product.name}
+                />
+              </div>
+            )}
+            {product.images && product.images.length > 1 && (
+              <div class="thumbnail-row">
+                {product.images.slice(0, 4).map((image: any, i: number) => (
+                  <button class={`thumbnail ${i === 0 ? 'active' : ''}`} data-index={i}>
+                    <img
+                      src={urlFor(image).width(150).height(100).auto('format').url()}
+                      alt={image.alt || `${product.name} view ${i + 1}`}
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div class="product-details">
+            {product.tierLabel && (
+              <span class={`tier-badge tier-${product.tierLabel}`}>
+                {product.tierLabel}
+              </span>
+            )}
+            <h1>{product.name}</h1>
+            {product.shortDescription && (
+              <p class="short-desc">{product.shortDescription}</p>
+            )}
+
+            {product.features && product.features.length > 0 && (
+              <div class="features">
+                <h3>Key Features</h3>
+                <ul>
+                  {product.features.map((feature: string) => (
+                    <li>{feature}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            <div class="cta-buttons">
+              <a href="/contact" class="btn btn-primary">Contact Sales</a>
+              <a href="/premium-seating" class="btn btn-secondary">View Premium Seating</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {product.relatedProducts && product.relatedProducts.length > 0 && (
+      <section class="related-products">
+        <div class="container">
+          <h2>Related Products</h2>
+          <div class="related-grid">
+            {product.relatedProducts.map((related: any) => (
+              <a href={`/products/${related.slug}`} class="related-card">
+                {related.image && (
+                  <img
+                    src={urlFor(related.image).width(300).height(200).auto('format').url()}
+                    alt={related.image.alt || related.name}
+                  />
+                )}
+                <h4>{related.name}</h4>
+                {related.shortDescription && <p>{related.shortDescription}</p>}
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .product-page {
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .product-hero {
+    padding: var(--spacing-xl) 0 var(--spacing-2xl);
+  }
+
+  .product-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: start;
+  }
+
+  .product-gallery {
+    position: sticky;
+    top: 100px;
+  }
+
+  .main-image {
+    background: var(--color-light-blue-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .main-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .thumbnail-row {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .thumbnail {
+    flex: 1;
+    padding: 0;
+    border: 2px solid transparent;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--color-light-blue-bg);
+    transition: border-color 0.2s ease;
+  }
+
+  .thumbnail.active,
+  .thumbnail:hover {
+    border-color: var(--color-primary);
+  }
+
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .product-details {
+    padding-top: var(--spacing-md);
+  }
+
+  .tier-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 999px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .tier-essential { background: #e8f5e9; color: #2e7d32; }
+  .tier-pro { background: #e3f2fd; color: var(--color-primary); }
+  .tier-enterprise { background: #fce4ec; color: #c2185b; }
+
+  h1 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: var(--weight-light);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.1;
+  }
+
+  .short-desc {
+    font-size: var(--text-lg);
+    color: var(--color-gray);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .features {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .features h3 {
+    font-size: var(--text-body);
+    font-weight: var(--weight-semibold);
+    color: var(--color-dark);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .features ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .features li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary);
+  }
+
+  .features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary);
+    font-weight: bold;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    border-radius: 999px;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-light);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-primary-light);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--color-primary);
+    color: var(--color-light);
+  }
+
+  .related-products {
+    background: var(--color-light-blue-bg);
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .related-products h2 {
+    font-size: var(--text-2xl);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .related-card {
+    background: var(--color-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+
+  .related-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .related-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .related-card h4 {
+    font-size: var(--text-body);
+    color: var(--color-primary);
+    padding: var(--spacing-sm) var(--spacing-md) 0;
+  }
+
+  .related-card p {
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+    padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md);
+  }
+
+  @media (max-width: 1024px) {
+    .product-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .product-gallery {
+      position: static;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .btn {
+      text-align: center;
+    }
+  }
+</style>

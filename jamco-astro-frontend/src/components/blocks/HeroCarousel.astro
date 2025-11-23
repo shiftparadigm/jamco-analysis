@@ -55,12 +55,20 @@ function getCtaHref(ctaObj: any): string {
                 <div class="hero-image">
                   <img src={imageUrl} alt={slide.floatingImage?.alt || ''} />
 
-                  {/* Hotspot markers */}
-                  <div class="hotspot hotspot-1" data-label="Display"></div>
-                  <div class="hotspot hotspot-2" data-label="Controls"></div>
-                  <div class="hotspot hotspot-3" data-label="Privacy"></div>
-                  <div class="hotspot hotspot-4" data-label="Storage"></div>
-                  <div class="hotspot hotspot-5" data-label="Comfort"></div>
+                  {/* Hotspot markers from CMS */}
+                  {slide.hotspots && slide.hotspots.map((hotspot: any, i: number) => (
+                    <button
+                      class={`hotspot hotspot-${i + 1}`}
+                      style={`left: ${hotspot.positionX}%; top: ${hotspot.positionY}%;`}
+                      data-hotspot={i + 1}
+                      aria-label={hotspot.title}
+                    >
+                      <div class="hotspot-tooltip">
+                        <strong>{hotspot.title}</strong>
+                        {hotspot.description && <p>{hotspot.description}</p>}
+                      </div>
+                    </button>
+                  ))}
 
                   {slide.featureCallout && (
                     <div class="feature-callout">
@@ -122,6 +130,29 @@ function getCtaHref(ctaObj: any): string {
   if (slides.length > 1) {
     setInterval(nextSlide, 5000)
   }
+
+  // Hotspot click interactions
+  const hotspots = document.querySelectorAll('.hotspot')
+
+  hotspots.forEach(hotspot => {
+    hotspot.addEventListener('click', (e) => {
+      e.stopPropagation()
+      const wasActive = hotspot.classList.contains('active')
+
+      // Close all other hotspots
+      hotspots.forEach(h => h.classList.remove('active'))
+
+      // Toggle this one
+      if (!wasActive) {
+        hotspot.classList.add('active')
+      }
+    })
+  })
+
+  // Close hotspots when clicking outside
+  document.addEventListener('click', () => {
+    hotspots.forEach(h => h.classList.remove('active'))
+  })
 </script>
 
 <style>
@@ -256,8 +287,8 @@ function getCtaHref(ctaObj: any): string {
   /* Hotspot markers */
   .hotspot {
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     background: var(--color-primary);
     border: 3px solid rgba(255, 255, 255, 0.9);
     border-radius: 50%;
@@ -265,19 +296,63 @@ function getCtaHref(ctaObj: any): string {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 85, 172, 0.3);
     z-index: 10;
+    padding: 0;
   }
 
-  .hotspot:hover {
+  .hotspot:hover,
+  .hotspot.active {
     transform: scale(1.3);
     box-shadow: 0 4px 16px rgba(0, 85, 172, 0.5);
   }
 
-  /* Position hotspots based on reference image */
-  .hotspot-1 { top: 22%; left: 48%; }  /* Display/monitor area */
-  .hotspot-2 { top: 28%; right: 25%; } /* Upper controls */
-  .hotspot-3 { top: 45%; left: 35%; }  /* Privacy divider area */
-  .hotspot-4 { bottom: 38%; left: 28%; } /* Storage/ottoman */
-  .hotspot-5 { bottom: 42%; right: 35%; } /* Seat comfort area */
+  .hotspot-tooltip {
+    position: absolute;
+    bottom: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 85, 172, 0.95);
+    backdrop-filter: blur(8px);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 6px;
+    width: 220px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    pointer-events: none;
+    text-align: left;
+  }
+
+  .hotspot-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-top-color: rgba(0, 85, 172, 0.95);
+  }
+
+  .hotspot.active .hotspot-tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .hotspot-tooltip strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .hotspot-tooltip p {
+    font-size: 12px;
+    line-height: 1.4;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  /* Hotspot positions are set via inline styles from CMS */
 
   .feature-callout {
     position: absolute;

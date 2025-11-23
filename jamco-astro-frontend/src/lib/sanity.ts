@@ -56,4 +56,16 @@ export const queries = {
       "image": images[0]
     }
   }`,
+
+  allProducts: `*[_type == "product"] | order(name asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    shortDescription,
+    "image": images[0],
+    tierLabel,
+    category-> { name, "slug": slug.current }
+  }`,
+
+  allProductSlugs: `*[_type == "product"]{ "slug": slug.current }`,
 }

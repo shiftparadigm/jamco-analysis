@@ -78,6 +78,51 @@ export default defineType({
       description: 'e.g., "01 / 02" for carousel pagination',
       placeholder: '01 / 02',
     }),
+    defineField({
+      name: 'hotspots',
+      title: 'Image Hotspots',
+      type: 'array',
+      description: 'Interactive hotspot markers on the product image',
+      of: [
+        {
+          type: 'object',
+          name: 'hotspot',
+          fields: [
+            defineField({
+              name: 'title',
+              title: 'Title',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: 'description',
+              title: 'Description',
+              type: 'text',
+              rows: 2,
+            }),
+            defineField({
+              name: 'positionX',
+              title: 'Position X (%)',
+              type: 'number',
+              description: 'Horizontal position from left (0-100)',
+              validation: (Rule) => Rule.min(0).max(100),
+            }),
+            defineField({
+              name: 'positionY',
+              title: 'Position Y (%)',
+              type: 'number',
+              description: 'Vertical position from top (0-100)',
+              validation: (Rule) => Rule.min(0).max(100),
+            }),
+          ],
+          preview: {
+            select: {
+              title: 'title',
+            },
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

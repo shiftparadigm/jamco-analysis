@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Header from '../../components/blocks/Header.astro'
+import Footer from '../../components/blocks/Footer.astro'
+import { sanityClient, queries, urlFor } from '../../lib/sanity'
+
+const products = await sanityClient.fetch(queries.allProducts)
+---
+
+<BaseLayout title="Products | Jamco" description="Explore our premium seating and aircraft interior solutions">
+  <Header breadcrumb={[{ label: 'Products' }]} />
+
+  <main class="products-page">
+    <section class="hero-section">
+      <div class="container">
+        <h1>Our Products</h1>
+        <p class="subtitle">Premium aircraft interior solutions designed for comfort and elegance</p>
+      </div>
+    </section>
+
+    <section class="products-grid-section">
+      <div class="container">
+        {products && products.length > 0 ? (
+          <div class="products-grid">
+            {products.map((product: any) => (
+              <a href={`/products/${product.slug}`} class="product-card">
+                {product.image && (
+                  <div class="product-image">
+                    <img
+                      src={urlFor(product.image).width(400).height(300).auto('format').url()}
+                      alt={product.image.alt || product.name}
+                      loading="lazy"
+                    />
+                  </div>
+                )}
+                <div class="product-info">
+                  {product.tierLabel && (
+                    <span class={`tier-badge tier-${product.tierLabel}`}>
+                      {product.tierLabel}
+                    </span>
+                  )}
+                  <h3>{product.name}</h3>
+                  {product.shortDescription && (
+                    <p>{product.shortDescription}</p>
+                  )}
+                  <span class="view-link">View Product &rarr;</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div class="no-products">
+            <p>No products available yet. Add products in Sanity Studio.</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .products-page {
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .hero-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-dark-bg) 100%);
+    color: var(--color-light);
+    padding: var(--spacing-2xl) 0;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: var(--weight-light);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .subtitle {
+    font-size: var(--text-lg);
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .products-grid-section {
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .product-card {
+    background: var(--color-light);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .product-image {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    background: var(--color-light-blue-bg);
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-image img {
+    transform: scale(1.05);
+  }
+
+  .product-info {
+    padding: var(--spacing-md);
+  }
+
+  .tier-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: var(--weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 999px;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .tier-essential {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  .tier-pro {
+    background: #e3f2fd;
+    color: var(--color-primary);
+  }
+
+  .tier-enterprise {
+    background: #fce4ec;
+    color: #c2185b;
+  }
+
+  .product-info h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .product-info p {
+    font-size: var(--text-sm);
+    color: var(--color-gray);
+    line-height: 1.5;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .view-link {
+    font-size: var(--text-sm);
+    font-weight: var(--weight-semibold);
+    color: var(--color-primary);
+  }
+
+  .no-products {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    color: var(--color-gray);
+  }
+
+  @media (max-width: 768px) {
+    .hero-section {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .products-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
