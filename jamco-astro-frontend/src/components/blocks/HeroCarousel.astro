@@ -55,6 +55,13 @@ function getCtaHref(ctaObj: any): string {
                 <div class="hero-image">
                   <img src={imageUrl} alt={slide.floatingImage?.alt || ''} />
 
+                  {/* Hotspot markers */}
+                  <div class="hotspot hotspot-1" data-label="Display"></div>
+                  <div class="hotspot hotspot-2" data-label="Controls"></div>
+                  <div class="hotspot hotspot-3" data-label="Privacy"></div>
+                  <div class="hotspot hotspot-4" data-label="Storage"></div>
+                  <div class="hotspot hotspot-5" data-label="Comfort"></div>
+
                   {slide.featureCallout && (
                     <div class="feature-callout">
                       <strong>{slide.featureCallout.label}</strong>
@@ -245,6 +252,32 @@ function getCtaHref(ctaObj: any): string {
     max-width: 730px;
     object-fit: contain;
   }
+
+  /* Hotspot markers */
+  .hotspot {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: var(--color-primary);
+    border: 3px solid rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 85, 172, 0.3);
+    z-index: 10;
+  }
+
+  .hotspot:hover {
+    transform: scale(1.3);
+    box-shadow: 0 4px 16px rgba(0, 85, 172, 0.5);
+  }
+
+  /* Position hotspots based on reference image */
+  .hotspot-1 { top: 22%; left: 48%; }  /* Display/monitor area */
+  .hotspot-2 { top: 28%; right: 25%; } /* Upper controls */
+  .hotspot-3 { top: 45%; left: 35%; }  /* Privacy divider area */
+  .hotspot-4 { bottom: 38%; left: 28%; } /* Storage/ottoman */
+  .hotspot-5 { bottom: 42%; right: 35%; } /* Seat comfort area */
 
   .feature-callout {
     position: absolute;
