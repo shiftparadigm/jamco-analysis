@@ -62,6 +62,7 @@ export default defineType({
         {type: 'pricingCardBlock'},
         {type: 'fullWidthImageBlock'},
         {type: 'seatingDiagramBlock'},
+        {type: 'productShowcaseBlock'},
       ],
     }),
     defineField({

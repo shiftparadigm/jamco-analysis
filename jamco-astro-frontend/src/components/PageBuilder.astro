@@ -1,4 +1,5 @@
 ---
+import Header from './blocks/Header.astro'
 import Hero from './blocks/Hero.astro'
 import HeroCarousel from './blocks/HeroCarousel.astro'
 import SectionIntro from './blocks/SectionIntro.astro'
@@ -10,15 +11,25 @@ import FullWidthImage from './blocks/FullWidthImage.astro'
 import Testimonial from './blocks/Testimonial.astro'
 import CTABlock from './blocks/CTABlock.astro'
 import SeatingDiagram from './blocks/SeatingDiagram.astro'
+import ProductShowcase from './blocks/ProductShowcase.astro'
 import Footer from './blocks/Footer.astro'
 
 interface Props {
   hero?: any
   content?: any[]
+  title?: string
 }
 
-const { hero, content } = Astro.props
+const { hero, content, title } = Astro.props
+
+// Generate breadcrumb from page title
+const breadcrumb = title ? [
+  { label: 'Products', href: '/products' },
+  { label: title }
+] : []
 ---
+
+<Header breadcrumb={breadcrumb} />
 
 {hero && hero._type === 'heroCarousel' ? <HeroCarousel {...hero} /> : hero && <Hero {...hero} />}
 
@@ -42,6 +53,8 @@ const { hero, content } = Astro.props
       return <CTABlock {...block} />
     case 'seatingDiagramBlock':
       return <SeatingDiagram {...block} />
+    case 'productShowcaseBlock':
+      return <ProductShowcase {...block} />
     default:
       return null
   }

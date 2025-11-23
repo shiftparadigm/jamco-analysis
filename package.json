@@ -7,5 +7,22 @@
   },
   "dependencies": {
     "@sanity/client": "^6.0.0"
-  }
+  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "add-second-hero.js",
+  "devDependencies": {
+    "playwright": "^1.56.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shiftparadigm/jamco-analysis.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shiftparadigm/jamco-analysis/issues"
+  },
+  "homepage": "https://github.com/shiftparadigm/jamco-analysis#readme"
 }

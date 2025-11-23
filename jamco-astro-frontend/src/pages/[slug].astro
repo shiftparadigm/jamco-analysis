@@ -35,5 +35,5 @@ const ogImage = page.seo?.ogImage ? urlFor(page.seo.ogImage).width(1200).url() :
   ogImage={ogImage}
   noIndex={page.seo?.noIndex}
 >
-  <PageBuilder hero={page.hero} content={page.content} />
+  <PageBuilder hero={page.hero} content={page.content} title={page.title} />
 </BaseLayout>
