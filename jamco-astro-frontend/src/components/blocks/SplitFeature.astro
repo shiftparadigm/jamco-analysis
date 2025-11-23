@@ -209,4 +209,40 @@ function getCtaHref(): string {
       min-height: 400px;
     }
   }
+
+  @media (max-width: 768px) {
+    .content-side {
+      padding: 1.5rem 1rem 1.5rem 2rem;
+    }
+
+    .content-side::before {
+      left: 0.75rem;
+      top: 1.5rem;
+      bottom: 1.5rem;
+      width: 2px;
+    }
+
+    .content-side h2 {
+      font-size: 28px;
+      margin-bottom: 1rem;
+    }
+
+    .description {
+      font-size: 14px;
+      margin-bottom: 1rem;
+    }
+
+    .bullet-points {
+      margin-bottom: 1.5rem;
+    }
+
+    .bullet-points li {
+      font-size: 14px;
+      margin-bottom: 0.5rem;
+    }
+
+    .image-side {
+      min-height: 280px;
+    }
+  }
 </style>

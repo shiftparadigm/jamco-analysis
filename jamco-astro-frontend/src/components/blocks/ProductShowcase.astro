@@ -175,4 +175,52 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
       font-size: 48px;
     }
   }
+
+  @media (max-width: 768px) {
+    .product-showcase {
+      padding: var(--spacing-lg) 0;
+    }
+
+    .showcase-container {
+      gap: var(--spacing-md);
+      padding: 0 1rem;
+    }
+
+    h2 {
+      font-size: 36px;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .subheading {
+      font-size: 14px;
+    }
+
+    .product-card {
+      border-radius: var(--radius-sm);
+    }
+
+    .pagination {
+      bottom: var(--spacing-sm);
+      right: var(--spacing-sm);
+    }
+
+    .nav-btn {
+      width: 28px;
+      height: 28px;
+      font-size: 12px;
+    }
+
+    .brand-info {
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .brand-name {
+      font-size: 22px;
+    }
+
+    .brand-description {
+      font-size: 13px;
+    }
+  }
 </style>

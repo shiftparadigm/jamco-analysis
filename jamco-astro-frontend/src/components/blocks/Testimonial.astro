@@ -165,25 +165,51 @@ const avatarUrl = authorImage ? (typeof authorImage === 'string' ? authorImage :
   }
 
   @media (max-width: 768px) {
+    .testimonial {
+      padding: var(--spacing-xl) 0;
+    }
+
+    .testimonial-container {
+      padding: 0 1rem;
+    }
+
     .quote {
-      font-size: 32px;
+      font-size: 24px;
+      line-height: 1.35;
     }
 
     .testimonial-large .quote {
-      font-size: 28px;
+      font-size: 22px;
+    }
+
+    .testimonial-medium .quote {
+      font-size: 20px;
     }
 
     .quote-box {
-      padding: var(--spacing-lg);
+      padding: 1rem;
+    }
+
+    blockquote {
+      margin-bottom: 1.5rem;
     }
 
     .author {
       flex-direction: column;
       text-align: center;
+      gap: 0.5rem;
     }
 
     .author-info {
       text-align: center;
+    }
+
+    .author-name {
+      font-size: 14px;
+    }
+
+    .author-title {
+      font-size: 12px;
     }
   }
 </style>
