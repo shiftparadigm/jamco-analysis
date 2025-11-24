@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 export const sanityClient = createClient({
   projectId: 'c94x8u55',
   dataset: 'production',
-  useCdn: true,
+  useCdn: false, // Disable CDN caching for fresh data during development
   apiVersion: '2024-01-01'
 })
 
@@ -30,7 +30,7 @@ export const queries = {
           name,
           "slug": slug.current,
           shortDescription,
-          "image": images[0]
+          images
         }
       }
     }

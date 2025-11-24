@@ -1,5 +1,35 @@
 # Claude Log - Jamco Premium Seating Project
 
+## November 23, 2025 - 7:35 PM CST
+
+### Session Summary
+Continued page refinement - added seating diagram, fixed button styles, updated product carousel.
+
+### Completed This Session
+- ✅ Added seating diagram/blueprint section (uploaded `seat-view.jpg`)
+- ✅ Added Venture & Quest for Elegance logos to seating diagram
+- ✅ Updated split feature button styles to `secondary` (outlined)
+- ✅ Updated product carousel title to "Complete your travel ecosystem"
+- ✅ Fixed screenshot capture script (removed full-page - too large for Claude)
+- ✅ Added default avatar fallback to Testimonial component (SVG data URI)
+- ✅ Added 4th product "Lavatories" to product carousel (now shows 01/04)
+- ✅ Fixed background colors: "Work and Entertain On-Demand" → blue, "Spatial Freedom" → light-blue
+- ✅ Fixed Sanity CDN caching issue (`useCdn: false` for fresh data)
+- ✅ Verified footer matches reference design
+
+### Technical Notes
+- **Full-page screenshots break Claude** - Images >2000px in any dimension cause API errors
+- Use individual section screenshots (hero.png, section-2.png, etc.) for review
+- `capture-screenshots.js` now skips full-page capture
+- **CDN caching** - Set `useCdn: false` in sanity.ts to get fresh data during development
+
+### Outstanding Items
+- [ ] Additional hero carousel images (both slides use same image)
+- [ ] Jamco logo in footer (currently text, could use SVG logo)
+- [ ] Typography fine-tuning to match Figma exactly
+
+---
+
 ## November 20, 2025 - 12:35 PM CST
 
 ### Session Summary

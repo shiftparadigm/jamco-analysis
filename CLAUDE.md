@@ -1,6 +1,6 @@
 # Claude Code Session Notes
 
-## Session: November 20, 2025 - 12:30 PM CST
+## Session: November 23, 2025 (Updated from Nov 20)
 
 ### Project Overview
 Building the Jamco Premium Seating product page based on Figma design analysis. Using Astro frontend + Sanity CMS.
@@ -40,12 +40,15 @@ Building the Jamco Premium Seating product page based on Figma design analysis. 
    - 16 images from `exported-images/` folder
    - Mapped to appropriate content blocks
 
+### What's Complete (Nov 23 Update)
+- Seating diagram/blueprint section with Venture & Quest for Elegance logos
+- Split feature buttons updated to secondary (outlined) style
+- Product carousel title updated to "Complete your travel ecosystem"
+
 ### What's Missing (Waiting for Design Assets)
-1. Seating diagram/layout section (aircraft cabin blueprint in blue)
-2. Large image sections between content blocks
-3. Footer component
-4. Additional hero carousel images (currently using same image for both slides)
-5. VentureLine callout styling
+1. Footer component
+2. Additional hero carousel images (currently using same image for both slides)
+3. VentureLine callout styling refinement
 
 ### Key Files
 - `jamco-astro-frontend/` - Astro frontend
@@ -81,3 +84,8 @@ SANITY_TOKEN='...' node <script-name>.js
 
 ### Reference Images Location
 - `reference-images/` - Contains 5 screenshots of the Figma design showing full page layout
+
+### Claude Processing Notes
+- **Full-page screenshots break Claude's image processing** - Images exceeding 2000px in any dimension cause API errors
+- Use `capture-screenshots.js` which captures individual viewport sections (hero, section-2, etc.) instead
+- Individual section screenshots at 1440x900 viewport work fine for review

@@ -1,6 +1,6 @@
 import { chromium } from 'playwright';
 
-const SITE_URL = 'https://blue-island-0b5fa6310.3.azurestaticapps.net/premium-seating';
+const SITE_URL = 'http://localhost:4321/premium-seating';
 
 async function captureScreenshots() {
   const browser = await chromium.launch();
@@ -13,11 +13,8 @@ async function captureScreenshots() {
   // Wait for images to load
   await page.waitForTimeout(2000);
 
-  // Capture full page screenshot
-  await page.screenshot({
-    path: 'screenshots/full-page.png',
-    fullPage: true
-  });
+  // NOTE: Full-page screenshots are too large for Claude to process (>2000px dimension limit)
+  // Skipping full-page capture - use individual section screenshots instead
 
   // Capture viewport sections for comparison
   const sections = [
@@ -26,6 +23,11 @@ async function captureScreenshots() {
     { name: 'section-3', y: 1800 },
     { name: 'section-4', y: 2700 },
     { name: 'section-5', y: 3600 },
+    { name: 'section-6', y: 4500 },
+    { name: 'section-7', y: 5400 },
+    { name: 'section-8', y: 6300 },
+    { name: 'section-9', y: 7200 },
+    { name: 'section-10', y: 8100 },
   ];
 
   for (const section of sections) {

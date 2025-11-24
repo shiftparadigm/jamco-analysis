@@ -25,6 +25,9 @@ const {
 
 const bgImageUrl = backgroundImage ? urlFor(backgroundImage).width(1440).auto('format').url() : null
 const avatarUrl = authorImage ? (typeof authorImage === 'string' ? authorImage : urlFor(authorImage).width(120).height(120).auto('format').url()) : null
+
+// Default avatar SVG as data URI
+const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e0e7ef'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%23a0aec0'/%3E%3Cellipse cx='50' cy='80' rx='28' ry='22' fill='%23a0aec0'/%3E%3C/svg%3E"
 ---
 
 <section class={`testimonial testimonial-${quoteSize} testimonial-${layout}`}>
@@ -40,9 +43,7 @@ const avatarUrl = authorImage ? (typeof authorImage === 'string' ? authorImage :
     </blockquote>
 
     <div class="author">
-      {avatarUrl && (
-        <img src={avatarUrl} alt={authorName} class="author-image" />
-      )}
+      <img src={avatarUrl || defaultAvatar} alt={authorName} class="author-image" />
       <div class="author-info">
         <p class="author-name">{authorName}</p>
         <p class="author-title">{authorTitle}</p>
