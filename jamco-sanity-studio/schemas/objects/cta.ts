@@ -33,7 +33,8 @@ export default defineType({
     defineField({
       name: 'externalUrl',
       title: 'External URL',
-      type: 'url',
+      type: 'string',
+      description: 'Full URL (https://...) or anchor link (#section)',
       hidden: ({parent}) => parent?.linkType !== 'external',
     }),
     defineField({
