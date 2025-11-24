@@ -1,9 +1,10 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
-import {presentationTool} from '@sanity/presentation'
+import {presentationTool} from 'sanity/presentation'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {schemaTypes} from './schemas'
 import {deskStructure} from './deskStructure'
+import {triggerRebuildAction} from './src/actions/triggerRebuild'
 
 // Preview URL - use localhost in dev, production URL otherwise
 const PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:4321'
@@ -71,5 +72,14 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (prev, context) => {
+      // Replace the default publish action with our custom one
+      return prev.map((originalAction) =>
+        originalAction.action === 'publish' ? triggerRebuildAction : originalAction
+      )
+    },
   },
 })
