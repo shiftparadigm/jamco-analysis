@@ -9,11 +9,14 @@ on:
     branches:
       - master
   workflow_dispatch:
-    # Allows triggering via API (for Sanity webhook)
+    # Allows manual triggering
+  repository_dispatch:
+    types: [sanity-publish]
+    # Triggered by Sanity webhook when content is published
 
 jobs:
   build_and_deploy_job:
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
