@@ -2,29 +2,36 @@
 import { urlFor } from '../../lib/sanity'
 
 interface Props {
-  quote: string
-  authorName: string
-  authorTitle: string
-  authorImage?: any
+  testimonials?: any[]
   backgroundImage?: any
   quoteSize?: string
   layout?: string
   showDivider?: boolean
+  // Legacy support for flat structure
+  quote?: string
+  authorName?: string
+  authorTitle?: string
+  authorImage?: any
 }
 
 const {
-  quote,
-  authorName,
-  authorTitle,
-  authorImage,
+  testimonials = [],
   backgroundImage,
   quoteSize = 'large',
   layout = 'left-aligned',
-  showDivider = true
+  showDivider = false,
+  // Legacy
+  quote,
+  authorName,
+  authorTitle,
+  authorImage
 } = Astro.props
 
+// Use first testimonial from array, or fall back to flat props
+const testimonial = testimonials.length > 0 ? testimonials[0] : { quote, author: authorName, title: authorTitle, image: authorImage }
+
 const bgImageUrl = backgroundImage ? urlFor(backgroundImage).width(1440).auto('format').url() : null
-const avatarUrl = authorImage ? (typeof authorImage === 'string' ? authorImage : urlFor(authorImage).width(120).height(120).auto('format').url()) : null
+const avatarUrl = testimonial.image ? urlFor(testimonial.image).width(120).height(120).auto('format').url() : null
 
 // Default avatar SVG as data URI
 const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23e0e7ef'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%23a0aec0'/%3E%3Cellipse cx='50' cy='80' rx='28' ry='22' fill='%23a0aec0'/%3E%3C/svg%3E"
@@ -36,17 +43,14 @@ const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 
   <div class="testimonial-container">
     <blockquote>
-      <div class="quote-box">
-        {showDivider && <hr class="divider" />}
-        <p class="quote">"{quote}"</p>
-      </div>
+      <p class="quote">"{testimonial.quote}"</p>
     </blockquote>
 
     <div class="author">
-      <img src={avatarUrl || defaultAvatar} alt={authorName} class="author-image" />
+      <img src={avatarUrl || defaultAvatar} alt={testimonial.author} class="author-image" />
       <div class="author-info">
-        <p class="author-name">{authorName}</p>
-        <p class="author-title">{authorTitle}</p>
+        <p class="author-name">{testimonial.author}</p>
+        <p class="author-title">{testimonial.title}{testimonial.company ? `, ${testimonial.company}` : ''}</p>
       </div>
     </div>
   </div>
@@ -55,9 +59,9 @@ const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
 <style>
   .testimonial {
     position: relative;
-    background: var(--color-dark-bg);
+    background: #3767AD;
     color: var(--color-light);
-    padding: var(--section-gap) 0;
+    padding: 100px 0 120px;
     overflow: hidden;
   }
 
@@ -66,61 +70,40 @@ const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
     inset: 0;
     background-size: cover;
     background-position: center;
-    opacity: 0.3;
+    opacity: 0.2;
   }
 
   .testimonial-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, var(--color-dark-bg) 0%, rgba(3, 35, 67, 0.8) 100%);
+    background: rgba(55, 103, 173, 0.85);
   }
 
   .testimonial-container {
     position: relative;
     z-index: 1;
-    max-width: var(--container-narrow);
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 var(--spacing-xl);
-  }
-
-  .testimonial-centered {
-    text-align: center;
+    padding: 0 72px;
   }
 
   .testimonial-left-aligned .testimonial-container {
-    max-width: var(--container-content);
+    max-width: 1440px;
   }
 
   blockquote {
-    margin: 0 0 2.5rem;
-  }
-
-  .quote-box {
-    border: 2px dashed rgba(255, 255, 255, 0.5);
-    padding: var(--spacing-xl);
-    border-radius: 4px;
-  }
-
-  .divider {
-    width: 60px;
-    height: 2px;
-    background: var(--color-light);
-    opacity: 0.4;
-    border: none;
-    margin: 0 0 var(--spacing-lg);
-  }
-
-  .testimonial-centered .divider {
-    margin: 0 auto var(--spacing-lg);
+    margin: 0 0 2rem;
+    max-width: 1100px;
   }
 
   .quote {
-    font-family: var(--font-heading);
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 48px;
-    line-height: 1.25;
-    font-weight: var(--weight-light);
+    line-height: 140%;
+    font-weight: 300;
     margin: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -2.88px;
+    color: #FFF;
   }
 
   .testimonial-medium .quote {
@@ -134,19 +117,15 @@ const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   .author {
     display: flex;
     align-items: center;
-    gap: 1rem;
-  }
-
-  .testimonial-centered .author {
-    justify-content: center;
+    gap: 1.25rem;
   }
 
   .author-image {
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.3);
   }
 
   .author-info {
@@ -154,14 +133,14 @@ const defaultAvatar = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/s
   }
 
   .author-name {
-    font-size: 16px;
-    font-weight: var(--weight-semibold);
+    font-size: 18px;
+    font-weight: 600;
     margin: 0 0 0.25rem;
   }
 
   .author-title {
-    font-size: 14px;
-    opacity: 0.75;
+    font-size: 16px;
+    opacity: 0.85;
     margin: 0;
   }
 

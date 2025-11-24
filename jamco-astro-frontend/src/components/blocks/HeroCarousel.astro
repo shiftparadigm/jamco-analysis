@@ -58,22 +58,21 @@ function getCtaHref(ctaObj: any): string {
                   {/* Hotspot markers from CMS */}
                   {slide.hotspots && slide.hotspots.map((hotspot: any, i: number) => (
                     <button
-                      class={`hotspot hotspot-${i + 1}`}
+                      class={`hotspot ${i === 0 ? 'active' : ''}`}
                       style={`left: ${hotspot.positionX}%; top: ${hotspot.positionY}%;`}
-                      data-hotspot={i + 1}
+                      data-hotspot-index={i}
+                      data-title={hotspot.title}
+                      data-description={hotspot.description || ''}
                       aria-label={hotspot.title}
                     >
-                      <div class="hotspot-tooltip">
-                        <strong>{hotspot.title}</strong>
-                        {hotspot.description && <p>{hotspot.description}</p>}
-                      </div>
                     </button>
                   ))}
 
-                  {slide.featureCallout && (
-                    <div class="feature-callout">
-                      <strong>{slide.featureCallout.label}</strong>
-                      {slide.featureCallout.description && <p>{slide.featureCallout.description}</p>}
+                  {/* Feature callout box - dynamically updated by clicking hotspots */}
+                  {slide.hotspots && slide.hotspots.length > 0 && (
+                    <div class="feature-callout" data-slide-index={index}>
+                      <strong class="callout-title">{slide.hotspots[0].title}</strong>
+                      {slide.hotspots[0].description && <p class="callout-description">{slide.hotspots[0].description}</p>}
                     </div>
                   )}
                 </div>
@@ -126,33 +125,55 @@ function getCtaHref(ctaObj: any): string {
   if (nextBtn) nextBtn.addEventListener('click', nextSlide)
   if (prevBtn) prevBtn.addEventListener('click', prevSlide)
 
-  // Auto-advance every 5 seconds
-  if (slides.length > 1) {
-    setInterval(nextSlide, 5000)
+  // Hotspot click interactions - update feature callout
+  function setupHotspots() {
+    const activeSlide = document.querySelector('.carousel-slide.active') as HTMLElement
+    if (!activeSlide) return
+
+    const hotspots = activeSlide.querySelectorAll('.hotspot')
+    const featureCallout = activeSlide.querySelector('.feature-callout') as HTMLElement
+
+    if (!featureCallout) return
+
+    const calloutTitle = featureCallout.querySelector('.callout-title') as HTMLElement
+    const calloutDescription = featureCallout.querySelector('.callout-description') as HTMLElement
+
+    hotspots.forEach((hotspot) => {
+      hotspot.addEventListener('click', (e) => {
+        e.stopPropagation()
+
+        // Remove active from all hotspots in this slide
+        hotspots.forEach(h => h.classList.remove('active'))
+
+        // Add active to clicked hotspot
+        hotspot.classList.add('active')
+
+        // Update feature callout content
+        const title = hotspot.getAttribute('data-title') || ''
+        const description = hotspot.getAttribute('data-description') || ''
+
+        if (calloutTitle) calloutTitle.textContent = title
+        if (calloutDescription) {
+          if (description) {
+            calloutDescription.textContent = description
+            calloutDescription.style.display = 'block'
+          } else {
+            calloutDescription.style.display = 'none'
+          }
+        }
+      })
+    })
   }
 
-  // Hotspot click interactions
-  const hotspots = document.querySelectorAll('.hotspot')
+  // Initialize hotspots for current slide
+  setupHotspots()
 
-  hotspots.forEach(hotspot => {
-    hotspot.addEventListener('click', (e) => {
-      e.stopPropagation()
-      const wasActive = hotspot.classList.contains('active')
-
-      // Close all other hotspots
-      hotspots.forEach(h => h.classList.remove('active'))
-
-      // Toggle this one
-      if (!wasActive) {
-        hotspot.classList.add('active')
-      }
-    })
-  })
-
-  // Close hotspots when clicking outside
-  document.addEventListener('click', () => {
-    hotspots.forEach(h => h.classList.remove('active'))
-  })
+  // Re-initialize when slide changes
+  const originalShowSlide = showSlide
+  showSlide = function(index: number) {
+    originalShowSlide(index)
+    setTimeout(setupHotspots, 50) // Wait for slide transition
+  }
 </script>
 
 <style>
@@ -162,28 +183,18 @@ function getCtaHref(ctaObj: any): string {
     overflow: hidden;
   }
 
-  .hero-carousel::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--overlay-hero);
-    z-index: 2;
-    pointer-events: none;
-  }
-
   .hero-container {
     position: relative;
-    z-index: 1;
     max-width: 1440px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    min-height: 877px;
+    min-height: 700px;
     align-items: center;
   }
 
   .hero-content {
-    padding: 4rem 2rem 4rem 4rem;
+    padding: 2rem 2rem 2rem 4rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -288,67 +299,26 @@ function getCtaHref(ctaObj: any): string {
     position: absolute;
     width: 24px;
     height: 24px;
-    background: rgba(0, 85, 172, 0.8);
-    border: 2px solid rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 50%;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 85, 172, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     z-index: 10;
     padding: 0;
   }
 
-  .hotspot:hover,
+  .hotspot:hover {
+    transform: scale(1.2);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
   .hotspot.active {
+    background: rgba(0, 85, 172, 0.9);
+    border-color: white;
     transform: scale(1.3);
-    box-shadow: 0 4px 16px rgba(0, 85, 172, 0.5);
-  }
-
-  .hotspot-tooltip {
-    position: absolute;
-    bottom: calc(100% + 12px);
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 85, 172, 0.95);
-    backdrop-filter: blur(8px);
-    color: white;
-    padding: 12px 16px;
-    border-radius: 6px;
-    width: 220px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s ease, visibility 0.2s ease;
-    pointer-events: none;
-    text-align: left;
-  }
-
-  .hotspot-tooltip::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border: 8px solid transparent;
-    border-top-color: rgba(0, 85, 172, 0.95);
-  }
-
-  .hotspot.active .hotspot-tooltip {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .hotspot-tooltip strong {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-
-  .hotspot-tooltip p {
-    font-size: 12px;
-    line-height: 1.4;
-    margin: 0;
-    opacity: 0.9;
+    box-shadow: 0 4px 16px rgba(0, 85, 172, 0.6);
   }
 
   /* Hotspot positions are set via inline styles from CMS */
@@ -363,9 +333,10 @@ function getCtaHref(ctaObj: any): string {
     padding: 1.5rem;
     border-radius: 4px;
     max-width: 256px;
+    transition: opacity 0.3s ease;
   }
 
-  .feature-callout strong {
+  .feature-callout .callout-title {
     display: block;
     font-size: 18px;
     font-weight: 600;
@@ -373,7 +344,7 @@ function getCtaHref(ctaObj: any): string {
     line-height: 1.2;
   }
 
-  .feature-callout p {
+  .feature-callout .callout-description {
     font-size: 14px;
     line-height: 1.4;
     margin: 0;
@@ -382,7 +353,7 @@ function getCtaHref(ctaObj: any): string {
 
   .carousel-controls {
     position: absolute;
-    bottom: 60px;
+    bottom: 24px;
     right: 60px;
     display: flex;
     align-items: center;

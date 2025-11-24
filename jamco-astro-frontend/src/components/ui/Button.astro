@@ -26,6 +26,8 @@ const { href = '#', text, variant = 'primary', target } = Astro.props
     transition: all var(--transition-base);
     cursor: pointer;
     border: 1px solid transparent;
+    width: fit-content;
+    max-width: 300px;
   }
 
   .btn-primary {
@@ -41,7 +43,7 @@ const { href = '#', text, variant = 'primary', target } = Astro.props
   }
 
   .btn-secondary {
-    background: var(--color-light);
+    background: transparent;
     color: var(--color-primary);
     border-color: var(--color-primary);
   }

@@ -28,12 +28,14 @@ const { heading, description, label, products, showPagination = true } = Astro.p
           <div class="product-card">
             {product.images && product.images[0] && (
               <img
-                src={urlFor(product.images[0]).width(320).height(400).fit('crop').auto('format').url()}
+                src={urlFor(product.images[0]).width(400).height(500).fit('crop').auto('format').url()}
                 alt={product.name}
                 loading="lazy"
               />
             )}
-            <h5>{product.name}</h5>
+            <div class="product-label">
+              <h5>{product.name}</h5>
+            </div>
           </div>
         ))}
       </div>
@@ -88,15 +90,15 @@ const { heading, description, label, products, showPagination = true } = Astro.p
 
 <style>
   .product-carousel {
-    background: var(--color-primary);
+    background: #3767AD;
     color: var(--color-light);
-    padding: var(--section-gap) 0;
+    padding: 80px 0 100px;
   }
 
   .carousel-header {
-    max-width: var(--container-content);
-    margin: 0 auto var(--spacing-xl);
-    padding: 0 var(--spacing-md);
+    max-width: 1440px;
+    margin: 0 auto 60px;
+    padding: 0 72px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -107,30 +109,36 @@ const { heading, description, label, products, showPagination = true } = Astro.p
   }
 
   h3 {
-    margin-bottom: 0.5rem;
-    color: var(--color-light);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 52px;
+    font-weight: 300;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: white;
+    letter-spacing: -0.02em;
   }
 
   .description {
-    color: var(--color-light);
+    font-size: 18px;
+    color: white;
     opacity: 0.9;
     margin: 0;
+    line-height: 1.6;
   }
 
   .label {
-    font-size: var(--text-xs);
+    font-size: 12px;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    background: rgba(255, 255, 255, 0.15);
-    padding: 6px 12px;
-    border-radius: 4px;
+    color: white;
     white-space: nowrap;
   }
 
   .carousel-wrapper {
-    max-width: var(--container-content);
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 72px;
   }
 
   .carousel {
@@ -138,8 +146,8 @@ const { heading, description, label, products, showPagination = true } = Astro.p
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    margin: 0 -var(--spacing-md);
-    padding: 0 var(--spacing-md);
+    margin: 0 -72px;
+    padding: 0 72px;
   }
 
   .carousel::-webkit-scrollbar {
@@ -148,71 +156,84 @@ const { heading, description, label, products, showPagination = true } = Astro.p
 
   .carousel-track {
     display: flex;
-    gap: var(--card-gap);
+    gap: 24px;
   }
 
   .product-card {
-    flex: 0 0 320px;
+    position: relative;
+    flex: 0 0 360px;
     scroll-snap-align: start;
-    background: var(--color-light);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
     overflow: hidden;
-    transition: transform var(--transition-base);
+    transition: transform 0.3s ease;
   }
 
   .product-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px);
   }
 
   .product-card img {
     width: 100%;
-    height: 400px;
+    height: 450px;
     object-fit: cover;
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    display: block;
   }
 
-  .product-card h5 {
-    padding: 1rem 1.25rem;
-    color: var(--color-dark);
-    font-size: 16px;
+  .product-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px 24px;
+  }
+
+  .product-label h5 {
+    color: #000;
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.3;
   }
 
   .carousel-controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 1rem;
-    margin-top: var(--spacing-lg);
+    gap: 16px;
+    margin-top: 48px;
   }
 
   .carousel-nav {
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 48px;
+    height: 48px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
     background: transparent;
-    color: var(--color-light);
+    color: white;
     border-radius: 50%;
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
-    transition: all var(--transition-base);
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .carousel-nav:hover {
-    background: var(--color-light);
-    color: var(--color-primary);
-    border-color: var(--color-light);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: white;
   }
 
   .pagination {
-    font-size: var(--text-sm);
-    font-weight: var(--weight-medium);
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    min-width: 60px;
+    text-align: center;
   }
 
   .pagination .current {
-    font-weight: var(--weight-bold);
+    font-weight: 700;
   }
 
   @media (max-width: 768px) {

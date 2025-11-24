@@ -110,16 +110,8 @@ function getCtaHref(): string {
     max-width: var(--container-max);
     margin: 0 auto;
     display: grid;
-    grid-template-columns: var(--split-content) var(--split-image);
+    grid-template-columns: 1fr 1fr;
     min-height: 648px;
-  }
-
-  .image-right .split-container {
-    grid-template-columns: var(--split-content) var(--split-image);
-  }
-
-  .image-left .split-container {
-    grid-template-columns: var(--split-image) var(--split-content);
   }
 
   .image-left .content-side {
@@ -128,31 +120,16 @@ function getCtaHref(): string {
 
   .content-side {
     position: relative;
-    padding: var(--spacing-2xl) var(--spacing-2xl) var(--spacing-2xl) calc(var(--spacing-2xl) + 24px);
+    padding: var(--spacing-2xl) 72px;
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
-  .content-side::before {
-    content: '';
-    position: absolute;
-    left: var(--spacing-lg);
-    top: var(--spacing-2xl);
-    bottom: var(--spacing-2xl);
-    width: 3px;
-    background: var(--color-primary);
-  }
-
-  .bg-blue .content-side::before,
-  .bg-dark-blue .content-side::before {
-    background: var(--color-light);
-    opacity: 0.3;
-  }
-
   .content-side h2 {
     margin-bottom: 1.5rem;
     color: var(--color-primary);
+    font-weight: 300;
   }
 
   .description {
@@ -186,12 +163,17 @@ function getCtaHref(): string {
   .image-side {
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
   }
 
   .image-side img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    max-width: 100%;
   }
 
   @media (max-width: 1024px) {
@@ -206,13 +188,6 @@ function getCtaHref(): string {
 
     .content-side {
       padding: var(--spacing-xl);
-      padding-left: calc(var(--spacing-xl) + 20px);
-    }
-
-    .content-side::before {
-      left: var(--spacing-md);
-      top: var(--spacing-xl);
-      bottom: var(--spacing-xl);
     }
 
     .image-side {
@@ -222,14 +197,7 @@ function getCtaHref(): string {
 
   @media (max-width: 768px) {
     .content-side {
-      padding: 1.5rem 1rem 1.5rem 2rem;
-    }
-
-    .content-side::before {
-      left: 0.75rem;
-      top: 1.5rem;
-      bottom: 1.5rem;
-      width: 2px;
+      padding: 1.5rem 1rem;
     }
 
     .content-side h2 {

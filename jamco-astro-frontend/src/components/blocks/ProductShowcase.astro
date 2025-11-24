@@ -5,6 +5,7 @@ interface Props {
   heading: string
   subheading?: string
   productImage?: any
+  productImages?: any[]
   brandName?: string
   brandDescription?: string
   showPagination?: boolean
@@ -15,13 +16,15 @@ const {
   heading,
   subheading,
   productImage,
+  productImages = [],
   brandName = 'Venture',
   brandDescription,
   showPagination = true,
   backgroundColor = 'light-blue'
 } = Astro.props
 
-const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').url() : null
+// Support both single image and multiple images
+const images = productImages.length > 0 ? productImages : (productImage ? [productImage] : [])
 ---
 
 <section class={`product-showcase bg-${backgroundColor}`}>
@@ -33,11 +36,23 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
 
     <div class="showcase-product">
       <div class="product-card">
-        {imageUrl && <img src={imageUrl} alt={heading} />}
-        {showPagination && (
+        <div class="image-slider">
+          {images.map((img: any, index: number) => {
+            const imageUrl = urlFor(img).width(800).auto('format').url()
+            return (
+              <img
+                src={imageUrl}
+                alt={img.alt || heading}
+                class={`slide-image ${index === 0 ? 'active' : ''}`}
+                data-index={index}
+              />
+            )
+          })}
+        </div>
+        {showPagination && images.length > 1 && (
           <div class="pagination">
             <button class="nav-btn prev" aria-label="Previous">←</button>
-            <span class="indicator"><span class="current">01</span> / 02</span>
+            <span class="indicator"><span class="current">01</span> / {String(images.length).padStart(2, '0')}</span>
             <button class="nav-btn next" aria-label="Next">→</button>
           </div>
         )}
@@ -50,6 +65,38 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
     </div>
   </div>
 </section>
+
+<script>
+  let currentIndex = 0
+  const slides = document.querySelectorAll('.product-showcase .slide-image')
+  const prevBtn = document.querySelector('.product-showcase .nav-btn.prev')
+  const nextBtn = document.querySelector('.product-showcase .nav-btn.next')
+  const indicator = document.querySelector('.product-showcase .indicator .current')
+
+  function showImage(index: number) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('active', i === index)
+    })
+    if (indicator) {
+      indicator.textContent = String(index + 1).padStart(2, '0')
+    }
+    currentIndex = index
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      const prev = (currentIndex - 1 + slides.length) % slides.length
+      showImage(prev)
+    })
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      const next = (currentIndex + 1) % slides.length
+      showImage(next)
+    })
+  }
+</script>
 
 <style>
   .product-showcase {
@@ -131,9 +178,18 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
     padding: 40px;
   }
 
-  .product-card img {
+  .image-slider {
+    position: relative;
+    width: 100%;
+  }
+
+  .slide-image {
     width: 100%;
     height: auto;
+    display: none;
+  }
+
+  .slide-image.active {
     display: block;
   }
 

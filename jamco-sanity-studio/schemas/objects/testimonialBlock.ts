@@ -104,6 +104,22 @@ export default defineType({
       },
       initialValue: 'centered',
     }),
+    defineField({
+      name: 'backgroundImage',
+      title: 'Background Image',
+      type: 'image',
+      description: 'Optional background image (will show through blue overlay)',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

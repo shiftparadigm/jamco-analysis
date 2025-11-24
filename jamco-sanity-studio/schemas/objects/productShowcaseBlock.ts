@@ -20,9 +20,31 @@ export default defineType({
       name: 'productImage',
       title: 'Product Image',
       type: 'image',
+      description: 'Single product image (legacy support)',
       options: {
         hotspot: true,
       },
+    }),
+    defineField({
+      name: 'productImages',
+      title: 'Product Images',
+      type: 'array',
+      description: 'Multiple images for carousel (use this for slideshows)',
+      of: [
+        {
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'brandName',
