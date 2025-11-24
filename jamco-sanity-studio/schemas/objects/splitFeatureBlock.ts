@@ -1,4 +1,4 @@
-import {defineType, defineField} from 'sanity'
+import { defineType, defineField, type Rule } from 'sanity'
 
 export default defineType({
   name: 'splitFeatureBlock',
@@ -10,7 +10,7 @@ export default defineType({
       title: 'Heading',
       type: 'string',
       description: 'H2 feature heading (64px)',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     }),
     defineField({
       name: 'description',
@@ -18,13 +18,13 @@ export default defineType({
       type: 'text',
       rows: 4,
       description: 'Main description text (18px)',
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     }),
     defineField({
       name: 'bulletPoints',
       title: 'Bullet Points',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
       description: 'Feature highlights',
     }),
     defineField({
@@ -36,7 +36,7 @@ export default defineType({
       name: 'featureImage',
       title: 'Feature Image',
       type: 'image',
-      options: {hotspot: true},
+      options: { hotspot: true },
       fields: [
         {
           name: 'alt',
@@ -44,14 +44,14 @@ export default defineType({
           type: 'string',
         },
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule: Rule) => Rule.required(),
     }),
     defineField({
       name: 'backgroundImage',
       title: 'Background Image',
       type: 'image',
       description: 'Optional background image for the content side',
-      options: {hotspot: true},
+      options: { hotspot: true },
       fields: [
         {
           name: 'alt',
@@ -66,8 +66,8 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'Left', value: 'left'},
-          {title: 'Right', value: 'right'},
+          { title: 'Left', value: 'left' },
+          { title: 'Right', value: 'right' },
         ],
         layout: 'radio',
       },
@@ -79,9 +79,10 @@ export default defineType({
       type: 'string',
       options: {
         list: [
-          {title: 'White', value: 'white'},
-          {title: 'Light Blue', value: 'light-blue'},
-          {title: 'Blue', value: 'blue'},
+          { title: 'White', value: 'white' },
+          { title: 'Light Blue', value: 'light-blue' },
+          { title: 'Blue', value: 'blue' },
+          { title: 'Dark Blue', value: 'dark-blue' },
         ],
         layout: 'radio',
       },
@@ -94,7 +95,7 @@ export default defineType({
       media: 'featureImage',
       position: 'imagePosition',
     },
-    prepare({title, media, position}) {
+    prepare({ title, media, position }) {
       return {
         title: title,
         subtitle: `Image ${position}`,

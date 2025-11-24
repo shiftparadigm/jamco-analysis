@@ -87,13 +87,22 @@ function getCtaHref(): string {
     color: var(--color-light);
   }
 
-  .bg-blue h2,
-  .bg-blue .description,
-  .bg-blue .bullet-points li {
+  .bg-dark-blue {
+    background-color: var(--color-dark-bg);
     color: var(--color-light);
   }
 
-  .bg-blue .bullet-points li::before {
+  .bg-blue h2,
+  .bg-blue .description,
+  .bg-blue .bullet-points li,
+  .bg-dark-blue h2,
+  .bg-dark-blue .description,
+  .bg-dark-blue .bullet-points li {
+    color: var(--color-light);
+  }
+
+  .bg-blue .bullet-points li::before,
+  .bg-dark-blue .bullet-points li::before {
     color: var(--color-light);
   }
 
@@ -135,7 +144,8 @@ function getCtaHref(): string {
     background: var(--color-primary);
   }
 
-  .bg-blue .content-side::before {
+  .bg-blue .content-side::before,
+  .bg-dark-blue .content-side::before {
     background: var(--color-light);
     opacity: 0.3;
   }
@@ -166,11 +176,11 @@ function getCtaHref(): string {
   }
 
   .bullet-points li::before {
-    content: '•';
+    content: '|';
     position: absolute;
     left: 0;
     color: var(--color-primary);
-    font-weight: var(--weight-bold);
+    font-weight: var(--weight-light);
   }
 
   .image-side {
