@@ -79,6 +79,91 @@ export default defineType({
       placeholder: '01 / 02',
     }),
     defineField({
+      name: 'slides',
+      title: 'Carousel Slides',
+      type: 'array',
+      description: 'Multiple slides for hero carousel',
+      of: [
+        {
+          type: 'object',
+          name: 'heroSlide',
+          fields: [
+            defineField({
+              name: 'floatingImage',
+              title: 'Floating Product Image',
+              type: 'image',
+              options: {hotspot: true},
+              fields: [
+                {
+                  name: 'alt',
+                  title: 'Alt Text',
+                  type: 'string',
+                },
+              ],
+            }),
+            defineField({
+              name: 'featureCallout',
+              title: 'Feature Callout',
+              type: 'featureCallout',
+            }),
+            defineField({
+              name: 'hotspots',
+              title: 'Image Hotspots',
+              type: 'array',
+              of: [
+                {
+                  type: 'object',
+                  name: 'hotspot',
+                  fields: [
+                    defineField({
+                      name: 'title',
+                      title: 'Title',
+                      type: 'string',
+                    }),
+                    defineField({
+                      name: 'description',
+                      title: 'Description',
+                      type: 'text',
+                      rows: 2,
+                    }),
+                    defineField({
+                      name: 'positionX',
+                      title: 'Position X (%)',
+                      type: 'number',
+                      validation: (Rule) => Rule.min(0).max(100),
+                    }),
+                    defineField({
+                      name: 'positionY',
+                      title: 'Position Y (%)',
+                      type: 'number',
+                      validation: (Rule) => Rule.min(0).max(100),
+                    }),
+                  ],
+                  preview: {
+                    select: {
+                      title: 'title',
+                    },
+                  },
+                },
+              ],
+            }),
+          ],
+          preview: {
+            select: {
+              media: 'floatingImage',
+              label: 'featureCallout.label',
+            },
+            prepare({media, label}) {
+              return {
+                title: label || 'Slide',
+                media,
+              }
+            },
+          },
+        },
+      ],
+    }),
+    defineField({
       name: 'hotspots',
       title: 'Image Hotspots',
       type: 'array',
