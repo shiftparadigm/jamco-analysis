@@ -13,6 +13,13 @@ export default defineType({
       options: {
         hotspot: true,
       },
+      fields: [
+        {
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+        },
+      ],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
