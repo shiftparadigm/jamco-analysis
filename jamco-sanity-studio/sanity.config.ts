@@ -1,8 +1,12 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
+import {presentationTool} from '@sanity/presentation'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {schemaTypes} from './schemas'
 import {deskStructure} from './deskStructure'
+
+// Preview URL - use localhost in dev, production URL otherwise
+const PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:4321'
 
 export default defineConfig({
   name: 'default',
@@ -14,6 +18,47 @@ export default defineConfig({
   plugins: [
     structureTool({
       structure: deskStructure,
+    }),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: `${PREVIEW_URL}/api/draft`,
+        },
+      },
+      resolve: {
+        mainDocuments: [
+          {
+            route: '/:slug',
+            filter: '_type == "page" && slug.current == $slug',
+          },
+        ],
+        locations: {
+          page: (doc) => ({
+            locations: [
+              {
+                title: doc?.title || 'Page',
+                href: `/${doc?.slug?.current || ''}`,
+              },
+            ],
+          }),
+          post: (doc) => ({
+            locations: [
+              {
+                title: doc?.title || 'Post',
+                href: `/blog/${doc?.slug?.current || ''}`,
+              },
+            ],
+          }),
+          product: (doc) => ({
+            locations: [
+              {
+                title: doc?.name || 'Product',
+                href: `/products/${doc?.slug?.current || ''}`,
+              },
+            ],
+          }),
+        },
+      },
     }),
     documentInternationalization({
       supportedLanguages: [
