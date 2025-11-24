@@ -1,6 +1,5 @@
 ---
 import '../styles/design-tokens.css'
-import VisualEditing from '../components/VisualEditing'
 
 interface Props {
   title: string
@@ -18,9 +17,6 @@ const {
 
 const siteName = 'Jamco America'
 const fullTitle = title ? `${title} | ${siteName}` : siteName
-
-// Check if we're in draft mode
-const isDraftMode = Astro.cookies.get('__sanity_draft')?.value === 'true'
 ---
 
 <!DOCTYPE html>
@@ -43,6 +39,5 @@ const isDraftMode = Astro.cookies.get('__sanity_draft')?.value === 'true'
   </head>
   <body>
     <slot />
-    {isDraftMode && <VisualEditing client:only="react" />}
   </body>
 </html>

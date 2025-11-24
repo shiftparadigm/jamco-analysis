@@ -1,49 +1,19 @@
-import { createClient, type QueryParams } from '@sanity/client'
+import { createClient } from '@sanity/client'
 import imageUrlBuilder from '@sanity/image-url'
 
 const projectId = 'c94x8u55'
 const dataset = 'production'
 const apiVersion = '2024-01-01'
 
-// Base client for public queries
 export const client = createClient({
   projectId,
   dataset,
-  useCdn: false,
+  useCdn: true, // Enable CDN for static builds
   apiVersion,
 })
 
 // Aliased export for backwards compatibility
 export const sanityClient = client
-
-// Client with token for draft mode
-export const previewClient = createClient({
-  projectId,
-  dataset,
-  useCdn: false,
-  apiVersion,
-  token: import.meta.env.SANITY_API_READ_TOKEN,
-  perspective: 'previewDrafts',
-  stega: {
-    enabled: true,
-    studioUrl: 'http://localhost:3333',
-  },
-})
-
-// Helper to get the right client based on draft mode
-export function getClient(isDraftMode: boolean = false) {
-  return isDraftMode ? previewClient : client
-}
-
-// Helper to load query with draft mode support
-export async function loadQuery<T = any>(
-  query: string,
-  params: QueryParams = {},
-  isDraftMode: boolean = false
-): Promise<T> {
-  const selectedClient = getClient(isDraftMode)
-  return selectedClient.fetch<T>(query, params)
-}
 
 const builder = imageUrlBuilder(client)
 
