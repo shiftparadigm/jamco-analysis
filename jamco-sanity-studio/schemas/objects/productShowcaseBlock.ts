@@ -36,6 +36,21 @@ export default defineType({
       type: 'text',
       rows: 3,
     }),
+    defineField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Primary Blue', value: 'primary' },
+          { title: 'Light Blue', value: 'light-blue' },
+          { title: 'Dark Blue', value: 'dark-blue' },
+          { title: 'White', value: 'white' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'light-blue',
+    }),
   ],
   preview: {
     select: {

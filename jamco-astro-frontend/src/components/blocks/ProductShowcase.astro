@@ -8,6 +8,7 @@ interface Props {
   brandName?: string
   brandDescription?: string
   showPagination?: boolean
+  backgroundColor?: 'primary' | 'light-blue' | 'dark-blue' | 'white'
 }
 
 const {
@@ -16,13 +17,14 @@ const {
   productImage,
   brandName = 'Venture',
   brandDescription,
-  showPagination = true
+  showPagination = true,
+  backgroundColor = 'light-blue'
 } = Astro.props
 
 const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').url() : null
 ---
 
-<section class="product-showcase">
+<section class={`product-showcase bg-${backgroundColor}`}>
   <div class="showcase-container">
     <div class="showcase-content">
       <h2>{heading}</h2>
@@ -51,50 +53,82 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
 
 <style>
   .product-showcase {
-    background: var(--color-primary);
     color: var(--color-light);
-    padding: var(--section-gap) 0;
+    padding: 80px 0 100px;
+  }
+
+  .product-showcase.bg-primary {
+    background: var(--color-primary);
+  }
+
+  .product-showcase.bg-light-blue {
+    background: #0B59A9;
+  }
+
+  .product-showcase.bg-dark-blue {
+    background: var(--color-dark-bg);
+  }
+
+  .product-showcase.bg-white {
+    background: var(--color-light);
+    color: var(--color-dark);
+  }
+
+  .product-showcase.bg-white h2,
+  .product-showcase.bg-white .brand-name {
+    color: var(--color-primary);
+  }
+
+  .product-showcase.bg-white .subheading,
+  .product-showcase.bg-white .brand-description {
+    color: var(--color-dark);
+    opacity: 0.8;
   }
 
   .showcase-container {
-    max-width: var(--container-max);
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
+    padding: 0 72px;
     display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: var(--spacing-xl);
-    align-items: start;
+    grid-template-columns: 380px 1fr;
+    gap: 100px;
+    align-items: center;
   }
 
   .showcase-content {
-    padding-top: var(--spacing-xl);
+    padding-top: 0;
   }
 
   h2 {
-    font-size: clamp(48px, 6vw, 80px);
-    font-weight: var(--weight-light);
-    line-height: 1;
-    margin-bottom: var(--spacing-md);
-    letter-spacing: -0.03em;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 96px;
+    font-weight: 300;
+    line-height: 0.9;
+    margin-bottom: 24px;
+    letter-spacing: -0.06em;
+    color: white;
   }
 
   .subheading {
-    font-size: var(--text-body);
-    opacity: 0.9;
-    max-width: 300px;
+    font-size: 16px;
+    line-height: 1.6;
+    letter-spacing: -0.03em;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 340px;
   }
 
   .showcase-product {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: 20px;
   }
 
   .product-card {
-    background: var(--color-light);
-    border-radius: var(--radius-md);
+    background: white;
+    border-radius: 16px;
     overflow: hidden;
     position: relative;
+    padding: 40px;
   }
 
   .product-card img {
@@ -105,61 +139,65 @@ const imageUrl = productImage ? urlFor(productImage).width(800).auto('format').u
 
   .pagination {
     position: absolute;
-    bottom: var(--spacing-md);
-    right: var(--spacing-md);
+    bottom: 32px;
+    right: 32px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 12px;
   }
 
   .nav-btn {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    border: 1px solid var(--color-primary);
+    border: 1px solid #0B59A9;
     background: transparent;
-    color: var(--color-primary);
+    color: #0B59A9;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    transition: all var(--transition-base);
+    font-size: 18px;
+    transition: all 0.2s ease;
+    font-weight: 300;
   }
 
   .nav-btn:hover {
-    background: var(--color-primary);
-    color: var(--color-light);
+    background: #0B59A9;
+    color: white;
   }
 
   .indicator {
-    font-size: var(--text-sm);
-    color: var(--color-primary);
+    font-size: 14px;
+    color: #0B59A9;
+    font-weight: 500;
   }
 
   .indicator .current {
-    font-weight: var(--weight-bold);
+    font-weight: 700;
   }
 
   .brand-info {
     display: flex;
     align-items: flex-start;
-    gap: var(--spacing-lg);
+    gap: 32px;
   }
 
   .brand-name {
     font-family: 'Times New Roman', serif;
     font-style: italic;
-    font-size: 28px;
-    color: var(--color-light);
+    font-size: 36px;
+    color: white;
     flex-shrink: 0;
+    line-height: 1;
   }
 
   .brand-description {
-    font-size: var(--text-sm);
-    line-height: 1.6;
-    opacity: 0.9;
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
     margin: 0;
+    padding-top: 4px;
   }
 
   @media (max-width: 1024px) {
