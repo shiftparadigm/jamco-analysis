@@ -67,7 +67,7 @@ export default defineType({
           },
         },
       ],
-      validation: (Rule) => Rule.required().min(1).max(3),
+      validation: (Rule) => Rule.max(3),
     }),
     defineField({
       name: 'quoteSize',

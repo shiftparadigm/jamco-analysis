@@ -21,7 +21,6 @@ export default defineType({
       name: 'cta',
       title: 'Call to Action',
       type: 'cta',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'backgroundImage',

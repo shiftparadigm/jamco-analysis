@@ -9,7 +9,6 @@ export default defineType({
       name: 'text',
       title: 'Button Text',
       type: 'string',
-      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'linkType',

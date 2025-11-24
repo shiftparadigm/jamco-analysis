@@ -42,7 +42,6 @@ export default defineType({
           name: 'alt',
           title: 'Alt Text',
           type: 'string',
-          validation: (Rule) => Rule.required(),
         },
       ],
       validation: (Rule) => Rule.required(),
@@ -73,6 +72,20 @@ export default defineType({
         layout: 'radio',
       },
       initialValue: 'right',
+    }),
+    defineField({
+      name: 'backgroundColor',
+      title: 'Background Color',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'White', value: 'white'},
+          {title: 'Light Blue', value: 'light-blue'},
+          {title: 'Blue', value: 'blue'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'white',
     }),
   ],
   preview: {
