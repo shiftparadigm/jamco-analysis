@@ -12,14 +12,14 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
+      name: 'subheading',
+      title: 'Subheading',
       type: 'text',
       rows: 3,
     }),
     defineField({
-      name: 'cta',
-      title: 'Call to Action',
+      name: 'ctaButton',
+      title: 'CTA Button',
       type: 'cta',
     }),
     defineField({

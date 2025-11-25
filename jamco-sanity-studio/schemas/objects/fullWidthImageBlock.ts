@@ -40,6 +40,19 @@ export default defineType({
       },
       initialValue: 'auto',
     }),
+    defineField({
+      name: 'watermark',
+      title: 'Watermark',
+      type: 'string',
+      description: 'Optional watermark text to overlay on image',
+    }),
+    defineField({
+      name: 'showNavArrows',
+      title: 'Show Navigation Arrows',
+      type: 'boolean',
+      description: 'Display left/right navigation arrows',
+      initialValue: false,
+    }),
   ],
   preview: {
     select: {
