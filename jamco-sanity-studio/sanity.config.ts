@@ -21,11 +21,7 @@ export default defineConfig({
       structure: deskStructure,
     }),
     presentationTool({
-      previewUrl: {
-        draftMode: {
-          enable: `${PREVIEW_URL}/api/draft`,
-        },
-      },
+      previewUrl: PREVIEW_URL,
       resolve: {
         mainDocuments: [
           {
