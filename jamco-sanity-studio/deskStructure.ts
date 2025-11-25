@@ -17,6 +17,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('English Pages')
                     .filter('_type == "page" && language == "en"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                 ),
               S.listItem()
@@ -25,6 +26,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('Japanese Pages')
                     .filter('_type == "page" && language == "ja"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                 ),
               S.divider(),
@@ -34,6 +36,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('All Pages')
                     .filter('_type == "page"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'title', direction: 'asc'}])
                 ),
             ])
@@ -54,6 +57,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('English News')
                     .filter('_type == "post" && language == "en"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.listItem()
@@ -62,6 +66,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('Japanese News')
                     .filter('_type == "post" && language == "ja"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
               S.divider(),
@@ -71,6 +76,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('All News')
                     .filter('_type == "post"')
+                    .apiVersion('2024-01-01')
                     .defaultOrdering([{field: 'publishedAt', direction: 'desc'}])
                 ),
             ])
@@ -91,6 +97,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('English Navigation')
                     .filter('_type == "navigation" && language == "en"')
+                    .apiVersion('2024-01-01')
                 ),
               S.listItem()
                 .title('Japanese Navigation')
@@ -98,6 +105,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('Japanese Navigation')
                     .filter('_type == "navigation" && language == "ja"')
+                    .apiVersion('2024-01-01')
                 ),
               S.divider(),
               S.listItem()
@@ -106,6 +114,7 @@ export const deskStructure = (S: StructureBuilder) =>
                   S.documentList()
                     .title('All Navigation')
                     .filter('_type == "navigation"')
+                    .apiVersion('2024-01-01')
                 ),
             ])
         ),
@@ -119,6 +128,7 @@ export const deskStructure = (S: StructureBuilder) =>
           S.documentList()
             .title('Products')
             .filter('_type == "product"')
+            .apiVersion('2024-01-01')
             .defaultOrdering([{field: 'name', direction: 'asc'}])
         ),
 
@@ -129,6 +139,7 @@ export const deskStructure = (S: StructureBuilder) =>
           S.documentList()
             .title('Product Categories')
             .filter('_type == "productCategory"')
+            .apiVersion('2024-01-01')
             .defaultOrdering([{field: 'name', direction: 'asc'}])
         ),
 
@@ -141,6 +152,7 @@ export const deskStructure = (S: StructureBuilder) =>
           S.documentList()
             .title('UI Translations')
             .filter('_type == "translations"')
+            .apiVersion('2024-01-01')
         ),
 
       S.divider(),
