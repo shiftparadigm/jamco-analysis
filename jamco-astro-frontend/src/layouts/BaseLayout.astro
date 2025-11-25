@@ -1,5 +1,6 @@
 ---
 import '../styles/design-tokens.css'
+import VisualEditing from '../components/VisualEditing'
 
 interface Props {
   title: string
@@ -17,6 +18,9 @@ const {
 
 const siteName = 'Jamco America'
 const fullTitle = title ? `${title} | ${siteName}` : siteName
+
+// Enable visual editing in preview mode
+const isDraftMode = Astro.url.searchParams.has('preview')
 ---
 
 <!DOCTYPE html>
@@ -39,5 +43,6 @@ const fullTitle = title ? `${title} | ${siteName}` : siteName
   </head>
   <body>
     <slot />
+    {isDraftMode && <VisualEditing client:only="react" />}
   </body>
 </html>
