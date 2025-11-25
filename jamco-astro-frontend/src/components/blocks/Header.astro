@@ -1,9 +1,14 @@
 ---
+import { client } from '../../lib/sanity'
+
 interface Props {
   breadcrumb?: Array<{ label: string; href?: string }>
 }
 
 const { breadcrumb = [] } = Astro.props
+
+// Fetch products for dropdown
+const products = await client.fetch('*[_type == "product"] | order(name asc) { name, "slug": slug.current }')
 ---
 
 <header class="site-header">
@@ -20,12 +25,19 @@ const { breadcrumb = [] } = Astro.props
       <nav class="main-nav">
         <a href="/locations" class="nav-item">LOCATIONS</a>
         <a href="/news" class="nav-item">NEWS</a>
-        <button class="nav-item dropdown">
-          PRODUCTS
-          <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
+        <div class="nav-dropdown">
+          <button class="nav-item dropdown">
+            PRODUCTS
+            <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="dropdown-menu">
+            {products.map((product: any) => (
+              <a href={`/products/${product.slug}`} class="dropdown-item">{product.name}</a>
+            ))}
+          </div>
+        </div>
       </nav>
     </div>
   </div>
@@ -114,6 +126,48 @@ const { breadcrumb = [] } = Astro.props
 
   .nav-item.dropdown svg {
     margin-top: 1px;
+  }
+
+  /* Dropdown */
+  .nav-dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 240px;
+    padding: 8px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+    z-index: 1000;
+  }
+
+  .nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-item {
+    display: block;
+    padding: 12px 20px;
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s ease;
+  }
+
+  .dropdown-item:hover {
+    background: #EDF4FA;
   }
 
   /* Breadcrumb Bar - Light Blue */
