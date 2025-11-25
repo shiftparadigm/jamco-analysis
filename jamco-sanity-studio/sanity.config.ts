@@ -6,8 +6,8 @@ import {schemaTypes} from './schemas'
 import {deskStructure} from './deskStructure'
 import {triggerRebuildAction} from './src/actions/triggerRebuild'
 
-// Preview URL - use localhost in dev, production URL otherwise
-const PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'http://localhost:4321'
+// Preview URL - defaults to production, can be overridden with SANITY_STUDIO_PREVIEW_URL for local dev
+const PREVIEW_URL = process.env.SANITY_STUDIO_PREVIEW_URL || 'https://blue-island-0b5fa6310.3.azurestaticapps.net'
 
 export default defineConfig({
   name: 'default',
