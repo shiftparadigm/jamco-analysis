@@ -22,6 +22,24 @@ npm run start  # Starts wp-env on http://localhost:8888
 - **Username**: admin
 - **Password**: password
 
+### Populating Content
+
+After starting the environment, populate the Premium Seating page with content:
+
+```bash
+./scripts/populate.sh
+```
+
+This script will:
+- Upload all 14 images from exported-images to WordPress media library
+- Create 10 content blocks (Hero, Section Intro, Feature Grid, 4 Split Features, Product Carousel, Testimonial, CTA)
+- Add product thumbnails
+- Build the complete Premium Seating page
+
+**No wp-admin required!** Everything is populated programmatically via WP-CLI.
+
+View the result at: http://localhost:8888/premium-seating/
+
 ### Stopping the Environment
 
 ```bash
