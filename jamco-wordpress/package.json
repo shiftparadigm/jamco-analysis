@@ -1,0 +1,15 @@
+{
+  "name": "jamco-wordpress",
+  "version": "1.0.0",
+  "description": "WordPress implementation of Jamco Premium Seating",
+  "scripts": {
+    "wp-env": "wp-env",
+    "start": "wp-env start",
+    "stop": "wp-env stop",
+    "clean": "wp-env clean",
+    "cli": "wp-env run cli wp"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^8.0.0"
+  }
+}
