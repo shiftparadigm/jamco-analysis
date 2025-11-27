@@ -7,6 +7,9 @@
 
 if (!defined('ABSPATH')) exit;
 
+// Include ACF field groups
+require_once get_template_directory() . '/inc/acf-field-groups.php';
+
 // Theme setup
 function jamco_theme_setup() {
     // Add theme support
