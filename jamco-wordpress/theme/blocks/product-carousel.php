@@ -3,13 +3,11 @@
  * Product Carousel Block Template
  */
 
-$data = $block_attributes['data'] ?? array();
-
-$heading = $data['heading'] ?? '';
-$description = $data['description'] ?? '';
-$label = $data['label'] ?? '';
-$product_ids = $data['products'] ?? array();
-$show_pagination = $data['show_pagination'] ?? false;
+$heading = get_field('heading');
+$description = get_field('description');
+$label = get_field('label');
+$product_ids = get_field('products') ?: array();
+$show_pagination = get_field('show_pagination');
 
 // Get product objects from IDs
 $products = array();

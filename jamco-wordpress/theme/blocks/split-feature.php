@@ -3,27 +3,12 @@
  * Split Feature Block Template
  */
 
-$data = $block_attributes['data'] ?? array();
-
-$heading = $data['heading'] ?? '';
-$description = $data['description'] ?? '';
-$image_position = $data['image_position'] ?? 'left';
-$background_color = $data['background_color'] ?? 'white';
-$cta_button = $data['cta_button'] ?? null;
-
-// Handle image
-$feature_image_id = $data['feature_image'] ?? 0;
-$feature_image = null;
-if ($feature_image_id) {
-    $image_url = wp_get_attachment_image_url($feature_image_id, 'full');
-    $image_alt = get_post_meta($feature_image_id, '_wp_attachment_image_alt', true);
-    if ($image_url) {
-        $feature_image = array(
-            'url' => $image_url,
-            'alt' => $image_alt
-        );
-    }
-}
+$heading = get_field('heading');
+$description = get_field('description');
+$image_position = get_field('image_position') ?: 'left';
+$background_color = get_field('background_color') ?: 'white';
+$cta_button = get_field('cta_button');
+$feature_image = get_field('feature_image');
 ?>
 
 <section class="split-feature bg-<?php echo esc_attr($background_color); ?> image-<?php echo esc_attr($image_position); ?>">
@@ -44,9 +29,11 @@ if ($feature_image_id) {
                 </p>
             <?php endif; ?>
 
-            <?php if (!empty($data['bullet_points'])) : ?>
+            <?php
+            $bullet_points = get_field('bullet_points');
+            if (!empty($bullet_points)) : ?>
                 <ul class="bullet-points">
-                    <?php foreach ($data['bullet_points'] as $point) : ?>
+                    <?php foreach ($bullet_points as $point) : ?>
                         <li><?php echo esc_html($point); ?></li>
                     <?php endforeach; ?>
                 </ul>

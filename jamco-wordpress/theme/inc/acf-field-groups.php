@@ -458,3 +458,162 @@ acf_add_local_field_group(array(
         ),
     ),
 ));
+
+// Product Showcase Block Field Group
+acf_add_local_field_group(array(
+    'key' => 'group_product_showcase',
+    'title' => 'Product Showcase Block Fields',
+    'fields' => array(
+        array(
+            'key' => 'field_product_showcase_heading',
+            'label' => 'Heading',
+            'name' => 'heading',
+            'type' => 'text',
+            'required' => 1,
+        ),
+        array(
+            'key' => 'field_product_showcase_subheading',
+            'label' => 'Subheading',
+            'name' => 'subheading',
+            'type' => 'textarea',
+            'rows' => 3,
+        ),
+        array(
+            'key' => 'field_product_showcase_brand_name',
+            'label' => 'Brand Name',
+            'name' => 'brand_name',
+            'type' => 'text',
+        ),
+        array(
+            'key' => 'field_product_showcase_brand_description',
+            'label' => 'Brand Description',
+            'name' => 'brand_description',
+            'type' => 'textarea',
+            'rows' => 4,
+        ),
+        array(
+            'key' => 'field_product_showcase_product_image',
+            'label' => 'Product Image',
+            'name' => 'product_image',
+            'type' => 'image',
+            'return_format' => 'array',
+            'required' => 1,
+        ),
+    ),
+    'location' => array(
+        array(
+            array(
+                'param' => 'block',
+                'operator' => '==',
+                'value' => 'acf/product-showcase',
+            ),
+        ),
+    ),
+));
+
+// Seating Diagram Block Field Group
+acf_add_local_field_group(array(
+    'key' => 'group_seating_diagram',
+    'title' => 'Seating Diagram Block Fields',
+    'fields' => array(
+        array(
+            'key' => 'field_seating_diagram_background_color',
+            'label' => 'Background Color',
+            'name' => 'background_color',
+            'type' => 'select',
+            'choices' => array(
+                'white' => 'White',
+                'light-blue' => 'Light Blue',
+                'blue' => 'Blue',
+            ),
+            'default_value' => 'white',
+            'required' => 1,
+        ),
+        array(
+            'key' => 'field_seating_diagram_diagram_image',
+            'label' => 'Diagram Image',
+            'name' => 'diagram_image',
+            'type' => 'image',
+            'return_format' => 'array',
+            'required' => 1,
+        ),
+        array(
+            'key' => 'field_seating_diagram_brand_logos',
+            'label' => 'Brand Logos',
+            'name' => 'brand_logos',
+            'type' => 'repeater',
+            'min' => 0,
+            'max' => 10,
+            'layout' => 'block',
+            'button_label' => 'Add Brand Logo',
+            'sub_fields' => array(
+                array(
+                    'key' => 'field_brand_logo_name',
+                    'label' => 'Brand Name',
+                    'name' => 'name',
+                    'type' => 'text',
+                    'required' => 1,
+                ),
+                array(
+                    'key' => 'field_brand_logo_tagline',
+                    'label' => 'Tagline',
+                    'name' => 'tagline',
+                    'type' => 'text',
+                ),
+            ),
+        ),
+    ),
+    'location' => array(
+        array(
+            array(
+                'param' => 'block',
+                'operator' => '==',
+                'value' => 'acf/seating-diagram',
+            ),
+        ),
+    ),
+));
+
+// Full Width Image Block Field Group
+acf_add_local_field_group(array(
+    'key' => 'group_full_width_image',
+    'title' => 'Full Width Image Block Fields',
+    'fields' => array(
+        array(
+            'key' => 'field_full_width_image_image',
+            'label' => 'Image',
+            'name' => 'image',
+            'type' => 'image',
+            'return_format' => 'array',
+            'required' => 1,
+        ),
+        array(
+            'key' => 'field_full_width_image_height',
+            'label' => 'Height',
+            'name' => 'height',
+            'type' => 'select',
+            'choices' => array(
+                'small' => 'Small',
+                'medium' => 'Medium',
+                'large' => 'Large',
+            ),
+            'default_value' => 'medium',
+            'required' => 1,
+        ),
+        array(
+            'key' => 'field_full_width_image_watermark',
+            'label' => 'Watermark Text',
+            'name' => 'watermark',
+            'type' => 'text',
+        ),
+    ),
+    'location' => array(
+        array(
+            array(
+                'param' => 'block',
+                'operator' => '==',
+                'value' => 'acf/full-width-image',
+            ),
+        ),
+    ),
+));

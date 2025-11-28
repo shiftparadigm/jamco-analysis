@@ -3,26 +3,11 @@
  * Product Showcase Block Template
  */
 
-$data = $block_attributes['data'] ?? array();
-
-$heading = $data['heading'] ?? '';
-$subheading = $data['subheading'] ?? '';
-$brand_name = $data['brand_name'] ?? '';
-$brand_description = $data['brand_description'] ?? '';
-
-// Handle image
-$product_image_id = $data['product_image'] ?? 0;
-$product_image = null;
-if ($product_image_id) {
-    $image_url = wp_get_attachment_image_url($product_image_id, 'full');
-    $image_alt = get_post_meta($product_image_id, '_wp_attachment_image_alt', true);
-    if ($image_url) {
-        $product_image = array(
-            'url' => $image_url,
-            'alt' => $image_alt
-        );
-    }
-}
+$heading = get_field('heading');
+$subheading = get_field('subheading');
+$brand_name = get_field('brand_name');
+$brand_description = get_field('brand_description');
+$product_image = get_field('product_image');
 ?>
 
 <section class="product-showcase">

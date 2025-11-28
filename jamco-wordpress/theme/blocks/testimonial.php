@@ -3,23 +3,12 @@
  * Testimonial Block Template
  */
 
-$data = $block_attributes['data'] ?? array();
-
-$quote = $data['quote'] ?? '';
-$author_name = $data['author_name'] ?? '';
-$author_title = $data['author_title'] ?? '';
-$author_company = $data['author_company'] ?? '';
-$background_color = $data['background_color'] ?? '#3767AD';
-
-// Handle author image
-$author_image_id = $data['author_image'] ?? 0;
-$author_image = null;
-if ($author_image_id) {
-    $image_url = wp_get_attachment_image_url($author_image_id, 'thumbnail');
-    if ($image_url) {
-        $author_image = array('url' => $image_url);
-    }
-}
+$quote = get_field('quote');
+$author_name = get_field('author_name');
+$author_title = get_field('author_title');
+$author_company = get_field('author_company');
+$background_color = get_field('background_color') ?: '#3767AD';
+$author_image = get_field('author_image');
 ?>
 
 <section class="testimonial" style="background-color: <?php echo esc_attr($background_color); ?>;">

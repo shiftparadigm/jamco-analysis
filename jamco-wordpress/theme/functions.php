@@ -56,135 +56,126 @@ function jamco_enqueue_block_editor_assets() {
 }
 add_action('enqueue_block_editor_assets', 'jamco_enqueue_block_editor_assets');
 
-// Register Jamco Blocks (using WordPress core block API)
+// Register Jamco Blocks (using ACF block API)
 function jamco_register_blocks() {
-    // Helper function to render block templates
-    $render_block = function($block_name) {
-        return function($attributes, $content, $block) use ($block_name) {
-            $template_path = get_template_directory() . "/blocks/{$block_name}.php";
-            if (file_exists($template_path)) {
-                ob_start();
-                // Make block attributes available
-                $block_attributes = $attributes;
-                $block_id = $block->context['blockId'] ?? uniqid('block_');
-                include $template_path;
-                return ob_get_clean();
-            }
-            return '';
-        };
-    };
+    // Check if ACF function exists
+    if (!function_exists('acf_register_block_type')) {
+        return;
+    }
 
     // Hero Block
-    register_block_type('jamco/hero', array(
-        'title'           => __('Hero Section', 'jamco'),
-        'description'     => __('Hero section with heading, image, and CTAs', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'cover-image',
-        'keywords'        => array('hero', 'banner', 'header'),
-        'supports'        => array('align' => false),
-        'attributes'      => array(
-            'data' => array('type' => 'object'),
+    acf_register_block_type(array(
+        'name'              => 'hero',
+        'title'             => __('Hero Section', 'jamco'),
+        'description'       => __('Hero section with heading, image, and CTAs', 'jamco'),
+        'render_template'   => 'blocks/hero.php',
+        'category'          => 'jamco',
+        'icon'              => 'cover-image',
+        'keywords'          => array('hero', 'banner', 'header'),
+        'supports'          => array(
+            'align' => false,
+            'mode' => false,
+            'jsx' => true
         ),
-        'render_callback' => $render_block('hero'),
     ));
 
     // Section Intro Block
-    register_block_type('jamco/section-intro', array(
-        'title'           => __('Section Intro', 'jamco'),
-        'description'     => __('Introduction section with eyebrow, heading, and description', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'editor-textcolor',
-        'keywords'        => array('section', 'intro', 'heading'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('section-intro'),
+    acf_register_block_type(array(
+        'name'              => 'section-intro',
+        'title'             => __('Section Intro', 'jamco'),
+        'description'       => __('Introduction section with eyebrow, heading, and description', 'jamco'),
+        'render_template'   => 'blocks/section-intro.php',
+        'category'          => 'jamco',
+        'icon'              => 'editor-textcolor',
+        'keywords'          => array('section', 'intro', 'heading'),
     ));
 
     // Feature Grid Block
-    register_block_type('jamco/feature-grid', array(
-        'title'           => __('Feature Grid', 'jamco'),
-        'description'     => __('3-column feature grid with images', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'grid-view',
-        'keywords'        => array('features', 'grid', 'columns'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('feature-grid'),
+    acf_register_block_type(array(
+        'name'              => 'feature-grid',
+        'title'             => __('Feature Grid', 'jamco'),
+        'description'       => __('3-column feature grid with images', 'jamco'),
+        'render_template'   => 'blocks/feature-grid.php',
+        'category'          => 'jamco',
+        'icon'              => 'grid-view',
+        'keywords'          => array('features', 'grid', 'columns'),
     ));
 
     // Split Feature Block
-    register_block_type('jamco/split-feature', array(
-        'title'           => __('Split Feature', 'jamco'),
-        'description'     => __('Feature section with image and content split', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'columns',
-        'keywords'        => array('split', 'feature', 'image'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('split-feature'),
+    acf_register_block_type(array(
+        'name'              => 'split-feature',
+        'title'             => __('Split Feature', 'jamco'),
+        'description'       => __('Feature section with image and content split', 'jamco'),
+        'render_template'   => 'blocks/split-feature.php',
+        'category'          => 'jamco',
+        'icon'              => 'columns',
+        'keywords'          => array('split', 'feature', 'image'),
     ));
 
     // Product Carousel Block
-    register_block_type('jamco/product-carousel', array(
-        'title'           => __('Product Carousel', 'jamco'),
-        'description'     => __('Carousel of related products', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'images-alt2',
-        'keywords'        => array('products', 'carousel', 'slider'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('product-carousel'),
+    acf_register_block_type(array(
+        'name'              => 'product-carousel',
+        'title'             => __('Product Carousel', 'jamco'),
+        'description'       => __('Carousel of related products', 'jamco'),
+        'render_template'   => 'blocks/product-carousel.php',
+        'category'          => 'jamco',
+        'icon'              => 'images-alt2',
+        'keywords'          => array('products', 'carousel', 'slider'),
     ));
 
     // Testimonial Block
-    register_block_type('jamco/testimonial', array(
-        'title'           => __('Testimonial', 'jamco'),
-        'description'     => __('Customer testimonial with quote and author', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'format-quote',
-        'keywords'        => array('testimonial', 'quote', 'review'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('testimonial'),
+    acf_register_block_type(array(
+        'name'              => 'testimonial',
+        'title'             => __('Testimonial', 'jamco'),
+        'description'       => __('Customer testimonial with quote and author', 'jamco'),
+        'render_template'   => 'blocks/testimonial.php',
+        'category'          => 'jamco',
+        'icon'              => 'format-quote',
+        'keywords'          => array('testimonial', 'quote', 'review'),
     ));
 
     // CTA Block
-    register_block_type('jamco/cta', array(
-        'title'           => __('Call to Action', 'jamco'),
-        'description'     => __('Call to action section with background image', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'megaphone',
-        'keywords'        => array('cta', 'call to action', 'button'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('cta'),
+    acf_register_block_type(array(
+        'name'              => 'cta',
+        'title'             => __('Call to Action', 'jamco'),
+        'description'       => __('Call to action section with background image', 'jamco'),
+        'render_template'   => 'blocks/cta.php',
+        'category'          => 'jamco',
+        'icon'              => 'megaphone',
+        'keywords'          => array('cta', 'call to action', 'button'),
     ));
 
     // Product Showcase Block
-    register_block_type('jamco/product-showcase', array(
-        'title'           => __('Product Showcase', 'jamco'),
-        'description'     => __('Full-width product showcase with branding', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'star-filled',
-        'keywords'        => array('product', 'showcase', 'hero'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('product-showcase'),
+    acf_register_block_type(array(
+        'name'              => 'product-showcase',
+        'title'             => __('Product Showcase', 'jamco'),
+        'description'       => __('Full-width product showcase with branding', 'jamco'),
+        'render_template'   => 'blocks/product-showcase.php',
+        'category'          => 'jamco',
+        'icon'              => 'star-filled',
+        'keywords'          => array('product', 'showcase', 'hero'),
     ));
 
     // Seating Diagram Block
-    register_block_type('jamco/seating-diagram', array(
-        'title'           => __('Seating Diagram', 'jamco'),
-        'description'     => __('Cabin seating layout diagram', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'grid-view',
-        'keywords'        => array('diagram', 'seating', 'layout'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('seating-diagram'),
+    acf_register_block_type(array(
+        'name'              => 'seating-diagram',
+        'title'             => __('Seating Diagram', 'jamco'),
+        'description'       => __('Cabin seating layout diagram', 'jamco'),
+        'render_template'   => 'blocks/seating-diagram.php',
+        'category'          => 'jamco',
+        'icon'              => 'grid-view',
+        'keywords'          => array('diagram', 'seating', 'layout'),
     ));
 
     // Full Width Image Block
-    register_block_type('jamco/full-width-image', array(
-        'title'           => __('Full Width Image', 'jamco'),
-        'description'     => __('Full-width image section', 'jamco'),
-        'category'        => 'jamco',
-        'icon'            => 'format-image',
-        'keywords'        => array('image', 'full-width', 'photo'),
-        'attributes'      => array('data' => array('type' => 'object')),
-        'render_callback' => $render_block('full-width-image'),
+    acf_register_block_type(array(
+        'name'              => 'full-width-image',
+        'title'             => __('Full Width Image', 'jamco'),
+        'description'       => __('Full-width image section', 'jamco'),
+        'render_template'   => 'blocks/full-width-image.php',
+        'category'          => 'jamco',
+        'icon'              => 'format-image',
+        'keywords'          => array('image', 'full-width', 'photo'),
     ));
 }
 add_action('init', 'jamco_register_blocks');

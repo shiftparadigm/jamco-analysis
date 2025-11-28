@@ -3,24 +3,9 @@
  * Seating Diagram Block Template
  */
 
-$data = $block_attributes['data'] ?? array();
-
-$background_color = $data['background_color'] ?? 'white';
-$brand_logos = $data['brand_logos'] ?? array();
-
-// Handle image
-$diagram_image_id = $data['diagram_image'] ?? 0;
-$diagram_image = null;
-if ($diagram_image_id) {
-    $image_url = wp_get_attachment_image_url($diagram_image_id, 'full');
-    $image_alt = get_post_meta($diagram_image_id, '_wp_attachment_image_alt', true);
-    if ($image_url) {
-        $diagram_image = array(
-            'url' => $image_url,
-            'alt' => $image_alt
-        );
-    }
-}
+$background_color = get_field('background_color') ?: 'white';
+$brand_logos = get_field('brand_logos') ?: array();
+$diagram_image = get_field('diagram_image');
 ?>
 
 <section class="seating-diagram bg-<?php echo esc_attr($background_color); ?>">
