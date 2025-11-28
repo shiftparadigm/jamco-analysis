@@ -62,7 +62,7 @@
   --split-image: 774px;
 
   /* Spacing */
-  --section-gap: clamp(60px, 8vw, 112px);
+  --section-gap: 120px;
   --card-gap: 24px;
   --feature-grid-gap: 36px;
   --spacing-xs: 8px;

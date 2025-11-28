@@ -230,6 +230,42 @@
   object-fit: contain;
 }
 
+.hero .feature-callout {
+  position: absolute;
+  bottom: 80px;
+  right: 60px;
+  background: rgba(0, 85, 172, 0.5);
+  backdrop-filter: blur(10px);
+  color: #FFFFFF;
+  padding: 1.5rem;
+  border-radius: 4px;
+  max-width: 256px;
+}
+
+.hero .feature-callout strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.hero .feature-callout p {
+  font-size: 14px;
+  line-height: 1.4;
+  margin: 0;
+  opacity: 0.95;
+}
+
+.hero .carousel-indicator {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666666;
+}
+
 /* Section Intro Block */
 .section-intro {
   padding: var(--section-gap) 0;
@@ -670,7 +706,7 @@
 
 /* Seating Diagram Block */
 .seating-diagram {
-  padding: 80px 0;
+  padding: var(--section-gap) 0;
 }
 
 .diagram-container {

@@ -22,9 +22,9 @@ $images_to_upload = [
     'product-3' => $theme_dir . '/exported-images/Placeholder Image-3.jpg',
     'testimonial-author' => $theme_dir . '/exported-images/maria.png',
     'cta-bg' => $theme_dir . '/exported-images/Placeholder Image-7.jpg',
-    'product-showcase' => $theme_dir . '/exported-images/product-showcase.jpg',
-    'seating-diagram' => $theme_dir . '/exported-images/seating-diagram.jpg',
-    'full-width-image' => $theme_dir . '/exported-images/full-width-image.jpg',
+    'product-showcase' => $theme_dir . '/exported-images/Rectangle 5.jpg',
+    'seating-diagram' => $theme_dir . '/exported-images/Screenshot 2025-11-05 at 9.52 1.jpg',
+    'full-width-image' => $theme_dir . '/exported-images/Rectangle 5.jpg',
 ];
 
 echo "Starting content population...\n\n";
@@ -97,9 +97,13 @@ $blocks[] = [
         'id' => $hero_block_id,
         'name' => 'jamco/hero',
         'data' => [
-            'heading' => 'Premium Seating',
-            'subheading' => 'Experience unparalleled comfort and luxury in our premium seating solutions designed for the modern traveler.',
+            'heading' => 'Jamco Premium Seating',
+            'subheading' => 'Premium-density seats with direct aisle access, optimized living space, and intuitive passenger control',
             'floating_image' => $uploaded_images['hero'] ?? '',
+            'feature_callout' => [
+                'label' => 'Spatial Freedom',
+                'description' => 'Configurable rests ensure passengers have the room they need'
+            ],
             'primary_cta' => [
                 'text' => 'Explore Products',
                 'url' => '#products'
