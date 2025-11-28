@@ -3,11 +3,24 @@
  * Product Carousel Block Template
  */
 
-$heading = get_field('heading');
-$description = get_field('description');
-$label = get_field('label');
-$products = get_field('products'); // Relationship field to Product CPT
-$show_pagination = get_field('show_pagination');
+$data = $block_attributes['data'] ?? array();
+
+$heading = $data['heading'] ?? '';
+$description = $data['description'] ?? '';
+$label = $data['label'] ?? '';
+$product_ids = $data['products'] ?? array();
+$show_pagination = $data['show_pagination'] ?? false;
+
+// Get product objects from IDs
+$products = array();
+if ($product_ids) {
+    foreach ($product_ids as $product_id) {
+        $product = get_post($product_id);
+        if ($product) {
+            $products[] = $product;
+        }
+    }
+}
 ?>
 
 <section class="product-carousel">

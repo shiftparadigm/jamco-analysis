@@ -3,25 +3,53 @@
  * Split Feature Block Template
  */
 
-$heading = get_field('heading');
-$description = get_field('description');
-$feature_image = get_field('feature_image');
-$image_position = get_field('image_position') ?: 'left';
-$background_color = get_field('background_color') ?: 'white';
-$cta_button = get_field('cta_button');
+$data = $block_attributes['data'] ?? array();
+
+$heading = $data['heading'] ?? '';
+$description = $data['description'] ?? '';
+$image_position = $data['image_position'] ?? 'left';
+$background_color = $data['background_color'] ?? 'white';
+$cta_button = $data['cta_button'] ?? null;
+
+// Handle image
+$feature_image_id = $data['feature_image'] ?? 0;
+$feature_image = null;
+if ($feature_image_id) {
+    $image_url = wp_get_attachment_image_url($feature_image_id, 'full');
+    $image_alt = get_post_meta($feature_image_id, '_wp_attachment_image_alt', true);
+    if ($image_url) {
+        $feature_image = array(
+            'url' => $image_url,
+            'alt' => $image_alt
+        );
+    }
+}
 ?>
 
 <section class="split-feature bg-<?php echo esc_attr($background_color); ?> image-<?php echo esc_attr($image_position); ?>">
     <div class="split-container">
-        <div class="split-content">
+        <div class="content-side">
             <?php if ($heading) : ?>
-                <h2><?php echo esc_html($heading); ?></h2>
+                <h2><?php
+                    // Handle both HTML entities and Unicode escapes
+                    $decoded_heading = html_entity_decode($heading, ENT_QUOTES | ENT_HTML5);
+                    $decoded_heading = preg_replace('/u0026/', '&', $decoded_heading);
+                    echo esc_html($decoded_heading);
+                ?></h2>
             <?php endif; ?>
 
             <?php if ($description) : ?>
-                <div class="description">
-                    <?php echo wp_kses_post($description); ?>
-                </div>
+                <p class="description">
+                    <?php echo wp_kses_post(html_entity_decode($description)); ?>
+                </p>
+            <?php endif; ?>
+
+            <?php if (!empty($data['bullet_points'])) : ?>
+                <ul class="bullet-points">
+                    <?php foreach ($data['bullet_points'] as $point) : ?>
+                        <li><?php echo esc_html($point); ?></li>
+                    <?php endforeach; ?>
+                </ul>
             <?php endif; ?>
 
             <?php if ($cta_button) : ?>
@@ -32,7 +60,7 @@ $cta_button = get_field('cta_button');
         </div>
 
         <?php if ($feature_image) : ?>
-            <div class="split-image">
+            <div class="image-side">
                 <img src="<?php echo esc_url($feature_image['url']); ?>" alt="<?php echo esc_attr($feature_image['alt'] ?: ''); ?>" />
             </div>
         <?php endif; ?>

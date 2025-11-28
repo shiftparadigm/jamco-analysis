@@ -3,13 +3,29 @@
  * Hero Block Template
  */
 
-$heading = get_field('heading');
-$subheading = get_field('subheading');
-$floating_image = get_field('floating_image');
-$primary_cta = get_field('primary_cta');
-$secondary_cta = get_field('secondary_cta');
-$feature_callout = get_field('feature_callout');
-$carousel_indicator = get_field('carousel_indicator');
+// Get data from block attributes
+$data = $block_attributes['data'] ?? array();
+
+$heading = $data['heading'] ?? '';
+$subheading = $data['subheading'] ?? '';
+$primary_cta = $data['primary_cta'] ?? null;
+$secondary_cta = $data['secondary_cta'] ?? null;
+$feature_callout = $data['feature_callout'] ?? null;
+$carousel_indicator = $data['carousel_indicator'] ?? '';
+
+// Handle image - if it's an ID, get the URL
+$floating_image_id = $data['floating_image'] ?? 0;
+$floating_image = null;
+if ($floating_image_id) {
+    $image_url = wp_get_attachment_image_url($floating_image_id, 'full');
+    $image_alt = get_post_meta($floating_image_id, '_wp_attachment_image_alt', true);
+    if ($image_url) {
+        $floating_image = array(
+            'url' => $image_url,
+            'alt' => $image_alt
+        );
+    }
+}
 ?>
 
 <section class="hero">

@@ -44,96 +44,150 @@ function jamco_enqueue_assets() {
 }
 add_action('wp_enqueue_scripts', 'jamco_enqueue_assets');
 
-// Register ACF Blocks
-function jamco_register_acf_blocks() {
-    // Check if ACF function exists
-    if (!function_exists('acf_register_block_type')) {
-        return;
-    }
+// Enqueue block editor assets
+function jamco_enqueue_block_editor_assets() {
+    wp_enqueue_script(
+        'jamco-blocks-editor',
+        get_template_directory_uri() . '/assets/js/blocks.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-data'),
+        '1.0.0',
+        true
+    );
+}
+add_action('enqueue_block_editor_assets', 'jamco_enqueue_block_editor_assets');
+
+// Register Jamco Blocks (using WordPress core block API)
+function jamco_register_blocks() {
+    // Helper function to render block templates
+    $render_block = function($block_name) {
+        return function($attributes, $content, $block) use ($block_name) {
+            $template_path = get_template_directory() . "/blocks/{$block_name}.php";
+            if (file_exists($template_path)) {
+                ob_start();
+                // Make block attributes available
+                $block_attributes = $attributes;
+                $block_id = $block->context['blockId'] ?? uniqid('block_');
+                include $template_path;
+                return ob_get_clean();
+            }
+            return '';
+        };
+    };
 
     // Hero Block
-    acf_register_block_type(array(
-        'name'            => 'hero',
+    register_block_type('jamco/hero', array(
         'title'           => __('Hero Section', 'jamco'),
         'description'     => __('Hero section with heading, image, and CTAs', 'jamco'),
-        'render_template' => 'blocks/hero.php',
         'category'        => 'jamco',
         'icon'            => 'cover-image',
         'keywords'        => array('hero', 'banner', 'header'),
-        'supports'        => array(
-            'align' => false,
-            'mode' => false,
-            'jsx' => true
-        )
+        'supports'        => array('align' => false),
+        'attributes'      => array(
+            'data' => array('type' => 'object'),
+        ),
+        'render_callback' => $render_block('hero'),
     ));
 
     // Section Intro Block
-    acf_register_block_type(array(
-        'name'            => 'section-intro',
+    register_block_type('jamco/section-intro', array(
         'title'           => __('Section Intro', 'jamco'),
         'description'     => __('Introduction section with eyebrow, heading, and description', 'jamco'),
-        'render_template' => 'blocks/section-intro.php',
         'category'        => 'jamco',
         'icon'            => 'editor-textcolor',
         'keywords'        => array('section', 'intro', 'heading'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('section-intro'),
     ));
 
     // Feature Grid Block
-    acf_register_block_type(array(
-        'name'            => 'feature-grid',
+    register_block_type('jamco/feature-grid', array(
         'title'           => __('Feature Grid', 'jamco'),
         'description'     => __('3-column feature grid with images', 'jamco'),
-        'render_template' => 'blocks/feature-grid.php',
         'category'        => 'jamco',
         'icon'            => 'grid-view',
         'keywords'        => array('features', 'grid', 'columns'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('feature-grid'),
     ));
 
     // Split Feature Block
-    acf_register_block_type(array(
-        'name'            => 'split-feature',
+    register_block_type('jamco/split-feature', array(
         'title'           => __('Split Feature', 'jamco'),
         'description'     => __('Feature section with image and content split', 'jamco'),
-        'render_template' => 'blocks/split-feature.php',
         'category'        => 'jamco',
         'icon'            => 'columns',
         'keywords'        => array('split', 'feature', 'image'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('split-feature'),
     ));
 
     // Product Carousel Block
-    acf_register_block_type(array(
-        'name'            => 'product-carousel',
+    register_block_type('jamco/product-carousel', array(
         'title'           => __('Product Carousel', 'jamco'),
         'description'     => __('Carousel of related products', 'jamco'),
-        'render_template' => 'blocks/product-carousel.php',
         'category'        => 'jamco',
         'icon'            => 'images-alt2',
         'keywords'        => array('products', 'carousel', 'slider'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('product-carousel'),
     ));
 
     // Testimonial Block
-    acf_register_block_type(array(
-        'name'            => 'testimonial',
+    register_block_type('jamco/testimonial', array(
         'title'           => __('Testimonial', 'jamco'),
         'description'     => __('Customer testimonial with quote and author', 'jamco'),
-        'render_template' => 'blocks/testimonial.php',
         'category'        => 'jamco',
         'icon'            => 'format-quote',
         'keywords'        => array('testimonial', 'quote', 'review'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('testimonial'),
     ));
 
     // CTA Block
-    acf_register_block_type(array(
-        'name'            => 'cta',
+    register_block_type('jamco/cta', array(
         'title'           => __('Call to Action', 'jamco'),
         'description'     => __('Call to action section with background image', 'jamco'),
-        'render_template' => 'blocks/cta.php',
         'category'        => 'jamco',
         'icon'            => 'megaphone',
         'keywords'        => array('cta', 'call to action', 'button'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('cta'),
+    ));
+
+    // Product Showcase Block
+    register_block_type('jamco/product-showcase', array(
+        'title'           => __('Product Showcase', 'jamco'),
+        'description'     => __('Full-width product showcase with branding', 'jamco'),
+        'category'        => 'jamco',
+        'icon'            => 'star-filled',
+        'keywords'        => array('product', 'showcase', 'hero'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('product-showcase'),
+    ));
+
+    // Seating Diagram Block
+    register_block_type('jamco/seating-diagram', array(
+        'title'           => __('Seating Diagram', 'jamco'),
+        'description'     => __('Cabin seating layout diagram', 'jamco'),
+        'category'        => 'jamco',
+        'icon'            => 'grid-view',
+        'keywords'        => array('diagram', 'seating', 'layout'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('seating-diagram'),
+    ));
+
+    // Full Width Image Block
+    register_block_type('jamco/full-width-image', array(
+        'title'           => __('Full Width Image', 'jamco'),
+        'description'     => __('Full-width image section', 'jamco'),
+        'category'        => 'jamco',
+        'icon'            => 'format-image',
+        'keywords'        => array('image', 'full-width', 'photo'),
+        'attributes'      => array('data' => array('type' => 'object')),
+        'render_callback' => $render_block('full-width-image'),
     ));
 }
-add_action('acf/init', 'jamco_register_acf_blocks');
+add_action('init', 'jamco_register_blocks');
 
 // Register custom block category
 function jamco_block_categories($categories) {
@@ -196,11 +250,20 @@ add_action('init', 'jamco_register_product_cpt');
 
 // Breadcrumb function
 function jamco_breadcrumbs() {
+    $breadcrumbs = array();
+
+    // Check if this is the Premium Seating page (even if it's the homepage)
+    if (is_page('premium-seating') || (is_front_page() && get_the_title() === 'Premium Seating')) {
+        $breadcrumbs[] = array('label' => 'Products', 'href' => get_post_type_archive_link('product'));
+        $breadcrumbs[] = array('label' => 'Premium Seating', 'href' => '');
+        return $breadcrumbs;
+    }
+
+    // Don't show breadcrumb on regular homepage
     if (is_front_page()) {
         return;
     }
 
-    $breadcrumbs = array();
     $breadcrumbs[] = array('label' => 'Home', 'href' => home_url('/'));
 
     if (is_singular('product')) {

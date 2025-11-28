@@ -3,10 +3,12 @@
  * Section Intro Block Template
  */
 
-$eyebrow = get_field('eyebrow');
-$heading = get_field('heading');
-$description = get_field('description');
-$alignment = get_field('alignment') ?: 'center';
+$data = $block_attributes['data'] ?? array();
+
+$eyebrow = $data['eyebrow'] ?? '';
+$heading = $data['heading'] ?? '';
+$description = $data['description'] ?? '';
+$alignment = $data['alignment'] ?? 'center';
 ?>
 
 <section class="section-intro text-<?php echo esc_attr($alignment); ?>">

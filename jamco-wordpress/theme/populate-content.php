@@ -22,6 +22,9 @@ $images_to_upload = [
     'product-3' => $theme_dir . '/exported-images/Placeholder Image-3.jpg',
     'testimonial-author' => $theme_dir . '/exported-images/maria.png',
     'cta-bg' => $theme_dir . '/exported-images/Placeholder Image-7.jpg',
+    'product-showcase' => $theme_dir . '/exported-images/product-showcase.jpg',
+    'seating-diagram' => $theme_dir . '/exported-images/seating-diagram.jpg',
+    'full-width-image' => $theme_dir . '/exported-images/full-width-image.jpg',
 ];
 
 echo "Starting content population...\n\n";
@@ -89,10 +92,10 @@ $blocks = [];
 // Hero Block
 $hero_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/hero',
+    'blockName' => 'jamco/hero',
     'attrs' => [
         'id' => $hero_block_id,
-        'name' => 'acf/hero',
+        'name' => 'jamco/hero',
         'data' => [
             'heading' => 'Premium Seating',
             'subheading' => 'Experience unparalleled comfort and luxury in our premium seating solutions designed for the modern traveler.',
@@ -111,13 +114,52 @@ $blocks[] = [
     'innerContent' => ['']
 ];
 
+// Product Showcase Block (Second Hero)
+$product_showcase_block_id = 'block_' . uniqid();
+$blocks[] = [
+    'blockName' => 'jamco/product-showcase',
+    'attrs' => [
+        'id' => $product_showcase_block_id,
+        'name' => 'jamco/product-showcase',
+        'data' => [
+            'heading' => 'Premium Seating',
+            'subheading' => 'Showcase every aspect of your journey.',
+            'brand_name' => 'Venture',
+            'brand_description' => 'Direct aisle access, premium density, and curated surfaces for a calm, private environment—ready to scale across your fleet.',
+            'product_image' => $uploaded_images['product-showcase'] ?? ''
+        ],
+        'mode' => 'preview'
+    ],
+    'innerContent' => ['']
+];
+
+// Seating Diagram Block
+$seating_diagram_block_id = 'block_' . uniqid();
+$blocks[] = [
+    'blockName' => 'jamco/seating-diagram',
+    'attrs' => [
+        'id' => $seating_diagram_block_id,
+        'name' => 'jamco/seating-diagram',
+        'data' => [
+            'diagram_image' => $uploaded_images['seating-diagram'] ?? '',
+            'background_color' => 'white',
+            'brand_logos' => [
+                ['name' => 'Venture'],
+                ['name' => 'Quest for Elegance', 'tagline' => 'Produced by Jamco']
+            ]
+        ],
+        'mode' => 'preview'
+    ],
+    'innerContent' => ['']
+];
+
 // Section Intro Block
 $section_intro_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/section-intro',
+    'blockName' => 'jamco/section-intro',
     'attrs' => [
         'id' => $section_intro_block_id,
-        'name' => 'acf/section-intro',
+        'name' => 'jamco/section-intro',
         'data' => [
             'eyebrow' => 'PREMIUM FEATURES',
             'heading' => 'Our Premium Seating features',
@@ -131,10 +173,10 @@ $blocks[] = [
 // Feature Grid Block
 $feature_grid_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/feature-grid',
+    'blockName' => 'jamco/feature-grid',
     'attrs' => [
         'id' => $feature_grid_block_id,
-        'name' => 'acf/feature-grid',
+        'name' => 'jamco/feature-grid',
         'data' => [
             'features' => [
                 [
@@ -159,22 +201,44 @@ $blocks[] = [
     'innerContent' => ['']
 ];
 
+// Full Width Image Block
+$full_width_image_block_id = 'block_' . uniqid();
+$blocks[] = [
+    'blockName' => 'jamco/full-width-image',
+    'attrs' => [
+        'id' => $full_width_image_block_id,
+        'name' => 'jamco/full-width-image',
+        'data' => [
+            'image' => $uploaded_images['full-width-image'] ?? '',
+            'height' => 'tall',
+            'watermark' => 'Venture'
+        ],
+        'mode' => 'preview'
+    ],
+    'innerContent' => ['']
+];
+
 // Split Feature 1 - Control & Comfort
 $split_1_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/split-feature',
+    'blockName' => 'jamco/split-feature',
     'attrs' => [
         'id' => $split_1_block_id,
-        'name' => 'acf/split-feature',
+        'name' => 'jamco/split-feature',
         'data' => [
             'heading' => 'Control & Comfort',
-            'description' => '<p>Our premium seating puts passengers in complete control of their comfort. Adjust recline, lumbar support, and headrest position with intuitive controls designed for ease of use.</p><p>Every detail is engineered to provide a personalized experience that adapts to individual preferences.</p>',
+            'description' => 'A unified control center uses capacitive touch input with LED lighting for clear, intuitive operation. Lighting, power, and entertainment are positioned where they are easy to use.',
+            'bullet_points' => [
+                'One-touch lighting',
+                'Power at hand for devices',
+                'Clear labeling for low-light use'
+            ],
             'feature_image' => $uploaded_images['split-1'] ?? '',
-            'image_position' => 'left',
+            'image_position' => 'right',
             'background_color' => 'white',
             'cta_button' => [
-                'text' => 'Learn More',
-                'url' => '#',
+                'text' => 'Contact Us',
+                'url' => '#contact',
                 'style' => 'secondary'
             ]
         ],
@@ -186,20 +250,24 @@ $blocks[] = [
 // Split Feature 2 - Private by Design
 $split_2_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/split-feature',
+    'blockName' => 'jamco/split-feature',
     'attrs' => [
         'id' => $split_2_block_id,
-        'name' => 'acf/split-feature',
+        'name' => 'jamco/split-feature',
         'data' => [
             'heading' => 'Private by Design',
-            'description' => '<p>Create your own sanctuary at 35,000 feet with privacy features that let you work, rest, or relax without distraction.</p><p>Adjustable privacy screens and thoughtful spatial design ensure a personal haven in the sky.</p>',
+            'description' => 'Sliding dividers provide privacy from zero to full as needed. Shielding and geometry help reduce distractions while maintaining an calm, spacious feel.',
+            'bullet_points' => [
+                'On-demand privacy divider',
+                'Shielded sightlines and calm surfaces'
+            ],
             'feature_image' => $uploaded_images['split-2'] ?? '',
-            'image_position' => 'right',
-            'background_color' => 'blue',
+            'image_position' => 'left',
+            'background_color' => 'light-blue',
             'cta_button' => [
-                'text' => 'View Details',
-                'url' => '#',
-                'style' => 'outline'
+                'text' => 'Contact Us',
+                'url' => '#contact',
+                'style' => 'secondary'
             ]
         ],
         'mode' => 'preview'
@@ -210,19 +278,24 @@ $blocks[] = [
 // Split Feature 3 - Work and Entertain
 $split_3_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/split-feature',
+    'blockName' => 'jamco/split-feature',
     'attrs' => [
         'id' => $split_3_block_id,
-        'name' => 'acf/split-feature',
+        'name' => 'jamco/split-feature',
         'data' => [
             'heading' => 'Work and Entertain On-Demand',
-            'description' => '<p>Stay productive or entertained with integrated workspace and entertainment features. Multiple device charging ports, spacious tray tables, and high-definition displays keep you connected.</p>',
+            'description' => 'An immersive HD display and spacious tray surface supports both work and relaxation. Content is accessible quickly without disrupting the passenger\'s setup.',
+            'bullet_points' => [
+                'Immersive HD display options',
+                'Fast access to entertainment and information',
+                'Work surface/tray for devices and notes'
+            ],
             'feature_image' => $uploaded_images['split-3'] ?? '',
-            'image_position' => 'left',
+            'image_position' => 'right',
             'background_color' => 'light-blue',
             'cta_button' => [
-                'text' => 'Explore Features',
-                'url' => '#',
+                'text' => 'Contact Us',
+                'url' => '#contact',
                 'style' => 'secondary'
             ]
         ],
@@ -234,19 +307,23 @@ $blocks[] = [
 // Split Feature 4 - Spatial Freedom
 $split_4_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/split-feature',
+    'blockName' => 'jamco/split-feature',
     'attrs' => [
         'id' => $split_4_block_id,
-        'name' => 'acf/split-feature',
+        'name' => 'jamco/split-feature',
         'data' => [
             'heading' => 'Spatial Freedom',
-            'description' => '<p>Generous legroom and clever storage solutions provide the space you need to truly relax. Our innovative design maximizes personal space without compromising cabin efficiency.</p>',
+            'description' => 'Ample space for passenger comfort and curated storage locations keep personal items tidy from taxi to touchdown.',
+            'bullet_points' => [
+                'Generous passenger space',
+                'Dedicated stowage for devices and small bags'
+            ],
             'feature_image' => $uploaded_images['split-4'] ?? '',
-            'image_position' => 'right',
+            'image_position' => 'left',
             'background_color' => 'white',
             'cta_button' => [
-                'text' => 'See Specifications',
-                'url' => '#',
+                'text' => 'Contact Us',
+                'url' => '#contact',
                 'style' => 'secondary'
             ]
         ],
@@ -277,14 +354,14 @@ foreach ($products as $index => $product) {
 // Product Carousel Block
 $product_carousel_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/product-carousel',
+    'blockName' => 'jamco/product-carousel',
     'attrs' => [
         'id' => $product_carousel_block_id,
-        'name' => 'acf/product-carousel',
+        'name' => 'jamco/product-carousel',
         'data' => [
-            'heading' => 'Related Products',
-            'description' => 'Explore our full range of premium seating solutions',
-            'label' => 'PRODUCT SHOWCASE',
+            'heading' => 'Complete your travel ecosystem',
+            'description' => 'Elevate every aspect of your journey.',
+            'label' => 'Related Products',
             'products' => $product_ids,
             'show_pagination' => true
         ],
@@ -296,10 +373,10 @@ $blocks[] = [
 // Testimonial Block
 $testimonial_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/testimonial',
+    'blockName' => 'jamco/testimonial',
     'attrs' => [
         'id' => $testimonial_block_id,
-        'name' => 'acf/testimonial',
+        'name' => 'jamco/testimonial',
         'data' => [
             'quote' => 'The premium seating has transformed our passenger experience. Comfort, style, and functionality come together perfectly in these seats.',
             'author_name' => 'Maria Santos',
@@ -316,18 +393,18 @@ $blocks[] = [
 // CTA Block
 $cta_block_id = 'block_' . uniqid();
 $blocks[] = [
-    'blockName' => 'acf/cta',
+    'blockName' => 'jamco/cta',
     'attrs' => [
         'id' => $cta_block_id,
-        'name' => 'acf/cta',
+        'name' => 'jamco/cta',
         'data' => [
-            'heading' => 'Ready to elevate your cabin?',
-            'subheading' => 'Contact our team to discuss how our premium seating solutions can transform your passenger experience.',
+            'heading' => 'Ready to talk?',
+            'subheading' => 'Our team is ready to meet your needs.',
             'background_image' => $uploaded_images['cta-bg'] ?? '',
             'cta_button' => [
-                'text' => 'Get in Touch',
-                'url' => '/contact',
-                'style' => 'outline'
+                'text' => 'Contact Us',
+                'url' => '#contact',
+                'style' => 'primary'
             ]
         ],
         'mode' => 'preview'

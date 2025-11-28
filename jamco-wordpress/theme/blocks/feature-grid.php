@@ -3,7 +3,21 @@
  * Feature Grid Block Template
  */
 
-$features = get_field('features');
+$data = $block_attributes['data'] ?? array();
+$features = $data['features'] ?? array();
+
+// Handle image IDs in features
+foreach ($features as &$feature) {
+    if (isset($feature['image']) && is_numeric($feature['image'])) {
+        $image_id = $feature['image'];
+        $image_url = wp_get_attachment_image_url($image_id, 'full');
+        $image_alt = get_post_meta($image_id, '_wp_attachment_image_alt', true);
+        $feature['image'] = array(
+            'url' => $image_url,
+            'alt' => $image_alt
+        );
+    }
+}
 ?>
 
 <section class="feature-grid">

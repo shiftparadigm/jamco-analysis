@@ -3,10 +3,21 @@
  * CTA Block Template
  */
 
-$heading = get_field('heading');
-$subheading = get_field('subheading');
-$background_image = get_field('background_image');
-$cta_button = get_field('cta_button');
+$data = $block_attributes['data'] ?? array();
+
+$heading = $data['heading'] ?? '';
+$subheading = $data['subheading'] ?? '';
+$cta_button = $data['cta_button'] ?? null;
+
+// Handle background image
+$background_image_id = $data['background_image'] ?? 0;
+$background_image = null;
+if ($background_image_id) {
+    $image_url = wp_get_attachment_image_url($background_image_id, 'full');
+    if ($image_url) {
+        $background_image = array('url' => $image_url);
+    }
+}
 ?>
 
 <section class="cta-block" <?php if ($background_image) : ?>style="background-image: url('<?php echo esc_url($background_image['url']); ?>');"<?php endif; ?>>
