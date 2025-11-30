@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/section-intro",
+	"title": "Section Intro",
+	"category": "jamco",
+	"icon": "editor-aligncenter",
+	"description": "Section introduction with heading and description",
+	"keywords": ["intro", "section", "heading"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"alignment": {
+			"type": "string",
+			"default": "center",
+			"enum": ["left", "center"]
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

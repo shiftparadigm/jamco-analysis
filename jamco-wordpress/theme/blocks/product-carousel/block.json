@@ -1,0 +1,37 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/product-carousel",
+	"title": "Product Carousel",
+	"category": "jamco",
+	"icon": "images-alt2",
+	"description": "Carousel of products",
+	"keywords": ["carousel", "products", "slider"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./frontend.js",
+	"style": "file:./style.css",
+	"render": "file:./render.php",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"label": {
+			"type": "string",
+			"default": ""
+		},
+		"productRefs": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

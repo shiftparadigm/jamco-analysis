@@ -1,0 +1,55 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/product-showcase",
+	"title": "Product Showcase",
+	"category": "jamco",
+	"icon": "products",
+	"description": "Showcase a single product with details",
+	"keywords": ["product", "showcase", "feature"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"productId": {
+			"type": "number",
+			"default": 0
+		},
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"subheading": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaButton": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "primary"
+			}
+		},
+		"secondaryCtaButton": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "outline"
+			}
+		},
+		"showcaseImage": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}
