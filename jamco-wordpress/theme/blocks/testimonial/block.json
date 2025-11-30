@@ -1,0 +1,35 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/testimonial",
+	"title": "Testimonial",
+	"category": "jamco",
+	"icon": "format-quote",
+	"description": "Customer testimonial with quote and author",
+	"keywords": ["testimonial", "quote", "review"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"quote": {
+			"type": "string",
+			"default": ""
+		},
+		"authorName": {
+			"type": "string",
+			"default": ""
+		},
+		"authorTitle": {
+			"type": "string",
+			"default": ""
+		},
+		"authorImage": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

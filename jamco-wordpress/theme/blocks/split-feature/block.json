@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/split-feature",
+	"title": "Split Feature",
+	"category": "jamco",
+	"icon": "columns",
+	"description": "Feature section with image and content side by side",
+	"keywords": ["feature", "split", "two-column"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"description": {
+			"type": "string",
+			"default": ""
+		},
+		"bulletPoints": {
+			"type": "array",
+			"default": []
+		},
+		"imagePosition": {
+			"type": "string",
+			"default": "right",
+			"enum": ["left", "right"]
+		},
+		"backgroundColor": {
+			"type": "string",
+			"default": "white",
+			"enum": ["white", "light-blue", "blue"]
+		},
+		"ctaButton": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "primary"
+			}
+		},
+		"featureImage": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

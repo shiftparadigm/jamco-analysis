@@ -1,0 +1,39 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/cta",
+	"title": "CTA Section",
+	"category": "jamco",
+	"icon": "megaphone",
+	"description": "Call-to-action section with background image",
+	"keywords": ["cta", "call-to-action", "banner"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"subheading": {
+			"type": "string",
+			"default": ""
+		},
+		"ctaButton": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "primary"
+			}
+		},
+		"backgroundImage": {
+			"type": "number",
+			"default": 0
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

@@ -1,10 +1,13 @@
 /*
 Theme Name: Jamco Premium Seating
-Theme URI: https://jamco-america.com
-Description: Custom WordPress theme replicating the Astro/Sanity build for Jamco Premium Seating
+Theme URI: https://jamco.com
+Description: WordPress theme for Jamco Premium Seating with native Gutenberg blocks
 Version: 1.0.0
-Author: Jamco Development Team
+Author: Jamco
+Author URI: https://jamco.com
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: jamco
 */
 
-/* This file is required by WordPress but styles are loaded from assets/css/ */
+/* Theme styles are enqueued via functions.php */

@@ -20,7 +20,7 @@ const path = require('path');
   // Screenshot Astro site
   console.log('Capturing Astro site...');
   const astroPage = await context.newPage();
-  await astroPage.goto('http://localhost:4321/premium-seating', { waitUntil: 'networkidle' });
+  await astroPage.goto('https://blue-island-0b5fa6310.3.azurestaticapps.net/premium-seating', { waitUntil: 'networkidle' });
   await astroPage.waitForTimeout(2000);
   await astroPage.screenshot({
     path: '/home/tony/projects/jamco-analysis/jamco-wordpress/screenshots/astro-full.png',

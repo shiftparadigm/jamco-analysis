@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/seating-diagram",
+	"title": "Seating Diagram",
+	"category": "jamco",
+	"icon": "admin-site-alt3",
+	"description": "Interactive seating diagram",
+	"keywords": ["seating", "diagram", "layout"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"diagramImage": {
+			"type": "number",
+			"default": 0
+		},
+		"hotspots": {
+			"type": "array",
+			"default": []
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}

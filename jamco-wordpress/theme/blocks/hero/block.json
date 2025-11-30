@@ -1,0 +1,58 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "jamco/hero",
+	"title": "Hero Section",
+	"category": "jamco",
+	"icon": "cover-image",
+	"description": "Hero section with heading, image, and CTAs",
+	"keywords": ["hero", "banner", "header"],
+	"textdomain": "jamco",
+	"editorScript": "file:./index.js",
+	"render": "file:./render.php",
+	"attributes": {
+		"heading": {
+			"type": "string",
+			"default": ""
+		},
+		"subheading": {
+			"type": "string",
+			"default": ""
+		},
+		"floatingImage": {
+			"type": "number",
+			"default": 0
+		},
+		"featureCallout": {
+			"type": "object",
+			"default": {
+				"label": "",
+				"description": ""
+			}
+		},
+		"primaryCta": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "primary"
+			}
+		},
+		"secondaryCta": {
+			"type": "object",
+			"default": {
+				"text": "",
+				"url": "",
+				"style": "outline"
+			}
+		},
+		"carouselIndicator": {
+			"type": "string",
+			"default": ""
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false
+	}
+}
