@@ -406,24 +406,210 @@ Test breakpoints:
 
 ## Production Deployment
 
+### Live Demo
+
+**Azure Container Apps Deployment**: https://jamco-wordpress.salmondesert-b200d92f.eastus.azurecontainerapps.io/
+
+This deployment runs WordPress and MySQL in a single self-contained Docker container, making it cost-effective and simple to manage.
+
+### Azure Deployment Architecture
+
+The production deployment uses a **single-container approach** for simplicity and cost-effectiveness:
+
+```
+Docker Container (Azure Container Apps)
+├── MySQL Server (MariaDB 10.11)
+│   └── Database: wordpress (1.6MB SQL import)
+├── Apache Web Server
+│   └── PHP 8.1
+├── WordPress 6.4
+│   ├── Jamco Theme
+│   └── Media Library (331 images, ~20MB)
+└── Supervisor (Process Manager)
+    ├── mysqld_safe (MySQL daemon)
+    └── apache2ctl (Apache daemon)
+```
+
+### Infrastructure Components
+
+1. **Azure Container Registry** (`jamcoregistry.azurecr.io`)
+   - Stores the Docker image
+   - Automatic image versioning with tags
+   - Integrated with Container Apps via system-assigned identity
+
+2. **Azure Container Apps Environment** (`jamco-env`)
+   - Serverless container platform
+   - Auto-scaling (0-10 replicas based on load)
+   - Built-in HTTPS with automatic SSL certificates
+   - Default domain: `*.salmondesert-b200d92f.eastus.azurecontainerapps.io`
+
+3. **Container App** (`jamco-wordpress`)
+   - Image: `jamcoregistry.azurecr.io/jamco-wordpress:single`
+   - Resources: 2 CPU cores, 4GB RAM
+   - Port: 80 (HTTP internally, HTTPS externally via ingress)
+   - Environment: `SITE_URL` set to HTTPS domain for proper asset URLs
+
+### Container Startup Process
+
+When the container starts (takes ~30-40 seconds):
+
+1. **MySQL Initialization** (`start-services.sh`)
+   - Creates MySQL socket directory (`/run/mysqld`)
+   - Initializes MySQL data directory if needed
+   - Starts MySQL temporarily for setup
+
+2. **Database Setup**
+   - Creates `wordpress` database
+   - Creates `wordpress` user with full privileges
+   - Imports database dump (`/tmp/wordpress.sql`)
+
+3. **WordPress Setup**
+   - Copies WordPress core files from `/usr/src/wordpress/`
+   - Creates `wp-config.php` with:
+     - Database credentials
+     - HTTPS detection for reverse proxy (`X-Forwarded-Proto`)
+     - Security salts and keys
+
+4. **Service Startup**
+   - Supervisor starts both MySQL and Apache as daemons
+   - URL fix script runs to update site URLs to match Azure domain
+
+### Docker Image Build
+
+The image is built from `Dockerfile.single`:
+
+```dockerfile
+FROM wordpress:6.4-php8.1-apache
+
+# Install MySQL server and supervisor
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    default-mysql-server supervisor
+
+# Copy theme, database, and uploads
+COPY theme /var/www/html/wp-content/themes/jamco
+COPY db-init/wordpress.sql /tmp/wordpress.sql
+COPY db-init/uploads /var/www/html/wp-content/uploads
+
+# Configure supervisor to run MySQL + Apache
+COPY supervisord.conf /etc/supervisor/conf.d/
+COPY start-services.sh /usr/local/bin/
+COPY fix-urls.sh /usr/local/bin/
+
+# Set permissions and start
+RUN chown -R www-data:www-data /var/www/html/wp-content
+CMD ["/usr/local/bin/start-services.sh"]
+```
+
+### Deployment Commands
+
+```bash
+# Login to Azure
+az login
+
+# Build the Docker image
+docker build -f Dockerfile.single -t jamco-wordpress-single:latest .
+
+# Tag for Azure Container Registry
+docker tag jamco-wordpress-single:latest \
+  jamcoregistry.azurecr.io/jamco-wordpress:single
+
+# Login to ACR
+az acr login --name jamcoregistry
+
+# Push image
+docker push jamcoregistry.azurecr.io/jamco-wordpress:single
+
+# Create/update container app
+az containerapp update \
+  --name jamco-wordpress \
+  --resource-group jamco-rg \
+  --image jamcoregistry.azurecr.io/jamco-wordpress:single \
+  --set-env-vars "SITE_URL=https://jamco-wordpress.salmondesert-b200d92f.eastus.azurecontainerapps.io"
+```
+
+### Cost Estimation
+
+**Azure Container Apps Pricing** (Consumption plan):
+- **Compute**: $0.000012/vCPU-second + $0.000002/GB-second
+- **Storage**: $0.18/GB-month for container storage
+- **Monthly estimate**: ~$15-30 for development/demo usage
+  - 2 vCPU × 4GB RAM
+  - Minimal traffic (auto-scales to 0 when idle)
+  - ~20GB storage for WordPress + MySQL data
+
+**Total deployment cost**: ~$15-30/month (significantly cheaper than separate database + app service)
+
+### HTTPS Configuration
+
+Azure Container Apps automatically provides:
+- ✅ Free SSL certificate for `*.azurecontainerapps.io` domains
+- ✅ Automatic HTTPS redirect
+- ✅ HTTP/2 support
+- ✅ Certificate renewal handled by Azure
+
+WordPress detects HTTPS via the `X-Forwarded-Proto` header:
+
+```php
+// In wp-config.php
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
+    $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+    $_SERVER['HTTPS'] = 'on';
+}
+```
+
+This ensures all asset URLs (CSS, JS, images) use HTTPS, preventing mixed-content warnings.
+
+### Local Testing
+
+Before deploying, test the container locally:
+
+```bash
+# Build image
+docker build -f Dockerfile.single -t jamco-wordpress-single:latest .
+
+# Run locally
+docker run -d -p 80:80 --name jamco-test jamco-wordpress-single:latest
+
+# Wait 30-40 seconds for startup, then test
+curl http://localhost
+
+# Check logs
+docker logs jamco-test
+
+# Clean up
+docker stop jamco-test && docker rm jamco-test
+```
+
+### Updating the Deployment
+
+When you make changes:
+
+1. **Update theme files** locally
+2. **Rebuild Docker image** with new changes
+3. **Push to ACR** with same tag (`:single`)
+4. **Update container app** - Azure will pull the latest image
+5. **Restart revision** if needed to force pull
+
+The database and uploads are baked into the image, so any content changes require a full rebuild and redeploy.
+
 ### Build Checklist
 
-- [ ] All blocks built with webpack
-- [ ] Images optimized and uploaded
-- [ ] CSS minified (optional)
-- [ ] Database exported
-- [ ] wp-config.php configured for production
-- [ ] Caching plugin installed (WP Rocket, W3 Total Cache)
-- [ ] Security hardening applied
-- [ ] SSL certificate installed
+- [x] All blocks built with webpack
+- [x] Images optimized and uploaded (331 images included)
+- [x] Database exported (`db-init/wordpress.sql`)
+- [x] wp-config.php configured for HTTPS proxy detection
+- [x] SSL certificate (automatic via Azure)
+- [x] Auto-scaling configured (0-10 replicas)
+- [x] HTTPS enforcement enabled
 
 ### Performance Optimization
 
-1. **Caching**: Install Redis object cache
-2. **CDN**: Use Cloudflare or similar for static assets
-3. **Image Optimization**: Install Imagify or ShortPixel
+1. **Caching**: Currently disabled (can add Redis for production)
+2. **CDN**: Azure Container Apps includes edge caching
+3. **Image Optimization**: Images pre-optimized and included in container
 4. **Lazy Loading**: Enabled by default in WordPress 5.5+
-5. **Database**: Optimize tables regularly
+5. **Database**: Optimized tables included in SQL dump
 
 ## Support & Documentation
 

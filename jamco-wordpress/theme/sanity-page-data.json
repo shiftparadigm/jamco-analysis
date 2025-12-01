@@ -1,0 +1,365 @@
+{
+  "content": [
+    {
+      "_type": "productShowcaseBlock",
+      "brandDescription": "Direct aisle access, premium density, and curated surfaces for a calm, private environment—ready to scale across your fleet.",
+      "brandName": "Venture",
+      "heading": "Premium Seating",
+      "productImage": {
+        "asset": {
+          "_id": "image-94dee5be4f3beebda76aa0da5c33a2a3c37f0ae8-707x507-jpg"
+        }
+      },
+      "subheading": "Showcase every aspect of your journey."
+    },
+    {
+      "_type": "seatingDiagramBlock",
+      "backgroundColor": "white",
+      "brandLogos": [
+        {
+          "_key": "venture-logo",
+          "name": "Venture"
+        },
+        {
+          "_key": "quest-logo",
+          "name": "Quest for Elegance",
+          "tagline": "Produced by Jamco"
+        }
+      ],
+      "diagramImage": {
+        "asset": {
+          "_id": "image-d349e4151f38ce7f24d31fab42463c4450413f3d-1440x658-jpg"
+        }
+      }
+    },
+    {
+      "_type": "sectionIntroBlock",
+      "description": "Deliver the passenger experience your brand promises, without sacrificing density or service efficiency.",
+      "heading": "Our Premium Seating features"
+    },
+    {
+      "_type": "featureGridBlock",
+      "columns": "3-col",
+      "features": [
+        {
+          "description": "Every seat provides unobstructed access to the aisle",
+          "heading": "Direct aisle access for every passenger",
+          "image": {
+            "asset": {
+              "_id": "image-94dee5be4f3beebda76aa0da5c33a2a3c37f0ae8-707x507-jpg"
+            }
+          }
+        },
+        {
+          "description": "Maximize capacity while maintaining passenger comfort",
+          "heading": "Premium density without the compromise",
+          "image": {
+            "asset": {
+              "_id": "image-b224ecd1eb47b809d5c935e25ed0f0af24167b98-432x432-jpg"
+            }
+          }
+        },
+        {
+          "description": "Thoughtful design keeps belongings organized and accessible",
+          "heading": "Optimized living space with smart storage",
+          "image": {
+            "asset": {
+              "_id": "image-8cce85d610ee5d1c9a06f8ef16eaae1d672a01e2-432x432-jpg"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "_type": "fullWidthImageBlock",
+      "height": "tall",
+      "image": {
+        "asset": {
+          "_id": "image-693bed54af13363d7338602a343c37ac394acb4a-1323x771-jpg"
+        }
+      },
+      "showNavArrows": true,
+      "watermark": "Venture"
+    },
+    {
+      "_type": "sectionIntroBlock",
+      "description": "Thoughtful design puts your passengers' comfortable, productive experience at the center of every detail.",
+      "heading": "Passenger Features"
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "backgroundColor": "white",
+      "bulletPoints": [
+        "One-touch lighting",
+        "Power at hand for devices",
+        "Clear labeling for low-light use"
+      ],
+      "ctaButton": {
+        "_type": "cta",
+        "externalUrl": "#contact",
+        "linkType": "external",
+        "style": "secondary",
+        "text": "Contact Us"
+      },
+      "description": "A unified control center uses capacitive touch input with LED lighting for clear, intuitive operation. Lighting, power, and entertainment are positioned where they are easy to use.",
+      "featureImage": {
+        "asset": {
+          "_id": "image-ed1f190541aa222f6cc19137680e71fc14e917a2-432x432-jpg"
+        }
+      },
+      "heading": "Control & Comfort",
+      "imagePosition": "right"
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "backgroundColor": "light-blue",
+      "bulletPoints": [
+        "On-demand privacy divider",
+        "Shielded sightlines and calm surfaces"
+      ],
+      "ctaButton": {
+        "_type": "cta",
+        "externalUrl": "#contact",
+        "linkType": "external",
+        "style": "secondary",
+        "text": "Contact Us"
+      },
+      "description": "Sliding dividers provide privacy from zero to full as needed. Shielding and geometry help reduce distractions while maintaining an calm, spacious feel.",
+      "featureImage": {
+        "asset": {
+          "_id": "image-e7af2956eb1f5e5512f98124b4884eac43c0904f-666x590-jpg"
+        }
+      },
+      "heading": "Private by Design",
+      "imagePosition": "left"
+    },
+    {
+      "_type": "testimonialBlock",
+      "backgroundImage": {
+        "asset": {
+          "_id": "image-d349e4151f38ce7f24d31fab42463c4450413f3d-1440x658-jpg"
+        }
+      },
+      "layout": "centered",
+      "quoteSize": "large",
+      "testimonials": [
+        {
+          "author": "Maria Smith",
+          "company": "Global Innovations",
+          "image": {
+            "asset": {
+              "_id": "image-908c6d4224815cb982a251a1e4bf8e5ff5f78c8f-120x120-png"
+            }
+          },
+          "quote": "This isn't just a seat. It's a mobile office, entertainment center, and personal sanctuary.",
+          "title": "CEO"
+        }
+      ]
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "backgroundColor": "light-blue",
+      "bulletPoints": [
+        "Immersive HD display options",
+        "Fast access to entertainment and information",
+        "Work surface/tray for devices and notes"
+      ],
+      "ctaButton": {
+        "_type": "cta",
+        "externalUrl": "#contact",
+        "linkType": "external",
+        "style": "secondary",
+        "text": "Contact Us"
+      },
+      "description": "An immersive HD display and spacious tray surface supports both work and relaxation. Content is accessible quickly without disrupting the passenger's setup.",
+      "featureImage": {
+        "asset": {
+          "_id": "image-e579ad72c4685efe50aafc49062c91fa164aa5fa-666x590-jpg"
+        }
+      },
+      "heading": "Work and Entertain On-Demand",
+      "imagePosition": "right"
+    },
+    {
+      "_type": "splitFeatureBlock",
+      "backgroundColor": "white",
+      "bulletPoints": [
+        "Generous passenger space",
+        "Dedicated stowage for devices and small bags"
+      ],
+      "ctaButton": {
+        "_type": "cta",
+        "externalUrl": "#contact",
+        "linkType": "external",
+        "style": "secondary",
+        "text": "Contact Us"
+      },
+      "description": "Ample space for passenger comfort and curated storage locations keep personal items tidy from taxi to touchdown.",
+      "featureImage": {
+        "asset": {
+          "_id": "image-e579ad72c4685efe50aafc49062c91fa164aa5fa-666x590-jpg"
+        }
+      },
+      "heading": "Spatial Freedom",
+      "imagePosition": "left"
+    },
+    {
+      "_type": "productCarouselBlock",
+      "description": "Elevate every aspect of your journey.",
+      "heading": "Complete your travel ecosystem",
+      "label": "Related Products",
+      "products": [
+        {
+          "_id": "product-flight-deck-doors",
+          "name": "Flight Deck Doors and Linings",
+          "slug": {
+            "current": "flight-deck-doors-linings"
+          }
+        },
+        {
+          "_id": "product-dividers-partitions",
+          "name": "Dividers & Partitions",
+          "slug": {
+            "current": "dividers-partitions"
+          }
+        },
+        {
+          "_id": "product-closets-stowage",
+          "name": "Closets & Stowage",
+          "slug": {
+            "current": "closets-stowage"
+          }
+        },
+        {
+          "_id": "product-lavatories",
+          "name": "Lavatories",
+          "slug": {
+            "current": "lavatories"
+          }
+        }
+      ],
+      "showPagination": true
+    },
+    {
+      "_type": "ctaBlock",
+      "backgroundColor": "dark-blue",
+      "backgroundImage": {
+        "asset": {
+          "_id": "image-a847d82dd2af281c9b97e4f179906a297ea4e539-666x590-jpg"
+        }
+      },
+      "ctaButton": {
+        "_type": "cta",
+        "externalUrl": "#contact",
+        "linkType": "external",
+        "style": "primary",
+        "text": "Contact Us"
+      },
+      "heading": "Ready to talk?",
+      "subheading": "Our team is ready to meet your needs."
+    }
+  ],
+  "hero": {
+    "_type": "heroCarousel",
+    "cta": {
+      "_type": "cta",
+      "externalUrl": "#contact",
+      "linkType": "external",
+      "style": "primary",
+      "text": "View Premium Seating Suite"
+    },
+    "featureCallout": {
+      "_type": "featureCallout",
+      "description": "Configurable rests ensure passengers have the room they need",
+      "image": {
+        "_type": "image",
+        "asset": {
+          "_ref": "image-e579ad72c4685efe50aafc49062c91fa164aa5fa-666x590-jpg",
+          "_type": "reference"
+        }
+      },
+      "label": "Spatial Freedom",
+      "position": "bottom-right"
+    },
+    "floatingImage": {
+      "asset": {
+        "_id": "image-b855847923d53de537f11924c06fdb7dbd9e588c-731x576-jpg"
+      }
+    },
+    "heading": "Jamco Premium Seating",
+    "secondaryCta": {
+      "_type": "cta",
+      "externalUrl": "#brochure",
+      "linkType": "external",
+      "style": "outline",
+      "text": "Download the Brochure"
+    },
+    "slides": [
+      {
+        "featureCallout": {
+          "_type": "featureCallout",
+          "description": "Configurable rests ensure passengers have the room they need",
+          "label": "Spatial Freedom",
+          "position": "bottom-right"
+        },
+        "floatingImage": {
+          "asset": {
+            "_id": "image-b855847923d53de537f11924c06fdb7dbd9e588c-731x576-jpg"
+          }
+        },
+        "hotspots": [
+          {
+            "_key": "hotspot1",
+            "description": "Immersive HD screen with intuitive controls for movies, music, and flight information.",
+            "positionX": 48,
+            "positionY": 22,
+            "title": "Entertainment Display"
+          },
+          {
+            "_key": "hotspot2",
+            "description": "Customizable mood lighting with reading lamp and do-not-disturb indicators.",
+            "positionX": 75,
+            "positionY": 28,
+            "title": "Ambient Lighting"
+          },
+          {
+            "_key": "hotspot3",
+            "description": "Sliding partition offers complete privacy from neighboring passengers.",
+            "positionX": 35,
+            "positionY": 45,
+            "title": "Privacy Divider"
+          },
+          {
+            "_key": "hotspot4",
+            "description": "Dedicated compartments for devices, shoes, and personal belongings.",
+            "positionX": 28,
+            "positionY": 62,
+            "title": "Personal Storage"
+          },
+          {
+            "_key": "hotspot5",
+            "description": "Converts to a guest seat or extends for full lie-flat sleeping position.",
+            "positionX": 65,
+            "positionY": 58,
+            "title": "Ottoman & Footrest"
+          }
+        ]
+      },
+      {
+        "featureCallout": {
+          "_type": "featureCallout",
+          "label": "Spatial Freedom",
+          "position": "top-right"
+        },
+        "floatingImage": {
+          "asset": {
+            "_id": "image-94dee5be4f3beebda76aa0da5c33a2a3c37f0ae8-707x507-jpg"
+          }
+        },
+        "hotspots": null
+      }
+    ],
+    "subheading": "Premium-density seats with direct aisle access, optimized living space, and intuitive passenger control - update 3"
+  },
+  "title": "Premium Seating"
+}

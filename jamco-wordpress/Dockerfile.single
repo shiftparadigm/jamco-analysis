@@ -1,0 +1,43 @@
+FROM wordpress:6.4-php8.1-apache
+
+# Install MySQL server and WP-CLI
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    default-mysql-server \
+    default-mysql-client \
+    less \
+    supervisor && \
+    curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x wp-cli.phar && \
+    mv wp-cli.phar /usr/local/bin/wp && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+# Copy Jamco theme
+COPY theme /var/www/html/wp-content/themes/jamco
+
+# Copy database dump
+COPY db-init/wordpress.sql /tmp/wordpress.sql
+
+# Copy WordPress uploads (media files)
+COPY db-init/uploads /var/www/html/wp-content/uploads
+
+# Set proper permissions
+RUN chown -R www-data:www-data /var/www/html/wp-content/themes/jamco && \
+    chown -R www-data:www-data /var/www/html/wp-content/uploads && \
+    chmod -R 755 /var/www/html/wp-content/themes/jamco && \
+    chmod -R 755 /var/www/html/wp-content/uploads
+
+# Create supervisor config to run both MySQL and Apache
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copy startup scripts
+COPY start-services.sh /usr/local/bin/
+COPY fix-urls.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/start-services.sh /usr/local/bin/fix-urls.sh
+
+EXPOSE 80
+
+ENTRYPOINT []
+CMD ["/usr/local/bin/start-services.sh"]
