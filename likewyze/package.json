@@ -1,0 +1,16 @@
+{
+  "name": "likewize-wordpress",
+  "version": "1.0.0",
+  "description": "Likewize Device Protection WordPress Theme",
+  "scripts": {
+    "start": "docker-compose up --build",
+    "stop": "docker-compose down",
+    "restart": "docker-compose restart",
+    "logs": "docker-compose logs -f",
+    "build": "docker build -t likewize-wordpress:latest .",
+    "clean": "docker-compose down -v && docker system prune -f"
+  },
+  "keywords": ["wordpress", "likewize", "gutenberg"],
+  "author": "Shift Paradigm",
+  "license": "ISC"
+}

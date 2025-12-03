@@ -1,0 +1,46 @@
+/**
+ * Process Steps Styles
+ */
+
+.likewize-process { background-color: var(--color-gray-bg); border-top: 1px solid var(--color-slate-200); border-bottom: 1px solid var(--color-slate-200); }
+.likewize-process .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+.likewize-process .flex { display: flex; }
+.likewize-process .flex-col { flex-direction: column; }
+@media (min-width: 768px) {
+  .likewize-process .md\\:flex-row { flex-direction: row; }
+  .likewize-process .md\\:w-1\\/2 { width: 50%; }
+}
+.likewize-process .gap-12 { gap: 3rem; }
+.likewize-process .items-center { align-items: center; }
+.likewize-process .space-y-6 > * + * { margin-top: 1.5rem; }
+.likewize-process .flex-shrink-0 { flex-shrink: 0; }
+.likewize-process .mr-4 { margin-right: 1rem; }
+.likewize-process .w-8 { width: 2rem; }
+.likewize-process .h-8 { height: 2rem; }
+.likewize-process .rounded-full { border-radius: 9999px; }
+.likewize-process h2 { font-size: 1.875rem; font-weight: 700; color: var(--color-navy); margin-bottom: 1.5rem; }
+.likewize-process p { color: var(--color-slate-600); margin-bottom: 2rem; }
+.likewize-process h4 { font-weight: 700; color: var(--color-slate-800); }
+
+/* Timeline */
+.timeline-container { position: relative; }
+.timeline-container::before { content: ''; position: absolute; left: 0.875rem; top: 0.5rem; height: 100%; width: 0.125rem; background-color: var(--color-slate-100); }
+.timeline-container .relative { position: relative; z-index: 1; }
+.timeline-container .w-7 { width: 1.75rem; }
+.timeline-container .h-7 { height: 1.75rem; }
+.timeline-container .border-4 { border-width: 4px; }
+.timeline-container .border-white { border-color: white; }
+.timeline-container .z-10 { z-index: 10; }
+.bg-green-500 { background-color: rgb(34, 197, 94); }
+.bg-blue-500 { background-color: rgb(59, 130, 246); }
+.bg-slate-200 { background-color: var(--color-slate-200); }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .5; }
+}
+.opacity-50 { opacity: 0.5; }
+.bg-gray { background-color: var(--color-gray-bg); }
+.border-y { border-top: 1px solid; border-bottom: 1px solid; }
+.border-slate-200 { border-color: var(--color-slate-200); }
+.text-navy { color: var(--color-navy); }

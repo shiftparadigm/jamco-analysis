@@ -1,0 +1,22 @@
+{
+  "name": "likewize-theme",
+  "version": "1.0.0",
+  "description": "Likewize Device Protection WordPress Theme",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "format": "wp-scripts format",
+    "lint:js": "wp-scripts lint-js"
+  },
+  "keywords": [
+    "wordpress",
+    "gutenberg",
+    "blocks"
+  ],
+  "author": "Shift Paradigm",
+  "license": "GPL-2.0-or-later",
+  "devDependencies": {
+    "@wordpress/scripts": "^27.0.0"
+  },
+  "dependencies": {}
+}

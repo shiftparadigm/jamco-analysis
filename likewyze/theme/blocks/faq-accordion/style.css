@@ -1,0 +1,145 @@
+/**
+ * FAQ Accordion Block Styles
+ *
+ * @package Likewize
+ */
+
+.likewize-faq-accordion {
+  background-color: white;
+}
+
+.likewize-faq-accordion .container {
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+.likewize-faq-accordion h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--color-navy);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* FAQ list */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* FAQ item */
+.faq-item {
+  border: 1px solid var(--color-slate-200);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+/* Accordion button */
+.likewize-accordion-button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background-color: var(--color-slate-50);
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.likewize-accordion-button:hover {
+  background-color: var(--color-slate-100);
+}
+
+.likewize-accordion-button:focus {
+  outline: 2px solid var(--color-blue);
+  outline-offset: -2px;
+}
+
+.likewize-accordion-button span {
+  font-weight: 700;
+  color: var(--color-slate-700);
+}
+
+.likewize-accordion-button i,
+.likewize-accordion-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-slate-400);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+/* Accordion content */
+.likewize-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+  background-color: white;
+}
+
+.likewize-accordion-content.active {
+  opacity: 1;
+}
+
+.likewize-accordion-content > div {
+  padding: 1.25rem;
+  color: var(--color-slate-600);
+  line-height: 1.6;
+  border-top: 1px solid var(--color-slate-100);
+}
+
+.likewize-accordion-content p {
+  margin: 0;
+}
+
+.likewize-accordion-content p + p {
+  margin-top: 1rem;
+}
+
+/* Utilities */
+.max-w-3xl {
+  max-width: 48rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .likewize-faq-accordion h2 {
+    font-size: 1.5rem;
+  }
+
+  .likewize-accordion-button {
+    padding: 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .likewize-accordion-button span {
+    padding-right: 0.5rem;
+  }
+
+  .likewize-accordion-content > div {
+    padding: 1rem;
+    font-size: 0.9375rem;
+  }
+}

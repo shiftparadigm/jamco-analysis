@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "likewize/process-steps",
+  "title": "Process Steps",
+  "category": "likewize",
+  "icon": "list-view",
+  "description": "Steps with timeline visualization",
+  "keywords": ["process", "steps", "timeline", "claims"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Simple Claims Process"
+    },
+    "description": {
+      "type": "string",
+      "default": "We know losing a device is stressful. That's why we've made our claims process the fastest in the industry."
+    },
+    "steps": {
+      "type": "array",
+      "default": [
+        { "title": "File a Claim 24/7", "description": "Visit this site or call us anytime. Most claims are approved instantly.", "color": "#E63026" },
+        { "title": "Pay Deductible", "description": "Pay your deductible via credit card. Deductibles range from $29 to $200 depending on device.", "color": "#0070B8" },
+        { "title": "Get Reconnected", "description": "We'll repair your screen, or ship a replacement device to your door as soon as the next day.", "color": "#003D7C" }
+      ]
+    },
+    "timeline": {
+      "type": "array",
+      "default": [
+        { "label": "Claim Approved", "sublabel": "Today, 9:41 AM", "icon": "check", "status": "completed" },
+        { "label": "Replacement Shipped", "sublabel": "Estimated Delivery: Tomorrow", "icon": "truck", "status": "active" },
+        { "label": "Delivered", "sublabel": "", "icon": "home", "status": "pending" }
+      ]
+    }
+  },
+  "textdomain": "likewize",
+  "editorScript": "file:../../build/blocks/process-steps/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

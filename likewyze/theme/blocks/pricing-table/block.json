@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "likewize/pricing-table",
+  "title": "Pricing Table",
+  "category": "likewize",
+  "icon": "list-view",
+  "description": "Pricing table with 3 tiers",
+  "keywords": ["pricing", "table", "tiers", "plans"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Transparent Details"
+    },
+    "description": {
+      "type": "string",
+      "default": "Know exactly what you're paying for."
+    },
+    "tiers": {
+      "type": "array",
+      "default": [
+        { "name": "Tier 1", "subtitle": "Basic Phones" },
+        { "name": "Tier 2", "subtitle": "Smartphones" },
+        { "name": "Tier 3", "subtitle": "Premium/Foldables" }
+      ]
+    },
+    "rows": {
+      "type": "array",
+      "default": [
+        { "label": "Monthly Premium", "icon": "shield", "values": ["$7.00", "$12.00", "$18.00"], "highlight": 1 },
+        { "label": "Screen Repair Deductible", "icon": "smartphone", "values": ["$29", "$29", "$49"], "highlight": 1 },
+        { "label": "Replacement Deductible", "icon": "refresh-cw", "values": ["$99", "$199", "$299"], "highlight": 1 },
+        { "label": "Claim Limit", "icon": "alert-octagon", "values": ["2 Claims per rolling 12-month period ($2,500 max per claim)"], "fullWidth": true }
+      ]
+    }
+  },
+  "textdomain": "likewize",
+  "editorScript": "file:../../build/blocks/pricing-table/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

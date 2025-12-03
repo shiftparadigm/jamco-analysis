@@ -1,0 +1,72 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "likewize/hero",
+  "title": "Hero Section",
+  "category": "likewize",
+  "icon": "cover-image",
+  "description": "Hero section with badge, heading, CTAs, and coverage card",
+  "keywords": ["hero", "header", "banner", "coverage"],
+  "supports": {
+    "align": ["full"],
+    "anchor": true
+  },
+  "attributes": {
+    "badgeText": {
+      "type": "string",
+      "default": "Protection powered by Likewize"
+    },
+    "showBadge": {
+      "type": "boolean",
+      "default": true
+    },
+    "heading": {
+      "type": "string",
+      "default": "Stay Connected."
+    },
+    "headingHighlight": {
+      "type": "string",
+      "default": "Stay Protected."
+    },
+    "description": {
+      "type": "string",
+      "default": "Life happens. From cracked screens to coffee spills, we cover the accidents that your warranty doesn't. Get back online fast with same-day repairs."
+    },
+    "primaryCTA": {
+      "type": "object",
+      "default": {
+        "text": "View Program Details",
+        "url": "#pricing"
+      }
+    },
+    "secondaryCTA": {
+      "type": "object",
+      "default": {
+        "text": "Check Deductible",
+        "url": "#faq"
+      }
+    },
+    "showCard": {
+      "type": "boolean",
+      "default": true
+    },
+    "cardData": {
+      "type": "object",
+      "default": {
+        "status": "Active",
+        "deviceName": "iPhone 15 Pro",
+        "planName": "Protection Plan Plus",
+        "billingAmount": "$24.00/mo",
+        "buttonText": "Manage Device"
+      }
+    },
+    "backgroundColor": {
+      "type": "string",
+      "default": "#003D7C"
+    }
+  },
+  "textdomain": "likewize",
+  "editorScript": "file:../../build/blocks/hero/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

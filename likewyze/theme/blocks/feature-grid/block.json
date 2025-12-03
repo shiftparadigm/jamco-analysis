@@ -1,0 +1,69 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "likewize/feature-grid",
+  "title": "Feature Grid",
+  "category": "likewize",
+  "icon": "grid-view",
+  "description": "Display coverage features in a responsive grid with icons",
+  "keywords": ["features", "grid", "coverage", "icons"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Comprehensive Coverage"
+    },
+    "description": {
+      "type": "string",
+      "default": "Most manufacturer warranties only cover defects. We cover the real world."
+    },
+    "columns": {
+      "type": "number",
+      "default": 4
+    },
+    "features": {
+      "type": "array",
+      "default": [
+        {
+          "icon": "droplets",
+          "iconColor": "#E63026",
+          "iconBgColor": "#FEF2F2",
+          "title": "Liquid Damage",
+          "description": "Coffee spills, pool drops, or unexpected rain. We repair or replace water damaged devices."
+        },
+        {
+          "icon": "smartphone-nfc",
+          "iconColor": "#0070B8",
+          "iconBgColor": "#EFF6FF",
+          "title": "Screen Cracks",
+          "description": "The most common accident. Get unlimited screen repairs with low deductibles."
+        },
+        {
+          "icon": "user-x",
+          "iconColor": "#475569",
+          "iconBgColor": "#F1F5F9",
+          "title": "Theft & Loss",
+          "description": "If your device is stolen or you simply can't find it, we can replace it as soon as tomorrow."
+        },
+        {
+          "icon": "zap-off",
+          "iconColor": "#9333EA",
+          "iconBgColor": "#FAF5FF",
+          "title": "Hardware Failure",
+          "description": "Buttons stopped working? Port broken? We cover mechanical breakdown after the warranty expires."
+        }
+      ]
+    }
+  },
+  "textdomain": "likewize",
+  "editorScript": "file:../../build/blocks/feature-grid/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}

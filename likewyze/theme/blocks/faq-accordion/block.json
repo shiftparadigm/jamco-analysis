@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "likewize/faq-accordion",
+  "title": "FAQ Accordion",
+  "category": "likewize",
+  "icon": "editor-help",
+  "description": "Collapsible FAQ section with questions and answers",
+  "keywords": ["faq", "accordion", "questions", "answers"],
+  "supports": {
+    "align": ["wide", "full"],
+    "anchor": true,
+    "spacing": {
+      "margin": true,
+      "padding": true
+    }
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "default": "Frequently Asked Questions"
+    },
+    "faqs": {
+      "type": "array",
+      "default": [
+        {
+          "question": "When does my coverage start?",
+          "answer": "Coverage begins immediately upon enrollment if the device is new. For existing devices, a 30-day waiting period may apply before you can file a claim for accidental damage."
+        },
+        {
+          "question": "What information do I need to file a claim?",
+          "answer": "You will need your mobile number, the device serial number (IMEI), brand and model, and a valid payment method for the deductible."
+        },
+        {
+          "question": "Can I go to an Apple Store for repairs?",
+          "answer": "Yes! We are an authorized partner. Once your claim is approved, you can choose to take your device to any authorized repair center, including Apple Genius Bars or Best Buy Geek Squad."
+        }
+      ]
+    }
+  },
+  "textdomain": "likewize",
+  "editorScript": "file:../../build/blocks/faq-accordion/index.js",
+  "style": "file:./style.css",
+  "render": "file:./render.php"
+}
